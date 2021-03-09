@@ -6,9 +6,9 @@
 #include "Libft/includes/libft.h" 
 #include <mlx.h>
 # include <unistd.h>
-# include <stdlib.h>
 
 #define SCALE 16 // условный размер каждого квадратика в карте
+# define BUFFER_SIZE 1
 
 typedef struct	s_win //структура для окна
 {
@@ -52,5 +52,8 @@ typedef struct	s_gnl
 }				t_gnl;
 
 int				get_next_line(int fd, char **line);
+
+
+void window(void);
 
 #endif

@@ -6,25 +6,24 @@
 /*   By: ycordell <ycordell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 17:11:27 by ycordell          #+#    #+#             */
-/*   Updated: 2021/03/05 13:16:23 by ycordell         ###   ########.fr       */
+/*   Updated: 2021/03/09 15:58:12 by ycordell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-static void		*ft_calloc(size_t count, size_t size)
+static char		*ft_strcpy(char *dst, char *src)
 {
-	unsigned char	*p;
-	size_t			len;
+	int				i;
 
-	if ((p = malloc(count * size)))
+	i = 0;
+	while (src[i] != '\0')
 	{
-		len = 0;
-		while (len < size * count)
-			p[len++] = 0;
-		return (p);
+		dst[i] = src[i];
+		i++;
 	}
-	return (0);
+	dst[i] = '\0';
+	return (dst);
 }
 
 static char		*char_free(char **str)

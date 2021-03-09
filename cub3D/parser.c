@@ -1,5 +1,8 @@
 #include "cub.h"
+#include "Libft/includes/libft.h" 
 #include <fcntl.h>
+
+//  gcc -lmlx -framework OpenGL -framework AppKit parser.c test.c get_next_line.c cub.h libmlx.dylib Libft/libft.a
 
 char	**make_map(t_list **head, int size)
 {
@@ -14,7 +17,7 @@ char	**make_map(t_list **head, int size)
 	}
 	i = -1;
 	while (map[++i])
-		ft_putendl(map[i]);
+		ft_putendl_fd(map[i]);
 	return (map);
 }
 
@@ -26,6 +29,8 @@ int		main(int argc, char **argv)
 
 	while (get_next_line(fd, &line))
 		ft_lstadd_back(&head, ft_lstnew(line));
-	ft_lstadd_back(&head, fnew(line));
+	ft_lstadd_back(&head, ft_lstnew(line));
 	make_map(&head, ft_lstsize(head));
+
+	window();
 }

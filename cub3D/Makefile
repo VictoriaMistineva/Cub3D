@@ -1,14 +1,16 @@
-NAME =	libftprintf.a
+NAME =	CUB3D.a
 
-#CFLAG =	-Wall -Werror -Wextra
+# CFLAG =	-Wall -Werror -Wextra
+LXFLAG =	-lft -lm -lmlx -framework OpenGL -framework AppKit
 
-# INCD =	-I includes/ -I Libft/includes
-INCD =	-I /. -I Libft/includes
+
+INCD =	-I includes/ -I Libft/includes
+# INCD =	-I . -I Libft/includes
 
 HEAD =	cub.h
 
-# SRCD =	src/
-SRCD =	/.
+SRCD =	src/
+# SRCD =	.
 
 OBJD = 	obj/
 
@@ -25,8 +27,11 @@ LIBFT =	Libft/libft.a
 # 		ftp_xX.c \
 # 		ftp_parser.c
 
-SRCD = parser.c \
-		test.c
+SRC = parser.c \
+		test.c \
+		get_next_line.c \
+		libmix.dyli
+
 
 
 OBJ =	$(addprefix $(OBJD), $(patsubst %.c, %.o, $(SRC)))
@@ -43,7 +48,7 @@ $(NAME): $(LIBFT) $(OBJD) $(OBJ)
 	@printf "\x1b[0m\n"
 
 $(OBJD)%.o: $(SRCD)%.c $(HEAD)
-	@gcc $(CFLAG) -o $@ -c $< $(INCD)
+	@gcc $(CFLAG) $(LXFLAG) -o $@ -c $< $(INCD)
 	@printf "💜\x1b[35mCompile: "
 	@printf $(notdir $@)
 	@printf "\x1b[0m\n"

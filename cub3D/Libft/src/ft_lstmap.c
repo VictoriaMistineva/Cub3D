@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast.c                                       :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ycordell <ycordell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/16 20:14:26 by jkeitha           #+#    #+#             */
-/*   Updated: 2021/03/09 16:31:53 by ycordell         ###   ########.fr       */
+/*   Created: 2020/11/19 15:07:08 by jkeitha           #+#    #+#             */
+/*   Updated: 2021/03/09 16:32:08 by ycordell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstlast(t_list *lst)
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	int len;
+	t_list	*lstn;
+	t_list	*temp;
 
-	len = ft_lstsize(lst) - 1;
-	while (lst && len--)
+	if (!lst || !f)
+		return (0);
+	lstn = 0;
+	while (lst)
 	{
+		if (!(temp = ft_lstnew((*f)(lst->content))))
+		{
+			ft_lstclear(&lstn, del);
+			return (0);
+		}
+		ft_lstadd_back(&lstn, temp);
 		lst = lst->next;
 	}
-	return (lst);
+	return (lstn);
 }

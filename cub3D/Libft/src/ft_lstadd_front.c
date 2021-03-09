@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eblastoi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ycordell <ycordell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/24 17:49:57 by eblastoi          #+#    #+#             */
-/*   Updated: 2020/11/27 19:01:17 by eblastoi         ###   ########.fr       */
+/*   Created: 2020/11/16 14:42:40 by jkeitha           #+#    #+#             */
+/*   Updated: 2021/03/09 16:31:23 by ycordell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_lstadd_front(t_list **lst, t_list *new)
 {
 	if (!new)
 		return ;
-	else if (!*lst)
+	if (!*lst)
 	{
 		*lst = new;
 		return ;

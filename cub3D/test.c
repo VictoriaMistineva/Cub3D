@@ -16,12 +16,12 @@ void window(void)
 		while(x++ < 200)
 			mlx_pixel_put(mlx, win, x, y, 0xFFFF1);
 	}
-	while(y++ < 400)
-	{
-		x = 100;
-		while(x++ < 600)
-			mlx_pixel_put(mlx, win, x, y, 0xFFFF6);
-	}
+	// while(y++ < 400)
+	// {
+	// 	x = 100;
+	// 	while(x++ < 600)
+	// 		mlx_pixel_put(mlx, win, x, y, 0xFFFFFF);
+	// }
 	mlx_loop(mlx);
 }
 

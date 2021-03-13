@@ -56,4 +56,6 @@ int				get_next_line(int fd, char **line);
 
 void window(void);
 
+int type_identifier(char **map);
+
 #endif

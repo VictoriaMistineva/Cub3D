@@ -16,16 +16,16 @@ typedef struct	s_win //структура для окна
 	void		*win;
 	void		*img;
 	void		*addr;
-	int			line_l;
-	int			bpp;
-	int			en;
+	int			line_length;
+	int			bits_per_pixel;
+	int			endian;
 }				  t_win;
 
 typedef struct	s_point // структура для точки
 {
 	int			x;
 	int			y;
-}				  t_point;
+}				 t_point;
 
 typedef struct	s_plr //структура для игрока и луча
 {
@@ -54,8 +54,10 @@ typedef struct	s_gnl
 int				get_next_line(int fd, char **line);
 
 
-void window(void);
+// void window(t_all **map);
 
-int type_identifier(char **map);
 
+int 		type_identifier(char *line);
+char		**read_full_map(char **argv, t_plr *plr);
+void map_identifier(t_all *all);
 #endif

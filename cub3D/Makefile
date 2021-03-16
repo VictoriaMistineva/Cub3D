@@ -1,7 +1,7 @@
 NAME =	cub3D
 
 # CFLAG =	-Wall -Werror -Wextra
-LXFLAG =  -lft -lm -lmlx -framework OpenGL -framework AppKit 
+LXFLAG =  -g -lm -lmlx -framework OpenGL -framework AppKit 
 
 MLXLIB =  libmlx.dylib
 
@@ -18,9 +18,8 @@ OBJD = 	obj/
 LIBFT =	Libft/libft.a
 
 SRC = parser.c \
-		test.c \
 		get_next_line.c \
-		identifier.c \
+
 
 
 
@@ -38,8 +37,11 @@ $(NAME): $(LIBFT) $(OBJD) $(OBJ)
 	@printf $@
 	@printf "\x1b[0m\n"
 
+#gcc -g  -lm -lmlx -framework OpenGL -framework AppKit  Libft/libft.a get_next_line.c parser.c | ./a.out map.cub
+
 $(OBJD)%.o: $(SRC)%.c $(HEAD)
-	@gcc $(CFLAG) $(LXFLAG) $(MLXLIB) -o $@ -c $< $(INCD)
+#	@gcc $(CFLAG) $(LXFLAG)  -o $@ -c $< $(INCD)
+	@gcc $(CFLAG) $(LXFLAG) $(LIBFT) $(SRCS)
 	@printf "💜\x1b[35mCompile: "
 	@printf $(notdir $@)
 	@printf "\x1b[0m\n"

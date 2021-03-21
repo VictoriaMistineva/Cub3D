@@ -41,7 +41,7 @@ typedef struct	s_all // структура для всего вместе
 	t_win		*win;
 	t_plr		*plr;
 	char		**map;
-}				  t_all;
+}				t_all;
 
 typedef struct	s_gnl
 {
@@ -51,13 +51,16 @@ typedef struct	s_gnl
 	char	*tmp;
 }				t_gnl;
 
+typedef struct  s_data
+{
+    void        *img;
+    char        *addr;
+    int         bits_per_pixel;
+    int         line_length;
+    int         endian;
+}               t_data;
+
 int				get_next_line(int fd, char **line);
 
 
-// void window(t_all **map);
-
-
-int 		type_identifier(char *line);
-char		**read_full_map(char **argv, t_plr *plr);
-void map_identifier(t_all *all);
 #endif

@@ -52,6 +52,10 @@ $(OBJD):
 $(LIBFT):
 	@make -C $(dir $(LIBFT))
 
+run:
+	gcc -g  -lmlx -lmlx -framework OpenGL -framework AppKit  Libft/libft.a get_next_line.c pars.c
+	./a.out map.cub
+
 clean:
 	@make -C $(dir $(LIBFT)) clean
 	@rm -rf $(OBJD)

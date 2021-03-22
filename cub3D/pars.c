@@ -15,22 +15,36 @@ void		draw_scale(t_all *all, t_point point)
 {
 	int i;
 	int j;
+	int start_x;
+	int start_y;
 
-	i = 0;
-	while (i < 100)
+	start_x = point.x * SCALE;
+	start_y = point.y * SCALE;
+
+	i = 1;
+	point.y = start_y;
+	while (i++ <= SCALE)
 	{
-		j = 0;
-		while(j< 50)
+		j = 1;
+		point.x = start_x;
+		while(j++ <= SCALE)
 		{
 			my_mlx_pixel_put(all->win, point.x, point.y, 0x00FFFF1);
-			j++;
 			point.x++;
 		}
-		i++;
 		point.y++;
 	}
 }
+// void		draw_scale(t_all *all, t_point point)
+// {
+// 	int i = 20;
+// 	int j = 20;
+// 	point.x = (point.x * i);
+// 	point.y = (point.y * j);
 
+// 	my_mlx_pixel_put(all->win, point.x, point.y, 0x00FFFF1);
+
+// }
 
 int		main(int argc, char **argv)
 {

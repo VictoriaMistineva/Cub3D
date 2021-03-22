@@ -7,7 +7,7 @@
 #include <mlx.h>
 # include <unistd.h>
 
-#define SCALE 16 // условный размер каждого квадратика в карте
+#define SCALE 50 // условный размер каждого квадратика в карте
 # define BUFFER_SIZE 1
 
 typedef struct	s_win //структура для окна

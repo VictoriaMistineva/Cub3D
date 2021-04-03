@@ -36,13 +36,11 @@ typedef struct	s_plr //структура для игрока и луча
 	float		end;
 }				  t_plr;
 
-typedef struct	s_all // структура для всего вместе
+typedef struct	s_param_map
 {
-	t_win		*win;
-	t_plr		*plr;
-	char		**map;
-}				t_all;
-
+	int			scr_w;
+	int			scr_h;
+}				t_param_map;
 typedef struct	s_gnl
 {
 	char	buf[BUFFER_SIZE + 1];
@@ -60,7 +58,17 @@ typedef struct  s_data
     int         endian;
 }               t_data;
 
-int				get_next_line(int fd, char **line);
+typedef struct	s_all // структура для всего вместе
+{
+	t_win		*win;
+	t_plr		*plr;
+	t_param_map *param_map;
+	char		**map;
+}				t_all;
 
+int				get_next_line(int fd, char **line);
+int				type_identifier(char *line, t_all *all);
+int check_resolution(char *line, t_all *all);
+ 
 
 #endif

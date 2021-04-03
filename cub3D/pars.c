@@ -42,9 +42,38 @@ int		main(int argc, char **argv)
 	void   		 *mlx;
     void  		  *mlx_win;
     t_win 		 img;
-
 	t_point point;
 
+	all.win = malloc(sizeof(t_win));
+	all.plr = malloc(sizeof(t_plr));
+	all.param_map = malloc(sizeof(t_param_map));
+
+	int      fd = open(argv[1], O_RDONLY);
+	char	  *line = NULL;
+	int i;
+	char *bigLine = NULL;
+	
+	i = 0;	
+	while (get_next_line(fd, &line) > 0)
+	{
+		if (i < 8)
+			type_identifier(line, &all);
+		if (i > 8)
+		{	
+			bigLine = ft_strjoin(bigLine, line);
+			// freee
+			bigLine = ft_strjoin(bigLine, "\n");
+		}
+		// printf("%s\n", line);
+		free(line);
+		i++;
+	}
+	bigLine = ft_strjoin(bigLine, line);
+	all.map = ft_split(bigLine, '\n');
+	// printf("%s\n", map[0]);
+	free(line);
+
+	int j;
 
     mlx = mlx_init();
     mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
@@ -66,47 +95,4 @@ int		main(int argc, char **argv)
 	}
     mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
     mlx_loop(mlx);
-}
-
-int main(int argc , char **argv)
-{
-	t_win		win;
-	t_plr		plr;
-	t_all		all;
-
-	printf("k4k\n");
-	if (argc < 2)
-		printf("i need a map\n");
-		//exit;
-	if (argc > 3)
-		printf("много аггументов\n");
-		//exit;
-	read_full_map(&argv[1], &all);
-
-}
-
-char		**read_full_map(char **argv, t_all *all)
-{
-	int i = 0;
-	int     fd;
-	char	*line = NULL;
-	char	*bigLine = NULL;
-	fd = open(argv[1], O_RDONLY);
-
-	while (get_next_line(fd, &line) > 0)
-	{
-		if (i > 8)
-		{
-			bigLine = ft_strjoin(bigLine, line);
-			// freee
-			bigLine = ft_strjoin(bigLine, "\n");
-		}
-		// printf("%s\n", line);
-		free(line);
-		i++;
-	}
-	bigLine = ft_strjoin(bigLine, line);
-	all.map = ft_split(bigLine, '\n');
-	// printf("%s\n", map[0]);
-	free(line);
 }

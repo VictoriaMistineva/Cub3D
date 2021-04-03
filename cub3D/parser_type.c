@@ -1,14 +1,18 @@
- int type_identifier(char *line)
+#include "cub.h"
+#include "Libft/includes/libft.h" 
+
+ int type_identifier(char *line, t_all *all)
  {
+	//  t_all *all;
 	 int i ;
 	 i = -1;
+	
 
 	printf("%s\n", line);
 	while(line[++i])
 	{
 	 if (line[i] == 'R' && line[i + 1] == ' ')
-		 //return (resolution());
-		 printf("R\n");
+		return (check_resolution(line, all));
 	 else if (line[i] == 'N' && line[i + 1] == 'O' && line[i + 2] == ' ')
 		 //return (texture());
 		 printf("NO\n");

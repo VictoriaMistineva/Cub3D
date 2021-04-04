@@ -44,6 +44,8 @@ int		main(int argc, char **argv)
     t_win 		 img;
 	t_point point;
 
+	//ft_bzero(&all, sizeof(t_all));
+
 	all.win = malloc(sizeof(t_win));
 	all.plr = malloc(sizeof(t_plr));
 	all.param_map = malloc(sizeof(t_param_map));
@@ -75,11 +77,11 @@ int		main(int argc, char **argv)
 
 	int j;
 
-    mlx = mlx_init();
-    mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-    img.img = mlx_new_image(mlx, 1920, 1080);
-    img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-                                 &img.endian);
+    // mlx = mlx_init();
+    // mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
+    // img.img = mlx_new_image(mlx, 1920, 1080);
+    // img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
+    //                              &img.endian);
 	all.win = &img;
     point.y = 0;
     while (all.map[point.y] != NULL)

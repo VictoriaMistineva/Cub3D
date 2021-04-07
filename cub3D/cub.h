@@ -2,10 +2,13 @@
 # define CUB_H
 
 
-#include "minilibx_mms/mlx.h"
-#include "Libft/includes/libft.h" 
-#include <mlx.h>
+# include "minilibx_mms/mlx.h"
+# include "Libft/includes/libft.h" 
+# include <mlx.h>
 # include <unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <fcntl.h>
 
 #define SCALE 50 // условный размер каждого квадратика в карте
 # define BUFFER_SIZE 1
@@ -68,7 +71,8 @@ typedef struct	s_all // структура для всего вместе
 
 int				get_next_line(int fd, char **line);
 int				type_identifier(char *line, t_all *all);
-int check_resolution(char *line, t_all *all);
- 
+int				resolution(char *line, t_all *all);
+void 			check_texture(char *texture);
+int 			check_argument_textur(char *line, t_all *all);
 
 #endif

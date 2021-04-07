@@ -27,7 +27,7 @@ int check_argument_textur(char *line, t_all *all)
 {	
 	// char **texture;
 	// printf("%d/n", all->param_map->param_textur);
-	printf("textura\n");
+	printf(" MY = textura\n");
 
 
 	// {

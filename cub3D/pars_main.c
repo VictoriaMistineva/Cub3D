@@ -40,6 +40,13 @@ void init_stuct(t_all *all)
 {
 	all->param_map->scr_h = 0;
 	all->param_map->scr_w = 0;
+	all->param_map->floor_r = 0;
+	all->param_map->floor_g = 0;
+	all->param_map->floor_b = 0;
+	all->param_map->ceil_r = 0;
+	all->param_map->ceil_g = 0;
+	all->param_map->ceil_b = 0;
+
 }
 
 int		main(int argc, char **argv)

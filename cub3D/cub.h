@@ -43,7 +43,14 @@ typedef struct	s_param_map
 {
 	int			scr_w;
 	int			scr_h;
+	int			floor_r;
+	int			floor_g;
+	int			floor_b;
+	int			ceil_r;
+	int			ceil_g;
+	int			ceil_b;
 }				t_param_map;
+
 typedef struct	s_gnl
 {
 	char	buf[BUFFER_SIZE + 1];
@@ -69,10 +76,17 @@ typedef struct	s_all // структура для всего вместе
 	char		**map;
 }				t_all;
 
+//utils
+int charlen(char **str);
+char *printf_exit(char *str);
+int	ft_atoi_pars(const char *str);
+
 int				get_next_line(int fd, char **line);
 int				type_identifier(char *line, t_all *all);
 int				resolution(char *line, t_all *all);
 void 			check_texture(char *texture);
 int 			check_argument_textur(char *line, t_all *all);
+
+int floor_texture(char *line, t_all *all);
 
 #endif

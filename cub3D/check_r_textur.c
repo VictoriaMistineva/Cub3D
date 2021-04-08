@@ -1,22 +1,10 @@
 #include "cub.h"
 
-int charlen(char **str)
-{
-	int i;
-	i = 0;
-	while(str[i]!='\0')
-		i++;
-	return i;
-}
-
 int resolution(char *line, t_all *all)
 {
 	char **resolution;
 	if(all->param_map->scr_w != 0 && all->param_map->scr_h != 0)
-	{
-		printf("двойной ввод R");
-		exit(0);
-	}
+		printf_exit("двойной ввод R");
 	resolution = ft_split((char const *)line,' ');
 	all->param_map->scr_w = ft_atoi(resolution[1]);
 	all->param_map->scr_h = ft_atoi(resolution[2]);

@@ -6,8 +6,8 @@ int resolution(char *line, t_all *all)
 	if(all->param_map->scr_w != 0 && all->param_map->scr_h != 0)
 		printf_exit("двойной ввод R");
 	resolution = ft_split((char const *)line,' ');
-	all->param_map->scr_w = ft_atoi(resolution[1]);
-	all->param_map->scr_h = ft_atoi(resolution[2]);
+	all->param_map->scr_w = ft_atoi_pars(resolution[1]);
+	all->param_map->scr_h = ft_atoi_pars(resolution[2]);
 	printf(" MY= %d %d\n",all->param_map->scr_w, all->param_map->scr_h);// удалить
 	return (1);
 }

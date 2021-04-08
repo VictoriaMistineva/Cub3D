@@ -11,17 +11,18 @@ static void floor_ceiling_check(t_all *all)
 
 int floor_texture(char *line, t_all *all)
 {
+	int i;
 	char **color;
-	printf(" Y= %d %d %d\n",all->param_map->floor_r , all->param_map->floor_g, all->param_map->floor_b );
+	printf(" Y= %d %d %d\n",all->param_map->floor_r , all->param_map->floor_g, all->param_map->floor_b);
 	if(all->param_map->floor_r != 0)
 		printf_exit("двойной ввод цвета для FLOOR");
 	color = ft_split((char const *)line,' ');
 		free(color);
 	color = ft_split(color[1],',');
-	all->param_map->floor_r = ft_atoi(color[0]);
-	all->param_map->floor_g = ft_atoi(color[1]);
-	all->param_map->floor_b = ft_atoi(color[2]);
-	printf(" MY= %d %d %d\n",all->param_map->floor_r , all->param_map->floor_g, all->param_map->floor_b );
+	all->param_map->floor_r = ft_atoi_pars(color[0]);
+	all->param_map->floor_g = ft_atoi_pars(color[1]);
+	all->param_map->floor_b = ft_atoi_pars(color[2]);
+	printf(" MY= %d %d %d\n",all->param_map->floor_r , all->param_map->floor_g, all->param_map->floor_b);
 	return(1);
 }
 //color сплит по пробелам сплит от 1 аргумента по запятой 

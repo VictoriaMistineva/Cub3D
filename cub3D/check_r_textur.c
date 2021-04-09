@@ -3,8 +3,8 @@
 int resolution(char *line, t_all *all)
 {
 	char **resolution;
-	if(all->param_map->scr_w != 0 && all->param_map->scr_h != 0)
-		printf_exit("двойной ввод R");
+	if(all->param_map->scr_w != -1 && all->param_map->scr_h != -1)
+		printf_exit("Error\nдвойной ввод R");
 	resolution = ft_split((char const *)line,' ');
 	all->param_map->scr_w = ft_atoi_pars(resolution[1]);
 	all->param_map->scr_h = ft_atoi_pars(resolution[2]);

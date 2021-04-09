@@ -4,7 +4,7 @@
  {
 	 int i ;
 	 i = -1;
-	printf("%s\n", line);
+	printf("%s\n", line);//удалить
 	while(line[++i])
 	{
 	 if (line[i] == 'R' && line[i + 1] == ' ')
@@ -21,10 +21,10 @@
 		return (check_argument_textur(line, all));
 	 else if (line[i] == 'F' && line[i + 1] == ' ')
 		 return (floor_texture(line, all));
-	// 	 printf("FLOOR\n");
-	//  else if (line[i] == 'C' && line[i + 1] == ' ')
-	// 	 //return (ceilling_texture());
-	// 	 printf("CEIL\n");
+	 else if (line[i] == 'C' && line[i + 1] == ' ')
+		 return (celling_texture(line, all));
+	 else
+	 	printf_exit("Error\nошибка типов");
 	}
 	return (0);
  }

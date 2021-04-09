@@ -49,6 +49,8 @@ typedef struct	s_param_map
 	int			ceil_r;
 	int			ceil_g;
 	int			ceil_b;
+	int			color_ceil;
+	int			color_floor;
 }				t_param_map;
 
 typedef struct	s_gnl
@@ -80,13 +82,17 @@ typedef struct	s_all // структура для всего вместе
 int charlen(char **str);
 char *printf_exit(char *str);
 int	ft_atoi_pars(const char *str);
+void	validate_color(int color);
+int		create_rgb(int r, int g, int b);
 
 int				get_next_line(int fd, char **line);
 int				type_identifier(char *line, t_all *all);
 int				resolution(char *line, t_all *all);
 void 			check_texture(char *texture);
 int 			check_argument_textur(char *line, t_all *all);
+void color_floor_cell(t_all *all);
 
 int floor_texture(char *line, t_all *all);
+int celling_texture(char *line, t_all *all);
 
 #endif

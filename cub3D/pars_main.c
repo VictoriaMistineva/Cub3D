@@ -38,14 +38,16 @@ void		draw_scale(t_all *all, t_point point)
 
 void init_stuct(t_all *all)
 {
-	all->param_map->scr_h = 0;
-	all->param_map->scr_w = 0;
-	all->param_map->floor_r = 0;
-	all->param_map->floor_g = 0;
-	all->param_map->floor_b = 0;
-	all->param_map->ceil_r = 0;
-	all->param_map->ceil_g = 0;
-	all->param_map->ceil_b = 0;
+	all->param_map->scr_h = -1;
+	all->param_map->scr_w = -1;
+	all->param_map->floor_r = -1;
+	all->param_map->floor_g = -1;
+	all->param_map->floor_b = -1;
+	all->param_map->ceil_r = -1;
+	all->param_map->ceil_g = -1;
+	all->param_map->ceil_b = -1;
+	all->param_map->color_ceil= 0;
+	all->param_map->color_floor= 0;
 
 }
 
@@ -69,9 +71,9 @@ int		main(int argc, char **argv)
 	i = 0;	
 	while (get_next_line(fd, &line) > 0)
 	{
-		if (i < 8)
+		if (i < 9)
 			type_identifier(line, &all);
-		if (i > 8)
+		if (i > 9)
 		{	
 			bigLine = ft_strjoin(bigLine, line);
 			// freee

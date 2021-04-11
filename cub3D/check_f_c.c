@@ -27,7 +27,7 @@ void	free_res(char **color)
 	free(color);
 }
 
-int	floor_texture(char *line, t_all *all)
+int	floor_color(char *line, t_all *all)
 {
 	char **color;
 
@@ -39,13 +39,14 @@ int	floor_texture(char *line, t_all *all)
 	validate_color(all->param_map->floor_g = ft_atoi_pars(color[2]));
 	validate_color(all->param_map->floor_b = ft_atoi_pars(color[3]));
 	free_res(color);
-	all->param_map->color_floor = create_rgb(all->param_map->floor_r, all->param_map->floor_g, all->param_map->floor_b);
+	all->param_map->color_floor 
+		= create_rgb(all->param_map->floor_r, all->param_map->floor_g, all->param_map->floor_b);
 	printf(" MY= %d\n", all->param_map->color_floor);//elfkbnm
 	
 	return(1);
 }
 
-int	celling_texture(char *line, t_all *all)
+int	celling_color(char *line, t_all *all)
 {
 	char **color;
 

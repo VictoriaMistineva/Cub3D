@@ -64,7 +64,7 @@ int		main(int argc, char **argv)
 	t_point		point;
 
 	all.win = malloc(sizeof(t_win));
-	all.plr = malloc(sizeof(t_plr));
+	all.player = malloc(sizeof(t_player));
 	all.param_map = malloc(sizeof(t_param_map));
 	init_stuct(&all);
 	int      fd = open(argv[1], O_RDONLY);
@@ -87,6 +87,7 @@ int		main(int argc, char **argv)
 	}
 	bigLine = ft_strjoin(bigLine, line);
 	all.map = ft_split(bigLine, '\n');//проверка валидности карты
+	check_map(&all);
 	// printf("%s\n", map[0]);
 	free(line);
 

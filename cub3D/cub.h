@@ -10,7 +10,9 @@
 # include <stdlib.h>
 # include <fcntl.h>
 
-#define SCALE 50 // условный размер каждого квадратика в карте
+# define SCALE 50 // условный размер каждого квадратика в карте
+# define PLAYER " "
+# define VALID_MAP " "
 # define BUFFER_SIZE 1
 
 typedef struct	s_win //структура для окна
@@ -30,14 +32,10 @@ typedef struct	s_point // структура для точки
 	int			y;
 }				 t_point;
 
-typedef struct	s_plr //структура для игрока и луча
+typedef struct	s_player //структура для игрока и луча
 {
-	float		x;
-	float		y;
-	float		dir;
-	float		start;
-	float		end;
-}				  t_plr;
+
+}				  t_player;
 
 typedef struct	s_param_map
 {
@@ -78,7 +76,7 @@ typedef struct  s_data
 typedef struct	s_all // структура для всего вместе
 {
 	t_win		*win;
-	t_plr		*plr;
+	t_player	*player;
 	t_param_map *param_map;
 	char		**map;
 }				t_all;
@@ -100,5 +98,6 @@ void color_floor_cell(t_all *all);
 
 int floor_color(char *line, t_all *all);
 int celling_color(char *line, t_all *all);
+void	check_map(t_all *all);
 
 #endif

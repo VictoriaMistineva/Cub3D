@@ -62,4 +62,3 @@ int	celling_color(char *line, t_all *all)
 	printf(" MY= %d\n", all->param_map->color_ceil);//elfkbnm
 	return(1);
 }
-

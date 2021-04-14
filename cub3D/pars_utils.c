@@ -39,3 +39,16 @@ int type_flags_check(t_all *all)
 					return(0);
 	return (1);
 }
+int		check_num(const char *str, int num)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != num)
+			return (0);
+		i++;
+	}
+	return (1);
+}

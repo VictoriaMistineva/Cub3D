@@ -11,8 +11,8 @@
 # include <fcntl.h>
 
 # define SCALE 50 // условный размер каждого квадратика в карте
-# define PLAYER " "
-# define VALID_MAP " "
+# define PLAYER "NSEW"
+# define VALID_MAP "012 NSEW"
 # define BUFFER_SIZE 1
 
 typedef struct	s_win //структура для окна
@@ -39,8 +39,8 @@ typedef struct	s_player //структура для игрока и луча
 
 typedef struct	s_param_map
 {
-	int			scr_w;
 	int			scr_h;
+	int			scr_w;
 	int			floor_r;
 	int			floor_g;
 	int			floor_b;
@@ -88,6 +88,7 @@ int	ft_atoi_pars(const char *str);
 void	validate_color(int color);
 int		create_rgb(int r, int g, int b);
 int type_flags_check(t_all *all);
+int		check_num(const char *str, int num);
 
 int				get_next_line(int fd, char **line);
 int				type_identifier(char *line, t_all *all);

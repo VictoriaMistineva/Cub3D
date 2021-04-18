@@ -21,7 +21,7 @@ int resolution(char *line, t_all *all)
 	char **resolution;
 	if(all->param_map->scr_h != -1 && all->param_map->scr_w != -1)
 		printf_exit("Error\nдвойной ввод R");
-	resolution = ft_split((char const *)line,' ');
+	resolution = ft_split(line,' ');
 	all->param_map->scr_h = ft_atoi_pars(resolution[1]);
 	all->param_map->scr_w = ft_atoi_pars(resolution[2]);
 	printf(" MY= %d %d\n",all->param_map->scr_w, all->param_map->scr_h);// удалить

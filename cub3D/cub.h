@@ -32,11 +32,6 @@ typedef struct	s_point // структура для точки
 	int			y;
 }				 t_point;
 
-typedef struct	s_player //структура для игрока и луча
-{
-
-}				  t_player;
-
 typedef struct	s_param_map
 {
 	int			scr_h;
@@ -54,6 +49,15 @@ typedef struct	s_param_map
 	char		*east;
 	char		*west;
 	char		*sprite;
+	double		posY;		
+	double		posX;
+	double		dirY;
+	double		dirX;
+	double		planeY;
+	double		planeX;
+
+
+	
 }				t_param_map;
 
 typedef struct	s_gnl
@@ -76,7 +80,6 @@ typedef struct  s_data
 typedef struct	s_all // структура для всего вместе
 {
 	t_win		*win;
-	t_player	*player;
 	t_param_map *param_map;
 	char		**map;
 }				t_all;

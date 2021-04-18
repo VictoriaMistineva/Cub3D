@@ -1,6 +1,6 @@
 #include "cub.h"
 
-int charlen(char **str)
+int	charlen(char **str)
 {
 	int i;
 	i = 0;
@@ -8,7 +8,7 @@ int charlen(char **str)
 		i++;
 	return i;
 }
-char *printf_exit(char *str)
+char	*printf_exit(char *str)
 {
 	printf("%s\n", str);
 	exit(0);
@@ -31,7 +31,7 @@ int	ft_atoi_pars(const char *str)
 	}
 	return (i);
 }
-int type_flags_check(t_all *all)
+int	type_flags_check(t_all *all)
 {
 	if(all->param_map->scr_h != -1 && all->param_map->scr_w != -1)
 		if(all->param_map->floor_r != -1)
@@ -39,7 +39,7 @@ int type_flags_check(t_all *all)
 					return(0);
 	return (1);
 }
-int		check_num(const char *str, int num)
+int	check_num(const char *str, int num)
 {
 	int i;
 

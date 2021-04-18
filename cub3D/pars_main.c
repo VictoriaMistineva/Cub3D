@@ -3,7 +3,31 @@
 #include <fcntl.h>
 #include <stdio.h>
 
-void            my_mlx_pixel_put(t_win *data, int x, int y, int color)
+// int map_carta(t_all *all)
+// {
+//     mlx = mlx_init();
+//     mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
+//     img.img = mlx_new_image(mlx, 1920, 1080);
+//     img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
+//                                  &img.endian);
+// 	all.win = &img;
+//     point.y = 0;
+//     while (all.map[point.y] != NULL)
+//     {
+// 		point.x = 0;
+// 		while(all.map[point.y][point.x] != '\0')
+// 		{
+// 			if (all.map[point.y][point.x] == '1')
+//         		draw_scale(&all, point);
+//         	point.x++;
+// 		}
+// 	 	point.y++;
+// 	}
+//     mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+//     //mlx_loop(mlx);
+// }
+
+void	my_mlx_pixel_put(t_win *data, int x, int y, int color)
 {
     char    *dst;
 
@@ -11,7 +35,7 @@ void            my_mlx_pixel_put(t_win *data, int x, int y, int color)
     *(unsigned int*)dst = color;
 }
 
-void		draw_scale(t_all *all, t_point point)
+void	draw_scale(t_all *all, t_point point)
 {
 	int i;
 	int j;
@@ -36,7 +60,7 @@ void		draw_scale(t_all *all, t_point point)
 	}
 }
 
-void init_stuct(t_all *all)
+void	init_stuct(t_all *all)
 {
 	all->param_map->scr_h = -1;
 	all->param_map->scr_w = -1;
@@ -53,19 +77,22 @@ void init_stuct(t_all *all)
 	all->param_map->east= NULL;
 	all->param_map->west= NULL;
 	all->param_map->sprite= NULL;
+	all->param_map->posX = 0;
+	all->param_map->posY = 0;
 }
 
-int		main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_all		all;
 	void		*mlx;
     void		*mlx_win;
     t_win		img;
 	t_point		point;
+	t_param_map *param_map;
 
 	all.win = malloc(sizeof(t_win));
-	all.player = malloc(sizeof(t_player));
 	all.param_map = malloc(sizeof(t_param_map));
+	param_map = all.param_map;
 	init_stuct(&all);
 	int      fd = open(argv[1], O_RDONLY);
 	char	  *line = NULL;
@@ -94,23 +121,12 @@ int		main(int argc, char **argv)
 	int j;
 
     mlx = mlx_init();
-    mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-    img.img = mlx_new_image(mlx, 1920, 1080);
+    mlx_win = mlx_new_window(mlx, param_map->scr_h, param_map->scr_w, "Hello world!");
+    img.img = mlx_new_image(mlx, param_map->scr_h, param_map->scr_w);
     img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
                                  &img.endian);
-	all.win = &img;
-    point.y = 0;
-    while (all.map[point.y] != NULL)
-    {
-		point.x = 0;
-		while(all.map[point.y][point.x] != '\0')
-		{
-			if (all.map[point.y][point.x] == '1')
-        		draw_scale(&all, point);
-        	point.x++;
-		}
-	 	point.y++;
-	}
+	//функция по 3д
     mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
     //mlx_loop(mlx);
+	// map_carta(&all);
 }

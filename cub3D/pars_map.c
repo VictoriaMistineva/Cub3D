@@ -1,65 +1,50 @@
 #include "cub.h"
 
-int	check_space_width(t_all *all, int k, int j)
+void check_player(t_all *all, int k, int j)
 {
-	if (j != 0)
-	{
-		if((all->map[k][j - 1] == '0')
-			|| (all->map[k][j - 1] == '2'))
-			return(0);
-	}
-	if (j != (int)ft_strlen(all->map[k] - 1))
-	{
-		if((all->map[k][j + 1] == '0'
-			|| all->map[k][j + 1] == '2'))
-			return(0);
-	}
-	else
-		printf_exit("открытое пространство");
-	// all->map[k][j] = '1';
+	if(all->param_map->posX != 0)	
+		printf_exit("Два игрока на карте");
 }
-
-int	check_space(t_all *all, int k, int j)
+			
+			
+void	check_cell(t_all *all, int j, int k)
 {
-	if (all->map[k][j] == ' ')
-	{
-		if (k != 0)
-		{
-			if((all->map[k - 1][j] == '0'
-				|| all->map[k - 1][j] == '2'))
-				return(0);
-		}
-		if (k != all->param_map->scr_h - 1)
-		{
-			if((all->map[k + 1][j] == '0'
-				|| all->map[k + 1][j] == '2'))
-				return(0);
-		}
-		check_space_width(all, k, j);
-	}
+    if(all->map[k][j] == ' ' || all->map[k][j] == '1')
+        return ;
+    if (j == 0 || k == 0 || j == (all->param_map->scr_w - 1)
+        || k == (all->param_map->scr_h - 1))
+        printf_exit("нет карты");
+    if (all->map[k + 0][j + 1] == ' '
+        || all->map[k + 0][j - 1] == ' '
+        || all->map[k + 1][j + 0] == ' '
+        || all->map[k - 1][j + 0] == ' '
+        || all->map[k - 1][j + 1] == ' '
+        || all->map[k - 1][j - 1] == ' '
+        || all->map[k + 1][j - 1] == ' '
+        || all->map[k + 1][j + 1] == ' ')
+        printf_exit("невалидная карта");
+    if (ft_strchr(PLAYER ,all->map[k][j]))
+    {
+        all->param_map->posY = k;
+        all->param_map->posX = j;
+    }
 }
 
 void	check_invalid(t_all *all, int k, int j)
 {
-	// printf("x: %i y: %i map %c\n", j, k, all->map[k][j]);
 	if (!(ft_strchr(VALID_MAP, all->map[k][j]))) //проверить символы
 		printf_exit("Невалидный символ в карте или его нет");
 	if (j == 0 || all->map[k][j + 1] == '\0') //ширина
 	{
-		if (all->map[k][j] != '1')
-		{
-			//printf("x: %i y: %i map %c\n", j, k, all->map[k][j]);
-			printf_exit("открытое пространство j");
-		}
+		if (all->map[k][j] != '1' && all->map[k][j] != ' ')
+			printf_exit("открытое пространство");
 	}
 	if (k == 0 || k == all->param_map->scr_h - 1) //высота и конец высоты
 		{
-			if (all->map[k][j] != '1')
-				printf_exit("открытое пространство k");
+			if (all->map[k][j] != '1' && all->map[k][j] != ' ')
+				printf_exit("открытое пространство");
 		}
-	if (ft_strchr(PLAYER, all->map[k][j]))
-			
-			printf_exit("Два игрока на карте");
+
 }
 
 void	check_map(t_all *all)
@@ -73,7 +58,8 @@ void	check_map(t_all *all)
 		j = 0;
 		while (all->map[k][j])
 		{
-			check_space(all, k, j);
+			check_player(all, j, k);
+			check_cell(all, j, k);
 			check_invalid(all, k, j);
 			j++;
 		}

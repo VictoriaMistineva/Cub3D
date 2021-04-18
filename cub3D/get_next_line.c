@@ -6,13 +6,13 @@
 /*   By: ycordell <ycordell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 17:11:27 by ycordell          #+#    #+#             */
-/*   Updated: 2021/03/09 15:58:12 by ycordell         ###   ########.fr       */
+/*   Updated: 2021/04/18 16:59:13 by ycordell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-static char		*ft_strcpy(char *dst, char *src)
+static char	*ft_strcpy(char *dst, char *src)
 {
 	int				i;
 
@@ -26,14 +26,14 @@ static char		*ft_strcpy(char *dst, char *src)
 	return (dst);
 }
 
-static char		*char_free(char **str)
+static char	*char_free(char **str)
 {
 	free(*str);
 	*str = NULL;
 	return (NULL);
 }
 
-static char		*check_newline(char **line, char **remainder)
+static char	*check_newline(char **line, char **remainder)
 {
 	char			*ptr_n;
 
@@ -57,7 +57,7 @@ static char		*check_newline(char **line, char **remainder)
 	return (ptr_n);
 }
 
-static int		read_lines(t_gnl *gnl, char **remainder, int fd, char **line)
+static	int read_lines(t_gnl *gnl, char **remainder, int fd, char **line)
 {
 	int				count;
 
@@ -81,7 +81,7 @@ static int		read_lines(t_gnl *gnl, char **remainder, int fd, char **line)
 	return (0);
 }
 
-int				get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
 	static char		*remainder;
 	t_gnl			gnl;

@@ -1,6 +1,6 @@
 #include "cub.h"
 
-int		create_rgb(int r, int g, int b)
+int	create_rgb(int r, int g, int b)
 {
 	int t;
 

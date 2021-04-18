@@ -25,7 +25,7 @@
 		 return (celling_color(line, all));
 	 else
 	 {
-		 printf("%s\n",line);
+		 printf("%s\n",line);//elfkbnm
 	 	printf_exit("Error\nошибка типов");
 	 }
 	}

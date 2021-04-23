@@ -54,7 +54,6 @@ void	check_player(t_all *all)
 				all->param_map->posY = k + 0.5;
 				check_ns_player(all, all->map[k][j]);
 				check_we_player(all, all->map[k][j]);
-				// all->map[k][j] = '0';
 			}
 			// else if (all->map[k][j] == '2')
 			// 	//спрайты

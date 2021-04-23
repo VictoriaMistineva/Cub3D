@@ -15,6 +15,17 @@
 # define VALID_MAP "012 NSEW"
 # define BUFFER_SIZE 1
 
+# define KEY_W					13
+# define KEY_A					0
+# define KEY_S					1
+# define KEY_D					2
+
+# define KEY_LEFT				123
+# define KEY_RIGHT				124
+
+# define KEY_ESC				53 
+
+
 typedef struct	s_win //структура для окна
 {
 	void		*mlx;
@@ -55,9 +66,7 @@ typedef struct	s_param_map
 	double		dirX;
 	double		planeY;
 	double		planeX;
-
-
-	
+	double		oldDirX
 }				t_param_map;
 
 typedef struct	s_gnl
@@ -93,15 +102,16 @@ int		create_rgb(int r, int g, int b);
 int type_flags_check(t_all *all);
 int		check_num(const char *str, int num);
 
-int				get_next_line(int fd, char **line);
-int				type_identifier(char *line, t_all *all);
-int				resolution(char *line, t_all *all);
-int 			check_argument_textur(char *line, t_all *all);
+int	get_next_line(int fd, char **line);
+int	type_identifier(char *line, t_all *all);
+int	resolution(char *line, t_all *all);
+int	check_argument_textur(char *line, t_all *all);
 int check_texture(char *line, char *texture);
 void color_floor_cell(t_all *all);
 
-int floor_color(char *line, t_all *all);
-int celling_color(char *line, t_all *all);
+int		floor_color(char *line, t_all *all);
+int		celling_color(char *line, t_all *all);
 void	check_map(t_all *all);
+void	check_player(t_all *all);
 
 #endif

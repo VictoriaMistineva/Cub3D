@@ -79,6 +79,12 @@ void	init_stuct(t_all *all)
 	all->param_map->sprite= NULL;
 	all->param_map->posX = 0;
 	all->param_map->posY = 0;
+	all->param_map->posX = 0;
+	all->param_map->dirY = 0;
+	all->param_map->dirX = 0;
+	all->param_map->planeY = 0;
+	all->param_map->planeX = 0;
+
 }
 
 int	main(int argc, char **argv)
@@ -96,7 +102,6 @@ int	main(int argc, char **argv)
 	init_stuct(&all);
 	int      fd = open(argv[1], O_RDONLY);
 	char	  *line = NULL;
-	int i;
 	char *bigLine = NULL;
 
 	while (get_next_line(fd, &line) > 0) 
@@ -115,11 +120,10 @@ int	main(int argc, char **argv)
 	bigLine = ft_strjoin(bigLine, line);
 	all.map = ft_split(bigLine, '\n');//проверка валидности карты
 	check_map(&all);
+	check_player(&all);
 	// printf("%s\n", map[0]);
 	free(line);
-
-	int j;
-
+	
     mlx = mlx_init();
     mlx_win = mlx_new_window(mlx, param_map->scr_h, param_map->scr_w, "Hello world!");
     img.img = mlx_new_image(mlx, param_map->scr_h, param_map->scr_w);

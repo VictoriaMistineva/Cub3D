@@ -1,10 +1,10 @@
-#include "cub.h"
+#include "../cub.h"
 
-void check_player_map(t_all *all, int k, int j)
-{
-	if(all->param_map->posX != 0)	
-		printf_exit("Два игрока на карте");
-}			
+// void check_player_map(t_all *all, int k, int j)
+// {
+// 	if(all->param_map->posX != 0)	
+// 		printf_exit("Два игрока на карте");
+// }			
 			
 void	check_cell(t_all *all, int j, int k)
 {
@@ -22,11 +22,11 @@ void	check_cell(t_all *all, int j, int k)
         || all->map[k + 1][j - 1] == ' '
         || all->map[k + 1][j + 1] == ' ')
         printf_exit("невалидная карта");
-    if (ft_strchr(PLAYER ,all->map[k][j]))
-    {
-        all->param_map->posY = k;
-        all->param_map->posX = j;
-    }
+    // if (ft_strchr(PLAYER ,all->map[k][j]))
+    // {
+    //     all->param_map->posY = k;
+    //     all->param_map->posX = j;
+    // }
 }
 
 void	check_invalid(t_all *all, int k, int j)
@@ -57,7 +57,7 @@ void	check_map(t_all *all)
 		j = 0;
 		while (all->map[k][j])
 		{
-			check_player_map(all, j, k);
+			// check_player_map(all, j, k);
 			check_cell(all, j, k);
 			check_invalid(all, k, j);
 			j++;

@@ -79,12 +79,20 @@ void	init_stuct(t_all *all)
 	all->param_map->sprite= NULL;
 	all->param_map->posX = 0;
 	all->param_map->posY = 0;
-	all->param_map->posX = 0;
 	all->param_map->dirY = 0;
 	all->param_map->dirX = 0;
 	all->param_map->planeY = 0;
 	all->param_map->planeX = 0;
 
+}
+
+int	render_next_frame(t_all *all)
+{
+	// mlx_clear_window(all->mlx, all->win->mlx);
+	cast_rays(all);
+	mlx_put_image_to_window(all->mlx, all->win->mlx, all->win->img, 0, 0);
+	mlx_do_sync(all->mlx);
+	return (0);
 }
 
 int	main(int argc, char **argv)
@@ -95,14 +103,19 @@ int	main(int argc, char **argv)
     t_win		img;
 	t_point		point;
 	t_param_map *param_map;
+	t_img		texNO;
 
 	all.win = malloc(sizeof(t_win));
 	all.param_map = malloc(sizeof(t_param_map));
+	all.algo_data = malloc(sizeof(t_algo_data));
+	all.txtr_data = malloc(sizeof(t_txtr_data));
+
 	param_map = all.param_map;
 	init_stuct(&all);
-	int      fd = open(argv[1], O_RDONLY);
-	char	  *line = NULL;
-	char *bigLine = NULL;
+	printf("argv[1] = %s\n", argv[1]);
+	int      	fd = open("map.cub", O_RDONLY);
+	char	  	*line = NULL;
+	char 		*bigLine = NULL;
 
 	while (get_next_line(fd, &line) > 0) 
 	{
@@ -117,20 +130,32 @@ int	main(int argc, char **argv)
 		}
 		free(line);
 	}
+	printf("north path = %s", all.param_map->north);
 	bigLine = ft_strjoin(bigLine, line);
 	all.map = ft_split(bigLine, '\n');//проверка валидности карты
-	check_map(&all);
 	check_player(&all);
+	check_map(&all);
 	// printf("%s\n", map[0]);
 	free(line);
 	
-    mlx = mlx_init();
-    mlx_win = mlx_new_window(mlx, param_map->scr_h, param_map->scr_w, "Hello world!");
-    img.img = mlx_new_image(mlx, param_map->scr_h, param_map->scr_w);
-    img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-                                 &img.endian);
+    all.mlx = mlx_init();
+	// mlx_new_window()
+    all.win->mlx = mlx_new_window(all.mlx, param_map->scr_w, param_map->scr_h, "Hello world!");
+    all.win->img = mlx_new_image(all.mlx, param_map->scr_w, param_map->scr_h);
+    all.win->addr = mlx_get_data_addr(all.win->img, &all.win->bits_per_pixel, &all.win->line_length,
+                                 &all.win->endian);
+	printf("north path = %s", all.param_map->north);
+	// mlx_png_file_to_image()
+	texNO.img = mlx_png_file_to_image(all.mlx, all.param_map->north, &texNO.width, &texNO.height);
+	texNO.addr = mlx_get_data_addr(texNO.img, &texNO.bpp, &texNO.line_len, &texNO.endian);
+	all.texNO = &texNO;
+	// cast_rays(&all);
+	// mlx_loop_hook(mlx, cast_rays, &all);
+	//движение
+	mlx_key_hook(all.win->mlx, move, &all);
 	//функция по 3д
-    mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-    //mlx_loop(mlx);
+    // mlx_put_image_to_window(mlx, all.win->mlx, all.win->img, 0, 0);
+	mlx_loop_hook(all.mlx, render_next_frame, &all);
+    mlx_loop(all.mlx);
 	// map_carta(&all);
 }

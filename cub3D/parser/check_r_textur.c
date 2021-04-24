@@ -1,4 +1,4 @@
-#include "cub.h"
+#include "../cub.h"
 
 // void check_texture(char *texture)
 // {
@@ -22,23 +22,23 @@ int resolution(char *line, t_all *all)
 	if(all->param_map->scr_h != -1 && all->param_map->scr_w != -1)
 		printf_exit("Error\nдвойной ввод R");
 	resolution = ft_split(line,' ');
-	all->param_map->scr_h = ft_atoi_pars(resolution[1]);
-	all->param_map->scr_w = ft_atoi_pars(resolution[2]);
+	all->param_map->scr_w = ft_atoi_pars(resolution[1]);
+	all->param_map->scr_h = ft_atoi_pars(resolution[2]);
 	printf(" MY= %d %d\n",all->param_map->scr_w, all->param_map->scr_h);// удалить
 	return (1);
 }
 
-int check_texture(char *line, char *texture)
+int check_texture(char *line, char **texture)
 {
 	int i;
 
 	i = 2;
-	if(texture != NULL)
+	if(*texture != NULL)
 		printf_exit("Error\nдвойной ввод texture");
 	while(line[i] == ' ')
 		i++;
-	texture = ft_strdup(&line[i]);
+	*texture = ft_strdup(&line[i]);
 	// check_texture(all->param_map->north); //оставить
-	printf(" my= %s\n ", texture);
+	printf(" my= %s\n ", *texture);
 	return(1);
 }

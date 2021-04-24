@@ -1,4 +1,4 @@
-#include "cub.h"
+#include "../cub.h"
 
 char	*return_space(char *line)
 {

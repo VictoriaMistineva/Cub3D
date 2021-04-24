@@ -1,42 +1,28 @@
 #include "cub.h"
 
-int key_press(int key, t_all *all)
-{
-	if(key = KEY_ESC)
-	{
-		exit(0); // доделать
-	}
+// int key_press(int key, t_all *all)
+// {
+// 	if(key = KEY_ESC)
+// 	{
+// 		exit(0); // доделать
+// 	}
 
-	if((move(key, all)) == 0)
-	{
-		//перезапись всех функций
-	}
-}
-
-
+// 	if((move(key, all)) == 0)
+// 	{
+// 		//перезапись всех функций
+// 	}
+// }
 
 
 
-int		move(int key, t_all *all)
-{
-	double	movespeed;
-	double	rotspeed;
 
-	movespeed = 0.3;
-	rotspeed = 0.3;
-	if (key == KEY_W || key == KEY_S)
-		key_w_or_key_s(all, movespeed, key);
-	if (key == KEY_A|| key == KEY_D)
-		key_a_or_key_d(all, movespeed, key);
-	// if (key == KEY_LEFT || key == KEY_RIGHT)
-	// 	//key_left_or_key_right;
-	return (1);
-}
+
 
 void	key_w_or_key_s(t_all *all, double movespeed, int key)
 {
 	if (key == KEY_W)
 	{
+		printf("%c\n", all->map[(int)all->param_map->posY][(int)(all->param_map->posX + all->param_map->dirX * movespeed)]);
 		if (all->map[(int)all->param_map->posY]
 				[(int)(all->param_map->posX + all->param_map->dirX * movespeed)] == '0')
 			all->param_map->posX += all->param_map->dirX * movespeed;
@@ -60,8 +46,8 @@ void	key_a_or_key_d(t_all *all, double movespeed, int key)
 	if (key == KEY_A)
 	{
 		if (all->map[(int)(all->param_map->posY)]
-				[(int)(all->param_map->posX + all->param_map->planeX * movespeed)] == '0')
-			all->param_map->posX += all->param_map->planeX * movespeed;
+				[(int)(all->param_map->posX - all->param_map->planeX * movespeed)] == '0')
+			all->param_map->posX -= all->param_map->planeX * movespeed;
 		if (all->map[(int)(all->param_map->posY + all->param_map->planeY
 					* movespeed)][(int)(all->param_map->posX)] == '0')
 			all->param_map->posY += all->param_map->planeY * movespeed;
@@ -69,14 +55,31 @@ void	key_a_or_key_d(t_all *all, double movespeed, int key)
 	if (key == KEY_D)
 	{
 		if (all->map[(int)(all->param_map->posY)]
-				[(int)(all->param_map->posX - all->param_map->planeX * movespeed)] == '0')
-			all->param_map->posX -= all->param_map->planeX * movespeed;
+				[(int)(all->param_map->posX + all->param_map->planeX * movespeed)] == '0')
+			all->param_map->posX += all->param_map->planeX * movespeed;
 		if (all->map[(int)(all->param_map->posY - all->param_map->planeY
 					* movespeed)][(int)(all->param_map->posX)] == '0')
 			all->param_map->posY -= all->param_map->planeY * movespeed;
 	}
 }
 
+int		move(int key, t_all *all)
+{
+	double	movespeed;
+	double	rotspeed;
+
+	movespeed = 0.3;
+	rotspeed = 0.3;
+	printf("\nold posX = %f\nold posY = %f\n", all->param_map->posX, all->param_map->posY);
+	if (key == KEY_W || key == KEY_S)
+		key_w_or_key_s(all, movespeed, key);
+	if (key == KEY_A|| key == KEY_D)
+		key_a_or_key_d(all, movespeed, key);
+	printf("New posX = %f\nNew posY = %f\n", all->param_map->posX, all->param_map->posY);
+	// if (key == KEY_LEFT || key == KEY_RIGHT)
+	// 	//key_left_or_key_right;
+	return (1);
+}
 // void	key_left_or_key_right(
 // 		int key, t_all *all, double rotspeed)
 // {

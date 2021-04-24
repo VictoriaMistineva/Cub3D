@@ -1,4 +1,4 @@
-#include "cub.h"
+#include "../cub.h"
 
 int	charlen(char **str)
 {
@@ -11,7 +11,7 @@ int	charlen(char **str)
 char	*printf_exit(char *str)
 {
 	printf("%s\n", str);
-	exit(0);
+	exit(-1);
 }
 
 int	ft_atoi_pars(const char *str)

@@ -6,11 +6,11 @@
 /*   By: ycordell <ycordell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 17:11:27 by ycordell          #+#    #+#             */
-/*   Updated: 2021/04/18 16:59:13 by ycordell         ###   ########.fr       */
+/*   Updated: 2021/04/24 19:30:27 by ycordell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "../cub.h"
 
 static char	*ft_strcpy(char *dst, char *src)
 {

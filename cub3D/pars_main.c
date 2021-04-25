@@ -178,7 +178,7 @@ int	main(int argc, char **argv)
 	// mlx_png_file_to_image()
 	
 	
-	// cast_rays(&all);
+	cast_rays(&all);
 	// mlx_loop_hook(mlx, cast_rays, &all);
 	//движение
 	mlx_key_hook(all.win->mlx, move, &all);

@@ -138,14 +138,14 @@ void	cr_part6(t_all *all, int x, t_img *tex)
 				* tex->line_len
 				+ all->txtr_data->tex_x
 				* (tex->bpp / 8)));
-			// my_mlx_pixel_put(all->win, x, y, all->txtr_data->color);
-			my_mlx_pixel_put(all->win, x, y, 0x00FFFF1);
+			my_mlx_pixel_put(all->win, x, y, all->txtr_data->color);
+			// my_mlx_pixel_put(all->win, x, y, 0x00FFFF1);
 		}
 		if ( y >= all->algo_data->draw_end)
 			my_mlx_pixel_put(all->win, x, y, all->param_map->color_floor);
 		y++;
 	}
-	// data->sp_data.z_buffer[x] = all->algo_data->pwd;
+	// all->algo_data->z_buffer[x] = all->algo_data->pwd;
 }
 int	cast_rays(t_all *all)
 {
@@ -164,9 +164,9 @@ int	cast_rays(t_all *all)
 		cr_part5(all, all->texNO);
 		cr_part5(all, all->texSO);
 		cr_part5(all, all->texWE);
-		cr_part5(all, all->texEA);
-		cr_part6(all, x, all->texNO);
+		cr_part5(all, all->texEA);	
 		cr_part6(all, x, all->texSO);
+		cr_part6(all, x, all->texNO);
 		cr_part6(all, x, all->texWE);
 		cr_part6(all, x, all->texEA);
 		x++;

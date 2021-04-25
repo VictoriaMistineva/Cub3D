@@ -95,6 +95,36 @@ int	render_next_frame(t_all *all)
 	return (0);
 }
 
+void init_tex(t_all *all)
+{
+	t_img		*texNO;
+	t_img		*texSO;
+	t_img		*texWE;
+	t_img		*texEA;
+	t_img		*texS;
+
+	texNO = (t_img *)malloc(sizeof(t_img));
+	texNO->img = mlx_png_file_to_image(all->mlx, all->param_map->north, &texNO->width, &texNO->height);
+	texNO->addr = mlx_get_data_addr(texNO->img, &texNO->bpp, &texNO->line_len, &texNO->endian);
+	all->texNO = texNO;
+	texSO = (t_img *)malloc(sizeof(t_img));
+	texSO->img = mlx_png_file_to_image(all->mlx, all->param_map->north, &texSO->width, &texSO->height);
+	texSO->addr = mlx_get_data_addr(texSO->img, &texSO->bpp, &texSO->line_len, &texSO->endian);
+	all->texSO = texSO;
+	texWE = (t_img *)malloc(sizeof(t_img));
+	texWE->img = mlx_png_file_to_image(all->mlx, all->param_map->north, &texWE->width, &texWE->height);
+	texWE->addr = mlx_get_data_addr(texWE->img, &texWE->bpp, &texWE->line_len, &texWE->endian);
+	all->texWE = texWE;
+	texEA = (t_img *)malloc(sizeof(t_img));
+	texEA->img = mlx_png_file_to_image(all->mlx, all->param_map->north, &texEA->width, &texEA->height);
+	texEA->addr = mlx_get_data_addr(texEA->img, &texEA->bpp, &texEA->line_len, &texEA->endian);
+	all->texEA = texEA;
+	texS = (t_img *)malloc(sizeof(t_img));
+	texS->img = mlx_png_file_to_image(all->mlx, all->param_map->north, &texS->width, &texS->height);
+	texS->addr = mlx_get_data_addr(texS->img, &texS->bpp, &texS->line_len, &texS->endian);
+	all->texS = texS;
+	
+}
 int	main(int argc, char **argv)
 {
 	t_all		all;
@@ -103,7 +133,6 @@ int	main(int argc, char **argv)
     t_win		img;
 	t_point		point;
 	t_param_map *param_map;
-	t_img		texNO;
 
 	all.win = malloc(sizeof(t_win));
 	all.param_map = malloc(sizeof(t_param_map));
@@ -145,10 +174,10 @@ int	main(int argc, char **argv)
     all.win->addr = mlx_get_data_addr(all.win->img, &all.win->bits_per_pixel, &all.win->line_length,
                                  &all.win->endian);
 	printf("north path = %s", all.param_map->north);
+	init_tex(&all);
 	// mlx_png_file_to_image()
-	texNO.img = mlx_png_file_to_image(all.mlx, all.param_map->north, &texNO.width, &texNO.height);
-	texNO.addr = mlx_get_data_addr(texNO.img, &texNO.bpp, &texNO.line_len, &texNO.endian);
-	all.texNO = &texNO;
+	
+	
 	// cast_rays(&all);
 	// mlx_loop_hook(mlx, cast_rays, &all);
 	//движение

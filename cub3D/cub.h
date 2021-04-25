@@ -76,7 +76,8 @@ typedef struct	s_param_map
 	double		oldDirX;
 }				t_param_map;
 
-typedef struct	s_algo_data{
+typedef struct	s_algo_data
+{
 	double		pwd;
 	double		camera_x;
 	int			hit;
@@ -84,19 +85,22 @@ typedef struct	s_algo_data{
 	int			line_h;
 	int			draw_start;
 	int			draw_end;
-	double			rayDirY;
-	double			rayDirX;
-	double			deltaDistX;
-	double			deltaDistY;
-	  int stepX;
-      int stepY;
-		double sideDistX;
-      double sideDistY;
-	int mapX;
-      int mapY;
+	double		rayDirY;
+	double		rayDirX;
+	double		deltaDistX;
+	double		deltaDistY;
+	int 		stepX;
+    int 		stepY;
+	double 		sideDistX;
+    double 		sideDistY;
+	int 		mapX;
+    int 		mapY;
+	double		old_plane_x;
+
 }				t_algo_data;
 
-typedef struct	s_img {
+typedef struct	s_img 
+{
 	void		*img;
 	char		*addr;
 	int			bpp;
@@ -106,7 +110,8 @@ typedef struct	s_img {
 	int			width;
 }				t_img;
 
-typedef struct	s_txtr_data {
+typedef struct	s_txtr_data 
+{
 	t_img		*t_arr;
 	int			text_num;
 	double		wall_x;
@@ -142,6 +147,10 @@ typedef struct	s_all // структура для всего вместе
 	t_algo_data	*algo_data;
 	t_txtr_data	*txtr_data;
 	t_img		*texNO;
+	t_img		*texSO;
+	t_img		*texWE;
+	t_img		*texEA;
+	t_img		*texS;
 	char		**map;
 }				t_all;
 

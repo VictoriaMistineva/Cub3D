@@ -85,7 +85,7 @@ void	cr_part3(t_all *all)// переход к следующему квадра�
 void	cr_part4(t_all *all)
 {
 	all->algo_data->line_h = (int)(all->param_map->scr_h / all->algo_data->pwd);// Рассчитываем высоту линии для рисования на экране
-	all->algo_data->draw_start = -1 * (all->algo_data->line_h)// вычисляем самый низкий и самый высокий пиксели для заполнения текущей полосы
+	all->algo_data->draw_start = - (all->algo_data->line_h)// вычисляем самый низкий и самый высокий пиксели для заполнения текущей полосы
 		/ 2 + all->param_map->scr_h / 2;
 	if (all->algo_data->draw_start < 0)
 		all->algo_data->draw_start = 0;
@@ -104,9 +104,7 @@ void	cr_part5(t_all *all, t_img *tex)
 		all->txtr_data->wall_x = all->param_map->posX + all->algo_data->pwd
 			* all->algo_data->rayDirX;
 	all->txtr_data->wall_x -= floor((all->txtr_data->wall_x));
-	
 	all->txtr_data->tex_x = (int)(all->txtr_data->wall_x *
-			// (double)(all->txtr_data->t_arr[all->txtr_data->text_num].width));
 			(double)(tex->width));
 	if (all->algo_data->side == 0 && all->algo_data->rayDirX > 0)
 		all->txtr_data->tex_x = tex->width - all->txtr_data->tex_x - 1;
@@ -120,37 +118,31 @@ void	cr_part5(t_all *all, t_img *tex)
 }
 
 
-void	cr_part6(t_all *all, int x)
+void	cr_part6(t_all *all, int x, t_img *tex)
 {
 	int y;
 
-	// y = all->algo_data->draw_start;
 	y = 0;
-	// while (y < all->algo_data->draw_end)
 	while (y < all->param_map->scr_h)
 	{
 		if (y <= all->algo_data->draw_start)
-			my_mlx_pixel_put(all->win, x, y, 0x000000);
+			my_mlx_pixel_put(all->win, x, y, all->param_map->color_ceil);
 		if (y > all->algo_data->draw_start && y < all->algo_data->draw_end)
 		{
 			all->txtr_data->tex_y = (int)all->txtr_data->text_pos
-			// & (all->txtr_data->t_arr[all->txtr_data->text_num].height - 1);
-				& (all->texNO->height - 1);
+				& (tex->height - 1);
 			all->txtr_data->text_pos += all->txtr_data->step;
 			all->txtr_data->color = *(unsigned int *)
-			// (all->txtr_data->t_arr[all->txtr_data->text_num].addr
-				(all->texNO->addr
+				(tex->addr
 				+ (all->txtr_data->tex_y
-			// * all->txtr_data->t_arr[all->txtr_data->text_num].line_len
-				 * all->texNO->line_len
+				* tex->line_len
 				+ all->txtr_data->tex_x
-			// * (all->txtr_data->t_arr[all->txtr_data->text_num].bpp / 8)));
-				* (all->texNO->bpp / 8)));
-		// my_mlx_pixel_put(all, all->param_map->scr_w - x - 1, y,
-			my_mlx_pixel_put(all->win, x, y, all->txtr_data->color);//как
+				* (tex->bpp / 8)));
+			// my_mlx_pixel_put(all->win, x, y, all->txtr_data->color);
+			my_mlx_pixel_put(all->win, x, y, 0x00FFFF1);
 		}
 		if ( y >= all->algo_data->draw_end)
-			my_mlx_pixel_put(all->win, x, y, 0xFFFFFF);
+			my_mlx_pixel_put(all->win, x, y, all->param_map->color_floor);
 		y++;
 	}
 	// data->sp_data.z_buffer[x] = all->algo_data->pwd;
@@ -169,10 +161,14 @@ int	cast_rays(t_all *all)
 			cr_part3(all);
 			cr_part4(all);
 		}
-		// def_texture(all);
-		//определяем текстуру
-		cr_part5(all, all->texNO);//записать каординаты
-		cr_part6(all, x);
+		cr_part5(all, all->texNO);
+		cr_part5(all, all->texSO);
+		cr_part5(all, all->texWE);
+		cr_part5(all, all->texEA);
+		cr_part6(all, x, all->texNO);
+		cr_part6(all, x, all->texSO);
+		cr_part6(all, x, all->texWE);
+		cr_part6(all, x, all->texEA);
 		x++;
 	}
 	return(0);

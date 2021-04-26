@@ -3,6 +3,22 @@
 #include <fcntl.h>
 #include <stdio.h>
 
+// typedef struct  s_data {
+//     void        *img;
+//     char        *addr;
+//     int         bits_per_pixel;
+//     int         line_length;
+//     int         endian;
+// }               t_data;
+
+// void            my_mlx_pixel_put(t_data *data, int x, int y, int color)
+// {
+//     char    *dst;
+
+//     dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+//     *(unsigned int*)dst = color;
+// }
+
 // int map_carta(t_all *all)
 // {
 //     mlx = mlx_init();
@@ -88,8 +104,9 @@ void	init_stuct(t_all *all)
 
 int	render_next_frame(t_all *all)
 {
-	// mlx_clear_window(all->mlx, all->win->mlx);
+	mlx_clear_window(all->mlx, all->win->mlx);
 	cast_rays(all);
+	// draw(all);
 	mlx_put_image_to_window(all->mlx, all->win->mlx, all->win->img, 0, 0);
 	mlx_do_sync(all->mlx);
 	return (0);
@@ -108,29 +125,28 @@ void init_tex(t_all *all)
 	texNO->addr = mlx_get_data_addr(texNO->img, &texNO->bpp, &texNO->line_len, &texNO->endian);
 	all->texNO = texNO;
 	texSO = (t_img *)malloc(sizeof(t_img));
-	texSO->img = mlx_png_file_to_image(all->mlx, all->param_map->north, &texSO->width, &texSO->height);
+	texSO->img = mlx_png_file_to_image(all->mlx, all->param_map->south, &texSO->width, &texSO->height);
 	texSO->addr = mlx_get_data_addr(texSO->img, &texSO->bpp, &texSO->line_len, &texSO->endian);
 	all->texSO = texSO;
 	texWE = (t_img *)malloc(sizeof(t_img));
-	texWE->img = mlx_png_file_to_image(all->mlx, all->param_map->north, &texWE->width, &texWE->height);
+	texWE->img = mlx_png_file_to_image(all->mlx, all->param_map->west, &texWE->width, &texWE->height);
 	texWE->addr = mlx_get_data_addr(texWE->img, &texWE->bpp, &texWE->line_len, &texWE->endian);
 	all->texWE = texWE;
 	texEA = (t_img *)malloc(sizeof(t_img));
-	texEA->img = mlx_png_file_to_image(all->mlx, all->param_map->north, &texEA->width, &texEA->height);
+	texEA->img = mlx_png_file_to_image(all->mlx, all->param_map->east, &texEA->width, &texEA->height);
 	texEA->addr = mlx_get_data_addr(texEA->img, &texEA->bpp, &texEA->line_len, &texEA->endian);
 	all->texEA = texEA;
 	texS = (t_img *)malloc(sizeof(t_img));
-	texS->img = mlx_png_file_to_image(all->mlx, all->param_map->north, &texS->width, &texS->height);
+	texS->img = mlx_png_file_to_image(all->mlx, all->param_map->sprite, &texS->width, &texS->height);
 	texS->addr = mlx_get_data_addr(texS->img, &texS->bpp, &texS->line_len, &texS->endian);
 	all->texS = texS;
-	
 }
 int	main(int argc, char **argv)
 {
 	t_all		all;
 	void		*mlx;
     void		*mlx_win;
-    t_win		img;
+    // t_win		img;
 	t_point		point;
 	t_param_map *param_map;
 
@@ -163,6 +179,11 @@ int	main(int argc, char **argv)
 	bigLine = ft_strjoin(bigLine, line);
 	all.map = ft_split(bigLine, '\n');//проверка валидности карты
 	check_player(&all);
+	printf("posX = %f\nposY = %f\n", all.param_map->posX, all.param_map->posY);
+	printf("\n");
+	for(int i = 0; i < 14; i++)
+		printf("%s\n", all.map[i]);
+	printf("\n");
 	check_map(&all);
 	// printf("%s\n", map[0]);
 	free(line);
@@ -176,14 +197,16 @@ int	main(int argc, char **argv)
 	printf("north path = %s", all.param_map->north);
 	init_tex(&all);
 	// mlx_png_file_to_image()
+	// drawFOV(&all);
+	// mlx_put_image_to_window(all.mlx, all.win->mlx, all.win->img, 0, 0);
 	
-	
-	cast_rays(&all);
+	// draw(&all);
+	// cast_rays(&all);
 	// mlx_loop_hook(mlx, cast_rays, &all);
 	//движение
 	mlx_key_hook(all.win->mlx, move, &all);
 	//функция по 3д
-    // mlx_put_image_to_window(mlx, all.win->mlx, all.win->img, 0, 0);
+    mlx_put_image_to_window(mlx, all.win->mlx, all.win->img, 0, 0);
 	mlx_loop_hook(all.mlx, render_next_frame, &all);
     mlx_loop(all.mlx);
 	// map_carta(&all);

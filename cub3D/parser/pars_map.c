@@ -55,6 +55,7 @@ void	check_map(t_all *all)
 	while (all->map[k])
 	{
 		j = 0;
+		printf("%s\n", all->map[k]);
 		while (all->map[k][j])
 		{
 			// check_player_map(all, j, k);

@@ -13,16 +13,11 @@
 // 	}
 // }
 
-
-
-
-
-
 void	key_w_or_key_s(t_all *all, double movespeed, int key)
 {
 	if (key == KEY_W)
 	{
-		// printf("%c\n", all->map[(int)all->param_map->posY][(int)(all->param_map->posX + all->param_map->dirX * movespeed)]);
+		
 		if (all->map[(int)all->param_map->posY]
 				[(int)(all->param_map->posX + all->param_map->dirX * movespeed)] == '0')
 			all->param_map->posX += all->param_map->dirX * movespeed;
@@ -67,29 +62,25 @@ void	key_a_or_key_d(t_all *all, double movespeed, int key)
 void	key_left_or_key_right(
 		int key, t_all *all, double rotspeed)
 {
-	if (key == KEY_RIGHT)
-	{
-		all->param_map->oldDirX = all->param_map->dirX;
-		all->param_map->dirX = all->param_map->dirX * cos(-rotspeed)
-			- all->param_map->dirY * sin(-rotspeed);
-		all->param_map->dirY = all->param_map->oldDirX * sin(-rotspeed)
-			+ all->param_map->dirY * cos(-rotspeed);
-		all->algo_data->old_plane_x = all->param_map->planeX;
-		all->param_map->planeX = all->param_map->planeX * cos(-rotspeed)
-			- all->param_map->planeY * sin(-rotspeed);
-		all->param_map->planeX = all->algo_data->old_plane_x
-			* sin(-rotspeed) + all->param_map->planeY * cos(-rotspeed);
-	}
+	double oldDirX;
+
 	if (key == KEY_LEFT)
 	{
-		all->param_map->oldDirX = all->param_map->dirX;
+		oldDirX = all->param_map->dirX;
+		all->param_map->dirX = all->param_map->dirX * cos(-rotspeed) - all->param_map->dirY * sin(-rotspeed);
+		all->param_map->dirY = oldDirX * sin(-rotspeed) + all->param_map->dirY * cos(-rotspeed);
+		all->algo_data->old_plane_x = all->param_map->planeX;
+		all->param_map->planeX = all->param_map->planeX * cos(-rotspeed) - all->param_map->planeY * sin(-rotspeed);
+		all->param_map->planeY = all->algo_data->old_plane_x * sin(-rotspeed) + all->param_map->planeY * cos(-rotspeed);
+	}
+	if (key == KEY_RIGHT)
+	{
+		oldDirX = all->param_map->dirX;
 		all->param_map->dirX = all->param_map->dirX * cos(rotspeed) - all->param_map->dirY * sin(rotspeed);
-		all->param_map->dirY = all->param_map->oldDirX
-			* sin(rotspeed) + all->param_map->dirY * cos(rotspeed);
+		all->param_map->dirY = oldDirX * sin(rotspeed) + all->param_map->dirY * cos(rotspeed);
 		all->algo_data->old_plane_x = all->param_map->planeX;
 		all->param_map->planeX = all->param_map->planeX * cos(rotspeed) - all->param_map->planeY * sin(rotspeed);
-		all->param_map->planeY = all->algo_data->old_plane_x
-			* sin(rotspeed) + all->param_map->planeY * cos(rotspeed);
+		all->param_map->planeY = all->algo_data->old_plane_x * sin(rotspeed) + all->param_map->planeY * cos(rotspeed);
 	}
 }
 
@@ -98,8 +89,8 @@ int		move(int key, t_all *all)
 	double	movespeed;
 	double	rotspeed;
 
-	movespeed = 2.0;
-	rotspeed = 0.09;
+	movespeed = 0.3;
+	rotspeed = 0.1;
 	printf("\nold posX = %f\nold posY = %f\n", all->param_map->posX, all->param_map->posY);
 	if (key == KEY_W || key == KEY_S)
 		key_w_or_key_s(all, movespeed, key);

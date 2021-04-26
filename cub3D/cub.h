@@ -38,7 +38,7 @@ typedef struct	s_win //структура для окна
 	void		*mlx;
 	void		*win;
 	void		*img;
-	void		*addr;
+	char		*addr;
 	int			line_length;
 	int			bits_per_pixel;
 	int			endian;
@@ -96,7 +96,6 @@ typedef struct	s_algo_data
 	int 		mapX;
     int 		mapY;
 	double		old_plane_x;
-	double		*z_buffer;
 
 }				t_algo_data;
 
@@ -131,14 +130,14 @@ typedef struct	s_gnl
 	char	*tmp;
 }				t_gnl;
 
-typedef struct  s_data
-{
-    void        *img;
-    char        *addr;
-    int         bits_per_pixel;
-    int         line_length;
-    int         endian;
-}               t_data;
+// typedef struct  s_data
+// {
+//     void        *img;
+//     char        *addr;
+//     int         bits_per_pixel;
+//     int         line_length;
+//     int         endian;
+// }               t_data;
 
 typedef struct	s_all // структура для всего вместе
 {
@@ -178,5 +177,5 @@ void	check_player(t_all *all);
 int	cast_rays(t_all *all);
 void	my_mlx_pixel_put(t_win *data, int x, int y, int color);
 int		move(int key, t_all *all);
-void init_tex(t_all *all);  
+void draw(t_all *all);
 #endif

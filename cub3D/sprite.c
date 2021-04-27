@@ -1,22 +1,28 @@
 #include "cub.h"
 
 
-void sp_1(t_all *all , int i)
+void sp_1(t_all *all)
 {
-	while(i < all->sprite->sp_num)
+	int i;
+
+	i = 0;
+	all->sprite->sp_dist = malloc(sizeof(double)* all->sprite->sp_num);
+	while (i < all->sprite->sp_num)
 	{
 		all->sprite->sp_order[i] = i;
-		all->sprite->sp_order[i] = ((all->param_map->posX - all->sprite->sp_cast[i].x) //маллос
-			* (all->param_map->posX- all->sprite->sp_cast[i].x)
-			+ (all->param_map->posY - all->sprite->sp_cast[i].y)
-			* (all->param_map->posY - all->sprite->sp_cast[i].y));				
+		// all->sprite->sp_dist[i] = ((all->param_map->posX - all->sprite->sp_cast[i].x) //маллос
+		// 	* (all->param_map->posX - all->sprite->sp_cast[i].x)
+		// 	+ (all->param_map->posY - all->sprite->sp_cast[i].y)
+		// 	* (all->param_map->posY - all->sprite->sp_cast[i].y));
+		all->sprite->sp_dist[i] = sqrt(pow(all->param_map->posX - all->sprite[i].x, 2) + pow(all->param_map->posY - all->sprite[i].y, 2));	
 		i++;
 	}
 }
 
-void sp_2(t_all *all , int i)
+void sp_2(t_all *all)
 {
 	//translate sprite position to relative to camera
+	int i = 0;
 	all->sprite->spriteX = all->sprite->sp_cast
 		[all->sprite->sp_order[i]].x - all->param_map->posX;
 	all->sprite->spriteY = all->sprite->sp_cast
@@ -77,15 +83,18 @@ void	cast_sprites(t_all *all)
 
 	y = 0;
 	coun_sp = 0;
-	// all->sprite->sp_order = malloc((sizeof(int)) * all->sprite->sp_num);
+	//int spriteOrder[sp_num];
+	all->sprite->sp_order = malloc((sizeof(int)) * all->sprite->sp_num);
+	//all->sprite->sp_order = 0;
 	// // all->sprite->sp_cast = (t_sprite *)malloc(sizeof(t_sprite) * all->sprite->sp_num);
 	// all->sprite->sp_cast = malloc(all->sprite->sp_num * sizeof(t_sp_cast));
-	sp_1(all, coun_sp);
+	sp_1(all);
 	// sort_sprites(&(all->sprite));
 	//coun_sp = 0;
-	while(coun_sp < all->sprite->sp_num)
+	int i = 0;
+	while(i < all->sprite->sp_num)
 	{
-		sp_2(all, coun_sp);
+		sp_2(all);
 		sp_3(all);
 		sptite = all->sprite->drawStartX;
 		while(sptite < all->sprite->drawEndX)
@@ -93,7 +102,7 @@ void	cast_sprites(t_all *all)
 			cs_part4(all, sptite, y);
 			sptite++;
 		}
-		coun_sp++;
+		i++;
 	}
 }
 

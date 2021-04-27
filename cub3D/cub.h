@@ -153,6 +153,8 @@ typedef struct s_sprite
     int         color;
 	int			*sp_order;
 	double		*sp_dist;
+	double		x;
+	double		y;
 }       		t_sprite;
 
 typedef struct	s_all // структура для всего вместе
@@ -195,11 +197,7 @@ int	cast_rays(t_all *all);
 void	my_mlx_pixel_put(t_win *data, int x, int y, int color);
 int		move(int key, t_all *all);
 void draw(t_all *all);
-void	cr_part6(t_all *all, int x, t_img *tex);
-void	cr_part5(t_all *all, t_img *tex);
+
 void	cast_sprites(t_all *all);
-void sotirovka_sprite(t_sprite *sprite);
-void	quick_sort(t_sp_cast *sp_cast, int start, int stop);
-int		sprite(t_sp_cast *arr, int start, int stop);
 
 #endif

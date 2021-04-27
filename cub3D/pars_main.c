@@ -155,6 +155,7 @@ int	main(int argc, char **argv)
 	all.algo_data = malloc(sizeof(t_algo_data));
 	all.txtr_data = malloc(sizeof(t_txtr_data));
 	all.sprite = malloc(sizeof(t_sprite));
+	all.sprite->sp_cast = malloc(sizeof(t_sp_cast));
 
 	param_map = all.param_map;
 	init_stuct(&all);

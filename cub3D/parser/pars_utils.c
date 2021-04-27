@@ -10,7 +10,7 @@ int	charlen(char **str)
 }
 char	*printf_exit(char *str)
 {
-	printf("%s\n", str);
+	printf("\x1B[31m""Error\n%s\n""\x1B[37m", str);
 	exit(-1);
 }
 
@@ -27,7 +27,7 @@ int	ft_atoi_pars(const char *str)
 			str++;
 		}
 		else
-			printf_exit("Error\nневалидная карта");
+			printf_exit("невалидная карта");
 	}
 	return (i);
 }

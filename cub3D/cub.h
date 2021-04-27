@@ -26,13 +26,6 @@
 
 # define KEY_ESC				53 
 
-# define NORTH					0
-# define SOUTH					1
-# define WEST					2
-# define EAST					3
-# define SPRITE					4
-
-
 typedef struct	s_win //структура для окна
 {
 	void		*mlx;
@@ -73,7 +66,6 @@ typedef struct	s_param_map
 	double		dirX;
 	double		planeY;
 	double		planeX;
-	double		oldDirX;
 }				t_param_map;
 
 typedef struct	s_algo_data
@@ -112,7 +104,6 @@ typedef struct	s_img
 
 typedef struct	s_txtr_data 
 {
-	t_img		*t_arr;
 	int			text_num;
 	double		wall_x;
 	int			tex_x;
@@ -130,14 +121,39 @@ typedef struct	s_gnl
 	char	*tmp;
 }				t_gnl;
 
-// typedef struct  s_data
-// {
-//     void        *img;
-//     char        *addr;
-//     int         bits_per_pixel;
-//     int         line_length;
-//     int         endian;
-// }               t_data;
+typedef struct s_sp_cast  //amount
+{
+	double x;
+	double y;
+	int order;
+	double dist;
+
+}			t_sp_cast;
+
+typedef struct s_sprite
+{
+	t_sp_cast 	*sp_cast;
+    double      *z_buffer;
+    double      spriteX;
+    double      spriteY;
+    double      invDet;
+    double      transformX;
+    double      transformY;
+    int         spriteScreenX;
+    int         spriteHeight;
+    int         drawStartY;
+    int         drawEndY;
+    int         spriteWidth;
+    int         drawStartX;
+    int         drawEndX;
+    int         texX;
+    int         d;
+    int         texY;
+    int         sp_num;
+    int         color;
+	int			*sp_order;
+	double		*sp_dist;
+}       		t_sprite;
 
 typedef struct	s_all // структура для всего вместе
 {
@@ -146,6 +162,7 @@ typedef struct	s_all // структура для всего вместе
 	t_param_map *param_map;
 	t_algo_data	*algo_data;
 	t_txtr_data	*txtr_data;
+	t_sprite    *sprite;
 	t_img		*texNO;
 	t_img		*texSO;
 	t_img		*texWE;
@@ -178,4 +195,11 @@ int	cast_rays(t_all *all);
 void	my_mlx_pixel_put(t_win *data, int x, int y, int color);
 int		move(int key, t_all *all);
 void draw(t_all *all);
+void	cr_part6(t_all *all, int x, t_img *tex);
+void	cr_part5(t_all *all, t_img *tex);
+void	cast_sprites(t_all *all);
+void sotirovka_sprite(t_sprite *sprite);
+void	quick_sort(t_sp_cast *sp_cast, int start, int stop);
+int		sprite(t_sp_cast *arr, int start, int stop);
+
 #endif

@@ -26,7 +26,7 @@
 	 else
 	 {
 		 printf("%s\n",line);//elfkbnm
-	 	printf_exit("Error\nошибка типов");
+	 	printf_exit("ошибка типов");
 	 }
 	}
 	return (0);

@@ -1,19 +1,11 @@
 #include "cub.h"
 
-// int key_press(int key, t_all *all)
-// {
-// 	if(key = KEY_ESC)
-// 	{
-// 		exit(0); // доделать
-// 	}
+int key_esc(int key, t_all *all)
+{
+	exit(0);
+}
 
-// 	if((move(key, all)) == 0)
-// 	{
-// 		//перезапись всех функций
-// 	}
-// }
-
-void	key_w_or_key_s(t_all *all, double movespeed, int key)
+void	key_w_s(t_all *all, double movespeed, int key)
 {
 	if (key == KEY_W)
 	{
@@ -38,7 +30,7 @@ void	key_w_or_key_s(t_all *all, double movespeed, int key)
 	}
 }
 
-void	key_a_or_key_d(t_all *all, double movespeed, int key)
+void	key_a_d(t_all *all, double movespeed, int key)
 {
 	if (key == KEY_A)
 	{
@@ -59,7 +51,7 @@ void	key_a_or_key_d(t_all *all, double movespeed, int key)
 			all->param_map->posY -= all->param_map->planeY * movespeed;
 	}
 }
-void	key_left_or_key_right(
+void	key_left_right(
 		int key, t_all *all, double rotspeed)
 {
 	double oldDirX;
@@ -92,12 +84,14 @@ int		move(int key, t_all *all)
 	movespeed = 0.3;
 	rotspeed = 0.1;
 	printf("\nold posX = %f\nold posY = %f\n", all->param_map->posX, all->param_map->posY);
+	if(key == KEY_ESC)
+		key_esc(key, all);
 	if (key == KEY_W || key == KEY_S)
-		key_w_or_key_s(all, movespeed, key);
+		key_w_s(all, movespeed, key);
 	if (key == KEY_A|| key == KEY_D)
-		key_a_or_key_d(all, movespeed, key);
+		key_a_d(all, movespeed, key);
 	printf("New posX = %f\nNew posY = %f\n", all->param_map->posX, all->param_map->posY);
 	if (key == KEY_LEFT || key == KEY_RIGHT)
-		key_left_or_key_right(key, all, rotspeed);
+		key_left_right(key, all, rotspeed);
 	return (1);
 }

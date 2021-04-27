@@ -40,7 +40,7 @@ void	check_player(t_all *all)
 {
 	int k;
 	int j;
-
+	all->sprite->sp_num = 0;
 	k = 0;
 	while (all->map[k])
 	{
@@ -62,12 +62,11 @@ void	check_player(t_all *all)
 				}
 				else
 				{
-					printf("Error\nДва игрока\n");
-					exit(-1);
+					printf_exit("Два игрока");
 				}
 			}
-			// else if (all->map[k][j] == '2')
-			// 	//спрайты
+			else if (all->map[k][j] == '2')
+				all->sprite->sp_num++;
 			j++;
 		}
 		k++;

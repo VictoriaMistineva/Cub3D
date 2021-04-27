@@ -99,6 +99,7 @@ void	init_stuct(t_all *all)
 	all->param_map->dirX = 0;
 	all->param_map->planeY = 0;
 	all->param_map->planeX = 0;
+	// all->sprite->sp_num = 0;
 
 }
 
@@ -146,7 +147,6 @@ int	main(int argc, char **argv)
 	t_all		all;
 	void		*mlx;
     void		*mlx_win;
-    // t_win		img;
 	t_point		point;
 	t_param_map *param_map;
 
@@ -154,6 +154,7 @@ int	main(int argc, char **argv)
 	all.param_map = malloc(sizeof(t_param_map));
 	all.algo_data = malloc(sizeof(t_algo_data));
 	all.txtr_data = malloc(sizeof(t_txtr_data));
+	all.sprite = malloc(sizeof(t_sprite));
 
 	param_map = all.param_map;
 	init_stuct(&all);
@@ -179,35 +180,18 @@ int	main(int argc, char **argv)
 	bigLine = ft_strjoin(bigLine, line);
 	all.map = ft_split(bigLine, '\n');//проверка валидности карты
 	check_player(&all);
-	printf("posX = %f\nposY = %f\n", all.param_map->posX, all.param_map->posY);
-	printf("\n");
-	for(int i = 0; i < 14; i++)
-		printf("%s\n", all.map[i]);
-	printf("\n");
 	check_map(&all);
-	// printf("%s\n", map[0]);
 	free(line);
 	
     all.mlx = mlx_init();
-	// mlx_new_window()
-    all.win->mlx = mlx_new_window(all.mlx, param_map->scr_w, param_map->scr_h, "Hello world!");
+    all.win->mlx = mlx_new_window(all.mlx, param_map->scr_w, param_map->scr_h, "CUB_3D");
     all.win->img = mlx_new_image(all.mlx, param_map->scr_w, param_map->scr_h);
     all.win->addr = mlx_get_data_addr(all.win->img, &all.win->bits_per_pixel, &all.win->line_length,
                                  &all.win->endian);
-	printf("north path = %s", all.param_map->north);
 	init_tex(&all);
-	// mlx_png_file_to_image()
-	// drawFOV(&all);
-	// mlx_put_image_to_window(all.mlx, all.win->mlx, all.win->img, 0, 0);
-	
-	// draw(&all);
-	// cast_rays(&all);
-	// mlx_loop_hook(mlx, cast_rays, &all);
-	//движение
+	cast_sprites(&all);
 	mlx_key_hook(all.win->mlx, move, &all);
-	//функция по 3д
     mlx_put_image_to_window(mlx, all.win->mlx, all.win->img, 0, 0);
 	mlx_loop_hook(all.mlx, render_next_frame, &all);
     mlx_loop(all.mlx);
-	// map_carta(&all);
 }

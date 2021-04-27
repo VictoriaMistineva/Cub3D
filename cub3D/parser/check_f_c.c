@@ -32,7 +32,7 @@ int	floor_color(char *line, t_all *all)
 	char **color;
 
 	if(all->param_map->floor_r != -1)
-		printf_exit("Error\nдвойной ввод цвета для FLOOR");
+		printf_exit("двойной ввод цвета для FLOOR");
 	return_space(line);
 	color = ft_split((char const *)line,' ');
 	validate_color(all->param_map->floor_r = ft_atoi_pars(color[1]));
@@ -51,7 +51,7 @@ int	celling_color(char *line, t_all *all)
 	char **color;
 
 	if(all->param_map->ceil_r != -1)
-		printf_exit("Error\nдвойной ввод цвета для CELLING");
+		printf_exit("двойной ввод цвета для CELLING");
 	return_space(line);
 	color = ft_split((char const *)line,' ');
 	validate_color(all->param_map->ceil_r = ft_atoi_pars(color[1]));

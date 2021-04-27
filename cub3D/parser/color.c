@@ -10,7 +10,7 @@ int	create_rgb(int r, int g, int b)
 void	validate_color(int color)
 {
 	if (color < 0 || color > 255)
-		printf_exit("Error\nНевалидный цвет потолка или пола");
+		printf_exit("Невалидный цвет потолка или пола");
 }
 
 

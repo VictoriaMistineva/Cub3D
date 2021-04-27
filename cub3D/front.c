@@ -9,24 +9,12 @@ void	cr_part1(t_all *all, int x)// вычисляем положение и на
 		+ all->param_map->planeX * all->algo_data->camera_x;
 	all->algo_data->rayDirY = all->param_map->dirY
 		+ all->param_map->planeY * all->algo_data->camera_x;
-
 	all->algo_data->mapX = (int)all->param_map->posX;
 	all->algo_data->mapY = (int)all->param_map->posY;
-	
-	// if (all->algo_data->rayDirY == 0)
-	// 	all->algo_data->deltaDistX = 0;
-	// else if (all->algo_data->rayDirX == 0)
-	// 		all->algo_data->deltaDistX = 1;
-	// else
-			all->algo_data->deltaDistX = fabs(1 / all->algo_data->rayDirX);
-	// if (all->algo_data->rayDirX == 0)
-	// 	all->algo_data->deltaDistY = 0;
-	// else if (all->algo_data->rayDirY == 0)
-	// 		all->algo_data->deltaDistY = 1;
-	// else
-			all->algo_data->deltaDistY = fabs(1 / all->algo_data->rayDirY);
+	all->algo_data->deltaDistX = fabs(1 / all->algo_data->rayDirX);
+	all->algo_data->deltaDistY = fabs(1 / all->algo_data->rayDirY);
 	all->algo_data->hit = 0;
-}
+} 
 
 void	cr_part2(t_all *all)// вычисляем шаг и начальный sideDist
 {
@@ -144,7 +132,6 @@ void	cr_part6(t_all *all, int x, t_img *tex)
 			my_mlx_pixel_put(all->win, x, y, all->param_map->color_floor);
 		y++;
 	}
-	// data->sp_data.z_buffer[x] = all->algo_data->pwd;
 }
 
 t_img	*chooseTex(t_all *all)
@@ -174,19 +161,11 @@ int	cast_rays(t_all *all)
 		cr_part1(all, x);
 		cr_part2(all);
 		while (all->algo_data->hit == 0)
-		{
 			cr_part3(all);	
-		}
 		cr_part4(all);
 		tmp = chooseTex(all);
 		cr_part5(all, tmp);
-		// cr_part5(all, all->texSO);
-		// cr_part5(all, all->texWE);
-		// cr_part5(all, all->texEA);
 		cr_part6(all, x, tmp);
-		// cr_part6(all, x, all->texSO);
-		// cr_part6(all, x, all->texWE);
-		// cr_part6(all, x, all->texEA);
 		x++;
 	}
 	return(0);

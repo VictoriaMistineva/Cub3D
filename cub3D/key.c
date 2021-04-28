@@ -39,7 +39,7 @@ void	key_a_d(t_all *all, double movespeed, int key)
 			all->param_map->posX -= all->param_map->planeX * movespeed;
 		if (all->map[(int)(all->param_map->posY + all->param_map->planeY
 					* movespeed)][(int)(all->param_map->posX)] == '0')
-			all->param_map->posY += all->param_map->planeY * movespeed;
+			all->param_map->posY -= all->param_map->planeY * movespeed;
 	}
 	if (key == KEY_D)
 	{
@@ -48,7 +48,7 @@ void	key_a_d(t_all *all, double movespeed, int key)
 			all->param_map->posX += all->param_map->planeX * movespeed;
 		if (all->map[(int)(all->param_map->posY - all->param_map->planeY
 					* movespeed)][(int)(all->param_map->posX)] == '0')
-			all->param_map->posY -= all->param_map->planeY * movespeed;
+			all->param_map->posY += all->param_map->planeY * movespeed;
 	}
 }
 void	key_left_right(

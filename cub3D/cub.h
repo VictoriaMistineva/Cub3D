@@ -123,16 +123,20 @@ typedef struct	s_gnl
 
 typedef struct s_sp_cast  //amount
 {
-	double x;
-	double y;
 	int order;
 	double dist;
-
 }			t_sp_cast;
+
+typedef struct s_sp  //amount
+{
+	double		x;
+	double		y;
+}			t_sp;
 
 typedef struct s_sprite
 {
 	t_sp_cast 	*sp_cast;
+	t_sp		*sp;
     double      *z_buffer;
     double      spriteX;
     double      spriteY;
@@ -153,8 +157,6 @@ typedef struct s_sprite
     int         color;
 	int			*sp_order;
 	double		*sp_dist;
-	double		x;
-	double		y;
 }       		t_sprite;
 
 typedef struct	s_all // структура для всего вместе
@@ -199,5 +201,8 @@ int		move(int key, t_all *all);
 void draw(t_all *all);
 
 void	cast_sprites(t_all *all);
+
+
+void spriteeee(t_all *all);
 
 #endif

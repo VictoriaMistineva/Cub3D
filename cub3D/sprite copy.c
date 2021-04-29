@@ -29,7 +29,6 @@ void coord_sprite(t_all *all)
 void sp_1(t_all *all)
 {
 	int i;
-
 	i = 0;
 	while (i < all->sprite->sp_num)
 	{
@@ -43,7 +42,6 @@ void sp_1(t_all *all)
 void sp_drawstart(t_all *all)
 {
 	int i;
-
 	i = 0;
 	all->sprite->invDet = 1.0 / (all->param_map->planeX * all->param_map->dirY - all->param_map->dirX * all->param_map->planeY); //required for correct matrix multiplication
     all->sprite->spriteX= (double)all->sprite->sp[all->sprite->sp_order[i]].x  - all->param_map->posX;
@@ -75,10 +73,14 @@ void	sp_drawend(t_all *all) //calculate width of the sprite
         all->sprite->drawEndX = all->param_map->scr_w - 1;
 }
 
-void	cs_part4(t_all *all, int y)
+void	cs_color(t_all *all)
 {
 	t_img *texS;
 	int stripe;
+	int y;
+
+	printf("3- %d %d \n" ,stripe , all->sprite->drawStartX);
+	printf("3.d- %d %d \n" ,stripe , all->sprite->drawEndX);
 
 	texS = all->texS;
 	stripe = all->sprite->drawStartX;
@@ -103,10 +105,7 @@ void	cs_part4(t_all *all, int y)
 void	cast_sprites(t_all *all)
 {
 	int stripe;
-	int y;
 	int i;
-
-	y = 0;
 	i = 0;
 	all->sprite->sp_dist = malloc(sizeof(double)* all->sprite->sp_num);
 	all->sprite->sp_order = malloc((sizeof(int)) * all->sprite->sp_num);
@@ -116,49 +115,12 @@ void	cast_sprites(t_all *all)
 	coord_sprite(all);
 	sp_1(all);
 	// sort_sprites(&(all->sprite));
-	i = 0;
 	while(i < all->sprite->sp_num)
 	{
 		sp_drawstart(all);
 		sp_drawend(all);
-		printf("3- %d %d \n" ,stripe , all->sprite->drawStartX);
-		printf("3.d- %d %d \n" ,stripe , all->sprite->drawEndX);
-		cs_part4(all, y);
+		cs_color(all);
 		i++;
 	}
 }
-
-// void	cast_sprites(t_all *all)
-// {
-// 	int stripe;
-// 	int y;
-// 	int i;
-
-// 	y = 0;
-// 	i = 0;
-// 	all->sprite->sp_dist = malloc(sizeof(double)* all->sprite->sp_num);
-// 	all->sprite->sp_order = malloc((sizeof(int)) * all->sprite->sp_num);
-// 	all->sprite->z_buffer = malloc((sizeof(double)) * all->param_map->scr_w);
-// 	all->sprite->sp_cast = malloc(sizeof(t_sprite) * all->sprite->sp_num);
-// 	all->sprite->sp = malloc(sizeof(t_sprite));
-// 	coord_sprite(all);
-// 	sp_1(all);
-// 	// sort_sprites(&(all->sprite));
-// 	i = 0;
-// 	while(i < all->sprite->sp_num)
-// 	{
-// 		sp_drawstart(all);
-// 		sp_drawend(all);
-// 		stripe = all->sprite->drawStartX;
-// 		printf("3- %d %d \n" ,stripe , all->sprite->drawStartX);
-// 		printf("3.d- %d %d \n" ,stripe , all->sprite->drawEndX);
-// 		while(stripe <= all->sprite->drawEndX)
-// 		{
-// 			printf("4- %d %d \n" , stripe , all->sprite->drawEndX);
-// 			cs_part4(all, stripe, y);
-// 			stripe++;
-// 		}
-// 		i++;
-// 	}
-// }
 

@@ -201,6 +201,7 @@ int		move(int key, t_all *all);
 void draw(t_all *all);
 
 void	cast_sprites(t_all *all);
+int	render_next_frame(t_all *all);
 
 
 void spriteeee(t_all *all);

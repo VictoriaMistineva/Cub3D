@@ -108,8 +108,8 @@ int	render_next_frame(t_all *all)
 	mlx_clear_window(all->mlx, all->win->mlx);
 	cast_rays(all);
 	// draw(all);
-	// cast_sprites(all);
-	spriteeee(all);
+	cast_sprites(all);
+	// spriteeee(all);
 	mlx_put_image_to_window(all->mlx, all->win->mlx, all->win->img, 0, 0);
 	mlx_do_sync(all->mlx);
 	return (0);
@@ -192,7 +192,6 @@ int	main(int argc, char **argv)
     all.win->addr = mlx_get_data_addr(all.win->img, &all.win->bits_per_pixel, &all.win->line_length,
                                  &all.win->endian);
 	init_tex(&all);
-	//cast_sprites(&all);
 	mlx_key_hook(all.win->mlx, move, &all);
     mlx_put_image_to_window(mlx, all.win->mlx, all.win->img, 0, 0);
 	mlx_loop_hook(all.mlx, render_next_frame, &all);

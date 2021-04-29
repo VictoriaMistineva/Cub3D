@@ -39,10 +39,8 @@ void sp_1(t_all *all)
 	}
 }
 
-void sp_drawstart(t_all *all)
+void sp_drawstart(t_all *all, int i)
 {
-	int i;
-	i = 0;
 	all->sprite->invDet = 1.0 / (all->param_map->planeX * all->param_map->dirY - all->param_map->dirX * all->param_map->planeY); //required for correct matrix multiplication
     all->sprite->spriteX= (double)all->sprite->sp[all->sprite->sp_order[i]].x  - all->param_map->posX;
     all->sprite->spriteY = all->sprite->sp[all->sprite->sp_order[i]].y - all->param_map->posY;
@@ -114,10 +112,11 @@ void	cast_sprites(t_all *all)
 	all->sprite->sp = malloc(sizeof(t_sprite));
 	coord_sprite(all);
 	sp_1(all);
+	i = 0;
 	// sort_sprites(&(all->sprite));
 	while(i < all->sprite->sp_num)
 	{
-		sp_drawstart(all);
+		sp_drawstart(all, i);
 		sp_drawend(all);
 		cs_color(all);
 		i++;

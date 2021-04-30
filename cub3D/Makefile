@@ -53,7 +53,7 @@ $(LIBFT):
 	@make -C $(dir $(LIBFT))
 
 run:
-	gcc -g libmlx.dylib -framework OpenGL -framework AppKit  Libft/libft.a ./*.c parser/*.c libmlx.dylib
+	gcc -g libmlx.dylib -framework OpenGL -framework AppKit Libft/libft.a parser/*.c rayscast/*.c ./*.c libmlx.dylib
 	./a.out map.cub
 
 clean:

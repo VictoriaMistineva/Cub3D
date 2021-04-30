@@ -1,11 +1,11 @@
 R 640 480
-NO ./pics/wood.png
-SO ./pics/bluestone.png
-WE ./pics/colorstone.png
-EA ./pics/eagle.png
-S ./pics/barrel.png
-F 63,75,30
-C 60,30,60
+NO ./pics/sak1.png
+SO ./pics/sak3.png
+WE ./pics/mossy.png
+EA ./pics/colorstone.png
+S ./pics/hhh.png
+F 91,140,53
+C 240,235,240
 
         1111111111111111111111111 
         1000000000110000011100001 

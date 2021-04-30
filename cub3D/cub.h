@@ -173,6 +173,8 @@ typedef struct	s_all // структура для всего вместе
 	t_img		*texEA;
 	t_img		*texS;
 	char		**map;
+	int			flag_save;
+	int			file;
 }				t_all;
 
 //utils
@@ -202,6 +204,11 @@ void draw(t_all *all);
 
 void	cast_sprites(t_all *all);
 int		render_next_frame(t_all *all);
+void	check_player_map(t_all *all);
 
 void 	sotirovka_sprite(t_sprite *sprite);
+void    create_screenshot(t_all *all);
+void is_save(char **argv, t_all *all, int argc);
+void set_cub(t_all *all, char **argv, int argc);
+
 #endif

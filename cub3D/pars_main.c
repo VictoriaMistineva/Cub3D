@@ -3,46 +3,6 @@
 #include <fcntl.h>
 #include <stdio.h>
 
-// typedef struct  s_data {
-//     void        *img;
-//     char        *addr;
-//     int         bits_per_pixel;
-//     int         line_length;
-//     int         endian;
-// }               t_data;
-
-// void            my_mlx_pixel_put(t_data *data, int x, int y, int color)
-// {
-//     char    *dst;
-
-//     dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-//     *(unsigned int*)dst = color;
-// }
-
-// int map_carta(t_all *all)
-// {
-//     mlx = mlx_init();
-//     mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-//     img.img = mlx_new_image(mlx, 1920, 1080);
-//     img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-//                                  &img.endian);
-// 	all.win = &img;
-//     point.y = 0;
-//     while (all.map[point.y] != NULL)
-//     {
-// 		point.x = 0;
-// 		while(all.map[point.y][point.x] != '\0')
-// 		{
-// 			if (all.map[point.y][point.x] == '1')
-//         		draw_scale(&all, point);
-//         	point.x++;
-// 		}
-// 	 	point.y++;
-// 	}
-//     mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-//     //mlx_loop(mlx);
-// }
-
 void	my_mlx_pixel_put(t_win *data, int x, int y, int color)
 {
     char    *dst;
@@ -99,7 +59,6 @@ void	init_stuct(t_all *all)
 	all->param_map->dirX = 0;
 	all->param_map->planeY = 0;
 	all->param_map->planeX = 0;
-	// all->sprite->sp_num = 0;
 
 }
 
@@ -107,9 +66,9 @@ int	render_next_frame(t_all *all)
 {
 	mlx_clear_window(all->mlx, all->win->mlx);
 	cast_rays(all);
-	// draw(all);
 	cast_sprites(all);
-	// spriteeee(all);
+	if(all->flag_save == 1)
+		create_screenshot(all);
 	mlx_put_image_to_window(all->mlx, all->win->mlx, all->win->img, 0, 0);
 	mlx_do_sync(all->mlx);
 	return (0);
@@ -157,11 +116,11 @@ int	main(int argc, char **argv)
 	all.algo_data = malloc(sizeof(t_algo_data));
 	all.txtr_data = malloc(sizeof(t_txtr_data));
 	all.sprite = malloc(sizeof(t_sprite));
-	// all.sprite->sp_cast = malloc(sizeof(t_sp_cast));
 
+	set_cub(&all, argv , argc);
+	is_save(argv, &all, argc);
 	param_map = all.param_map;
 	init_stuct(&all);
-	printf("argv[1] = %s\n", argv[1]);
 	int      	fd = open("map.cub", O_RDONLY);
 	char	  	*line = NULL;
 	char 		*bigLine = NULL;
@@ -179,9 +138,8 @@ int	main(int argc, char **argv)
 		}
 		free(line);
 	}
-	printf("north path = %s", all.param_map->north);
 	bigLine = ft_strjoin(bigLine, line);
-	all.map = ft_split(bigLine, '\n');//проверка валидности карты
+	all.map = ft_split(bigLine, '\n');
 	check_player(&all);
 	check_map(&all);
 	free(line);

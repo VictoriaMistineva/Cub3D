@@ -1,8 +1,8 @@
 R 640 480
 NO ./pics/sak1.png
-SO ./pics/sak3.png
-WE ./pics/mossy.png
-EA ./pics/colorstone.png
+SO ./pics/sak31.png
+WE ./pics/bam.png
+EA ./pics/sak3.png
 S ./pics/hhh.png
 F 49,87,3
 C 240,235,240

@@ -47,7 +47,7 @@ void	cr_part2(t_all *all)
 	all->algo_data->hit = 0;
 }
 
-void	cr_part3(t_all *all)
+void	cr_part3(t_all *all, int x)
 {
 	if (all->algo_data->sideDistX < all->algo_data->sideDistY)
 	{
@@ -69,6 +69,7 @@ void	cr_part3(t_all *all)
 	else
 		all->algo_data->pwd = (all->algo_data->mapY - all->param_map->posY
 			+ (1 - all->algo_data->stepY) / 2) / all->algo_data->rayDirY;
+	all->sprite->z_buffer[x] = all->algo_data->pwd;
 }
 
 void	cr_part4(t_all *all)
@@ -156,13 +157,14 @@ int	cast_rays(t_all *all)
 	int		x;
 	t_img	*tmp;
 
+	all->sprite->z_buffer = malloc((sizeof(double)) * all->param_map->scr_w);
 	x = 0;
 	while (x < all->param_map->scr_w)
 	{
 		cr_part1(all, x);
 		cr_part2(all);
 		while (all->algo_data->hit == 0)
-			cr_part3(all);
+			cr_part3(all, x);
 		cr_part4(all);
 		tmp = chooseTex(all);
 		cr_part5(all, tmp);

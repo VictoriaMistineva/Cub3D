@@ -17,7 +17,6 @@ void coord_sprite(t_all *all)
 			{
 				all->sprite->sp[i].x = j + 0.5;
 				all->sprite->sp[i].y = k + 0.5;
-					// printf("map %f\n",all->sprite->sp[i].x);
 					i++;
 			}
 			j++;
@@ -77,9 +76,6 @@ void	sp_color(t_all *all)
 	int stripe;
 	int y;
 
-	printf("3- %d %d \n" ,stripe , all->sprite->drawStartX);
-	printf("3.d- %d %d \n" ,stripe , all->sprite->drawEndX);
-
 	texS = all->texS;
 	stripe = all->sprite->drawStartX;
 	while(stripe < all->sprite->drawEndX)
@@ -104,6 +100,7 @@ void	cast_sprites(t_all *all)
 {
 	int stripe;
 	int i;
+
 	i = 0;
 	all->sprite->sp_dist = malloc(sizeof(double)* all->sprite->sp_num);
 	all->sprite->sp_order = malloc((sizeof(int)) * all->sprite->sp_num);
@@ -113,7 +110,7 @@ void	cast_sprites(t_all *all)
 	coord_sprite(all);
 	sp_1(all);
 	i = 0;
-	sotirovka_sprite(&(all->sprite));
+	// sotirovka_sprite(all->sprite);
 	while(i < all->sprite->sp_num)
 	{
 		sp_drawstart(all, i);

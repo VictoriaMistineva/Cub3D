@@ -16,29 +16,28 @@
 // 	}
 // }
 
-int resolution(char *line, t_all *all)
+int	resolution(char *line, t_all *all)
 {
-	char **resolution;
-	if(all->param_map->scr_h != -1 && all->param_map->scr_w != -1)
+	char	**resolution;
+
+	if (all->param_map->scr_h != -1 && all->param_map->scr_w != -1)
 		printf_exit("двойной ввод R");
-	resolution = ft_split(line,' ');
+	resolution = ft_split(line, ' ');
 	all->param_map->scr_w = ft_atoi_pars(resolution[1]);
 	all->param_map->scr_h = ft_atoi_pars(resolution[2]);
-	printf(" MY= %d %d\n",all->param_map->scr_w, all->param_map->scr_h);// удалить
 	return (1);
 }
 
-int check_texture(char *line, char **texture)
+int	check_texture(char *line, char **texture)
 {
-	int i;
+	int	i;
 
 	i = 2;
-	if(*texture != NULL)
+	if (*texture != NULL)
 		printf_exit("двойной ввод texture");
-	while(line[i] == ' ')
+	while (line[i] == ' ')
 		i++;
 	*texture = ft_strdup(&line[i]);
 	// check_texture(all->param_map->north); //оставить
-	printf(" my= %s\n ", *texture);
-	return(1);
+	return (1);
 }

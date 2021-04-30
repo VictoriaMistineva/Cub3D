@@ -102,10 +102,10 @@ void	cast_sprites(t_all *all)
 	int i;
 
 	i = 0;
-	all->sprite->sp_dist = malloc(sizeof(double)* all->sprite->sp_num);
-	all->sprite->sp_order = malloc((sizeof(int)) * all->sprite->sp_num);
-	all->sprite->sp_cast = malloc(sizeof(t_sprite) * all->sprite->sp_num);
-	all->sprite->sp = malloc(sizeof(t_sprite));
+	// all->sprite->sp_dist = malloc(sizeof(double)* all->sprite->sp_num);
+	// all->sprite->sp_order = malloc((sizeof(int)) * all->sprite->sp_num);
+	// all->sprite->sp_cast = malloc(sizeof(t_sprite) * all->sprite->sp_num);
+	// all->sprite->sp = malloc(sizeof(t_sprite));
 	coord_sprite(all);
 	sp_1(all);
 	i = 0;

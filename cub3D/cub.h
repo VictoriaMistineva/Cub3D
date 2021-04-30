@@ -185,6 +185,7 @@ void	validate_color(int color);
 int		create_rgb(int r, int g, int b);
 int		type_flags_check(t_all *all);
 int		check_num(const char *str, int num);
+char			**array_free(char **array);
 
 int	get_next_line(int fd, char **line);
 int	type_identifier(char *line, t_all *all);

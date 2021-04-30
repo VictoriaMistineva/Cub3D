@@ -157,7 +157,7 @@ int	cast_rays(t_all *all)
 	int		x;
 	t_img	*tmp;
 
-	all->sprite->z_buffer = malloc((sizeof(double)) * all->param_map->scr_w);
+	// all->sprite->z_buffer = malloc((sizeof(double)) * all->param_map->scr_w);
 	x = 0;
 	while (x < all->param_map->scr_w)
 	{

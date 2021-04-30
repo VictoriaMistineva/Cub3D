@@ -74,6 +74,15 @@ int	render_next_frame(t_all *all)
 	return (0);
 }
 
+void malloc_sp(t_all *all)
+{
+	all->sprite->sp_dist = malloc(sizeof(double)* all->sprite->sp_num);
+	all->sprite->sp_order = malloc((sizeof(int)) * all->sprite->sp_num);
+	all->sprite->sp_cast = malloc(sizeof(t_sprite) * all->sprite->sp_num);
+	all->sprite->sp = malloc(sizeof(t_sprite));
+
+}
+
 void init_tex(t_all *all)
 {
 	t_img		*texNO;
@@ -124,6 +133,7 @@ int	main(int argc, char **argv)
 	int      	fd = open("map.cub", O_RDONLY);
 	char	  	*line = NULL;
 	char 		*bigLine = NULL;
+	char		*tmp = NULL;
 
 	while (get_next_line(fd, &line) > 0) 
 	{
@@ -134,23 +144,31 @@ int	main(int argc, char **argv)
 			bigLine = ft_strjoin(bigLine, line);
 			free(line);
 			line = bigLine; 
-			bigLine = ft_strjoin(bigLine, "\n");
+			//free(bigLine);
+			// bigLine = ft_strjoin(bigLine, "\n");//
+			tmp = ft_strjoin(bigLine, "\n");//
+			bigLine = tmp;
+			// free(tmp);
+
 		}
 		free(line);
 	}
 	bigLine = ft_strjoin(bigLine, line);
-	all.map = ft_split(bigLine, '\n');
+	// bigLine = ft_strjoin(bigLine, line);
+	all.map = ft_split(bigLine, '\n');//
+	free(bigLine);
 	check_player(&all);
 	check_map(&all);
 	free(line);
-	
-    all.mlx = mlx_init();
+	malloc_sp(&all);
+	all.sprite->z_buffer = malloc((sizeof(double)) * all.param_map->scr_w); //
+    all.mlx = mlx_init(); //защитить маллоки
     all.win->mlx = mlx_new_window(all.mlx, param_map->scr_w, param_map->scr_h, "CUB_3D");
     all.win->img = mlx_new_image(all.mlx, param_map->scr_w, param_map->scr_h);
     all.win->addr = mlx_get_data_addr(all.win->img, &all.win->bits_per_pixel, &all.win->line_length,
                                  &all.win->endian);
 	init_tex(&all);
-	mlx_key_hook(all.win->mlx, move, &all);
+	mlx_hook(all.win->mlx, 2, 1L<<0, move, &all);
     mlx_put_image_to_window(mlx, all.win->mlx, all.win->img, 0, 0);
 	mlx_loop_hook(all.mlx, render_next_frame, &all);
     mlx_loop(all.mlx);

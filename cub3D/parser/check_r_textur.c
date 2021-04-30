@@ -25,6 +25,7 @@ int	resolution(char *line, t_all *all)
 	resolution = ft_split(line, ' ');
 	all->param_map->scr_w = ft_atoi_pars(resolution[1]);
 	all->param_map->scr_h = ft_atoi_pars(resolution[2]);
+	array_free(resolution);
 	return (1);
 }
 

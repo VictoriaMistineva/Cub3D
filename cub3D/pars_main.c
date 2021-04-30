@@ -133,29 +133,27 @@ int	main(int argc, char **argv)
 	int      	fd = open("map.cub", O_RDONLY);
 	char	  	*line = NULL;
 	char 		*bigLine = NULL;
-	char		*tmp = NULL;
+	char		*tmp;
 
 	while (get_next_line(fd, &line) > 0) 
 	{
 		if (type_flags_check(&all) > 0)
 			type_identifier(line, &all);
 		else
-		{	
+		{
+			tmp = bigLine;
 			bigLine = ft_strjoin(bigLine, line);
-			free(line);
-			line = bigLine; 
-			//free(bigLine);
-			// bigLine = ft_strjoin(bigLine, "\n");//
-			tmp = ft_strjoin(bigLine, "\n");//
-			bigLine = tmp;
-			// free(tmp);
-
+			free(tmp);
+			tmp = bigLine;
+			bigLine = ft_strjoin(bigLine, "\n");
+			free(tmp);
 		}
 		free(line);
 	}
+	tmp = bigLine;
 	bigLine = ft_strjoin(bigLine, line);
-	// bigLine = ft_strjoin(bigLine, line);
-	all.map = ft_split(bigLine, '\n');//
+	free(tmp);
+	all.map = ft_split(bigLine, '\n');//проверка валидности карты
 	free(bigLine);
 	check_player(&all);
 	check_map(&all);

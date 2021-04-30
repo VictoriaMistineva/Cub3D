@@ -64,4 +64,4 @@ fclean: clean
 	@make -C $(dir $(LIBFT)) fclean
 	@rm -f $(NAME)
 
-re: fclean all
+re: fclean allw

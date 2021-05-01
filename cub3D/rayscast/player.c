@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   player.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ycordell <ycordell@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/01 20:05:58 by ycordell          #+#    #+#             */
+/*   Updated: 2021/05/01 20:29:09 by ycordell         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub.h"
 
 void	check_ns_player(t_all *all, char map)
@@ -41,7 +53,6 @@ void	check_player(t_all *all)
 	int	k;
 	int	j;
 
-	all->sprite->sp_num = 0;
 	k = 0;
 	while (all->map[k])
 	{
@@ -61,8 +72,6 @@ void	check_player(t_all *all)
 					all->map[k][j] = '0';
 				}
 			}
-			else if (all->map[k][j] == '2')
-				all->sprite->sp_num++;
 			j++;
 		}
 		k++;

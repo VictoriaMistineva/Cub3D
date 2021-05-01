@@ -38,27 +38,27 @@ void	draw_scale(t_all *all, t_point point)
 
 void	init_stuct(t_all *all)
 {
-	all->prm_map->scr_h = -1;
-	all->prm_map->scr_w = -1;
-	all->prm_map->floor_r = -1;
-	all->prm_map->floor_g = -1;
-	all->prm_map->floor_b = -1;
-	all->prm_map->ceil_r = -1;
-	all->prm_map->ceil_g = -1;
-	all->prm_map->ceil_b = -1;
-	all->prm_map->color_ceil= 0;
-	all->prm_map->color_floor= 0;
-	all->prm_map->north= NULL;
-	all->prm_map->south= NULL;
-	all->prm_map->east= NULL;
-	all->prm_map->west= NULL;
-	all->prm_map->sprite= NULL;
-	all->prm_map->posX = 0;
-	all->prm_map->posY = 0;
-	all->prm_map->dirY = 0;
-	all->prm_map->dirX = 0;
-	all->prm_map->planeY = 0;
-	all->prm_map->planeX = 0;
+	all->pm->scr_h = -1;
+	all->pm->scr_w = -1;
+	all->pm->floor_r = -1;
+	all->pm->floor_g = -1;
+	all->pm->floor_b = -1;
+	all->pm->ceil_r = -1;
+	all->pm->ceil_g = -1;
+	all->pm->ceil_b = -1;
+	all->pm->color_ceil= 0;
+	all->pm->color_floor= 0;
+	all->pm->north= NULL;
+	all->pm->south= NULL;
+	all->pm->east= NULL;
+	all->pm->west= NULL;
+	all->pm->sprite= NULL;
+	all->pm->posX = 0;
+	all->pm->posY = 0;
+	all->pm->dirY = 0;
+	all->pm->dirX = 0;
+	all->pm->plY = 0;
+	all->pm->plX = 0;
 
 }
 
@@ -92,23 +92,23 @@ void init_tex(t_all *all)
 	t_img		*texS;
 
 	texNO = (t_img *)malloc(sizeof(t_img));
-	texNO->img = mlx_png_file_to_image(all->mlx, all->prm_map->north, &texNO->width, &texNO->height);
+	texNO->img = mlx_png_file_to_image(all->mlx, all->pm->north, &texNO->width, &texNO->height);
 	texNO->addr = mlx_get_data_addr(texNO->img, &texNO->bpp, &texNO->line_len, &texNO->endian);
 	all->texNO = texNO;
 	texSO = (t_img *)malloc(sizeof(t_img));
-	texSO->img = mlx_png_file_to_image(all->mlx, all->prm_map->south, &texSO->width, &texSO->height);
+	texSO->img = mlx_png_file_to_image(all->mlx, all->pm->south, &texSO->width, &texSO->height);
 	texSO->addr = mlx_get_data_addr(texSO->img, &texSO->bpp, &texSO->line_len, &texSO->endian);
 	all->texSO = texSO;
 	texWE = (t_img *)malloc(sizeof(t_img));
-	texWE->img = mlx_png_file_to_image(all->mlx, all->prm_map->west, &texWE->width, &texWE->height);
+	texWE->img = mlx_png_file_to_image(all->mlx, all->pm->west, &texWE->width, &texWE->height);
 	texWE->addr = mlx_get_data_addr(texWE->img, &texWE->bpp, &texWE->line_len, &texWE->endian);
 	all->texWE = texWE;
 	texEA = (t_img *)malloc(sizeof(t_img));
-	texEA->img = mlx_png_file_to_image(all->mlx, all->prm_map->east, &texEA->width, &texEA->height);
+	texEA->img = mlx_png_file_to_image(all->mlx, all->pm->east, &texEA->width, &texEA->height);
 	texEA->addr = mlx_get_data_addr(texEA->img, &texEA->bpp, &texEA->line_len, &texEA->endian);
 	all->texEA = texEA;
 	texS = (t_img *)malloc(sizeof(t_img));
-	texS->img = mlx_png_file_to_image(all->mlx, all->prm_map->sprite, &texS->width, &texS->height);
+	texS->img = mlx_png_file_to_image(all->mlx, all->pm->sprite, &texS->width, &texS->height);
 	texS->addr = mlx_get_data_addr(texS->img, &texS->bpp, &texS->line_len, &texS->endian);
 	all->texS = texS;
 }
@@ -118,17 +118,17 @@ int	main(int argc, char **argv)
 	void		*mlx;
     void		*mlx_win;
 	t_point		point;
-	t_prm_map *prm_map;
+	t_pm *pm;
 
 	all.win = malloc(sizeof(t_win));
-	all.prm_map = malloc(sizeof(t_prm_map));
-	all.algo_data = malloc(sizeof(t_algo_data));
+	all.pm = malloc(sizeof(t_pm));
+	all.gl = malloc(sizeof(t_gl));
 	all.txtr_data = malloc(sizeof(t_txtr_data));
 	all.sprite = malloc(sizeof(t_sprite));
 
 	set_cub(&all, argv , argc);
 	is_save(argv, &all, argc);
-	prm_map = all.prm_map;
+	pm = all.pm;
 	init_stuct(&all);
 	int      	fd = open("map.cub", O_RDONLY);
 	char	  	*line = NULL;
@@ -159,10 +159,10 @@ int	main(int argc, char **argv)
 	check_map(&all);
 	free(line);
 	malloc_sp(&all);
-	all.sprite->z_buf = malloc((sizeof(double)) * all.prm_map->scr_w); //
+	all.sprite->z_buf = malloc((sizeof(double)) * all.pm->scr_w); //
     all.mlx = mlx_init(); //защитить маллоки
-    all.win->mlx = mlx_new_window(all.mlx, prm_map->scr_w, prm_map->scr_h, "CUB_3D");
-    all.win->img = mlx_new_image(all.mlx, prm_map->scr_w, prm_map->scr_h);
+    all.win->mlx = mlx_new_window(all.mlx, pm->scr_w, pm->scr_h, "CUB_3D");
+    all.win->img = mlx_new_image(all.mlx, pm->scr_w, pm->scr_h);
     all.win->addr = mlx_get_data_addr(all.win->img, &all.win->bits_per_pixel, &all.win->line_length,
                                  &all.win->endian);
 	init_tex(&all);

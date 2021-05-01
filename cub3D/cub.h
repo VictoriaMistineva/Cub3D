@@ -43,7 +43,7 @@ typedef struct	s_point // структура для точки
 	int			y;
 }				 t_point;
 
-typedef struct	s_prm_map
+typedef struct	s_pm
 {
 	int			scr_h;
 	int			scr_w;
@@ -64,11 +64,11 @@ typedef struct	s_prm_map
 	double		posX;
 	double		dirY;
 	double		dirX;
-	double		planeY;
-	double		planeX;
-}				t_prm_map;
+	double		plY;
+	double		plX;
+}				t_pm;
 
-typedef struct	s_algo_data
+typedef struct	s_gl
 {
 	double		pwd;
 	double		camera_x;
@@ -87,9 +87,9 @@ typedef struct	s_algo_data
     double 		sideDistY;
 	int 		mapX;
     int 		mapY;
-	double		old_plane_x;
+	double		old_plX;
 
-}				t_algo_data;
+}				t_gl;
 
 typedef struct	s_img 
 {
@@ -163,8 +163,8 @@ typedef struct	s_all // структура для всего вместе
 {
 	void		*mlx;
 	t_win		*win;
-	t_prm_map *prm_map;
-	t_algo_data	*algo_data;
+	t_pm *pm;
+	t_gl	*gl;
 	t_txtr_data	*txtr_data;
 	t_sprite    *sprite;
 	t_img		*texNO;

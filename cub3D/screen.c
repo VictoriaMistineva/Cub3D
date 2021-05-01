@@ -14,11 +14,11 @@ void    create_screenshot2(int fd, t_all *all)
     int32_t x;
     int32_t y;
     int     color;
-    y = all->prm_map->scr_h - 1;
+    y = all->pm->scr_h - 1;
     while (y >= 0)
     {
         x = 0;
-        while (x < all->prm_map->scr_w)
+        while (x < all->pm->scr_w)
         {
             color = *(unsigned int *)(all->win->addr
                     + (y * all->win->line_length)
@@ -41,12 +41,12 @@ void    create_screenshot(t_all *all)
     ft_bzero(bitmap, 54);
     bitmap[0] = 'B';// просто символы
     bitmap[1] = 'M';
-    *((int *)(bitmap + 2)) = all->prm_map->scr_h
-        * all->prm_map->scr_w * 4 + 54;
+    *((int *)(bitmap + 2)) = all->pm->scr_h
+        * all->pm->scr_w * 4 + 54;
     *(int *)(bitmap + 10) = 54;
     *(int *)(bitmap + 14) = 40;
-    *(int *)(bitmap + 18) = all->prm_map->scr_w;;
-    *(int *)(bitmap + 22) = all->prm_map->scr_h;;
+    *(int *)(bitmap + 18) = all->pm->scr_w;;
+    *(int *)(bitmap + 22) = all->pm->scr_h;;
     *(bitmap + 26) = 1;
     *(bitmap + 28) = 32;
     write(fd, bitmap, 54);

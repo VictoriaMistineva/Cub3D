@@ -2,7 +2,7 @@
 
 void check_player_map(t_all *all)
 {
-	if(all->prm_map->posX != 0)	
+	if(all->pm->posX != 0)	
 		printf_exit("Два игрока на карте");
 }			
 
@@ -11,8 +11,8 @@ void	check_cell(t_all *all, int j, int k)
 {
     if(all->map[k][j] == ' ' || all->map[k][j] == '1')
         return ;
-    if (j == 0 || k == 0 || j == (all->prm_map->scr_w - 1)
-        || k == (all->prm_map->scr_h - 1))
+    if (j == 0 || k == 0 || j == (all->pm->scr_w - 1)
+        || k == (all->pm->scr_h - 1))
 			printf_exit ("невалидная карта");
     if (all->map[k + 0][j + 1] == ' '
         || all->map[k + 0][j - 1] == ' '
@@ -34,7 +34,7 @@ void	check_invalid(t_all *all, int k, int j)
 		if (all->map[k][j] != '1' && all->map[k][j] != ' ')
 			printf_exit("открытое пространство");
 	}
-	if (k == 0 || k == all->prm_map->scr_h - 1)
+	if (k == 0 || k == all->pm->scr_h - 1)
 	{
 		if (all->map[k][j] != '1' && all->map[k][j] != ' ')
 			printf_exit("открытое пространство");

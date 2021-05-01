@@ -4,107 +4,107 @@ void	cr_part1(t_all *all, int x)
 {
 	double	camere_x;
 
-	all->algo_data->camera_x = 2.0 * x / (double)all->prm_map->scr_w - 1;
-	all->algo_data->rayDirX = all->prm_map->dirX
-		+ all->prm_map->planeX * all->algo_data->camera_x;
-	all->algo_data->rayDirY = all->prm_map->dirY
-		+ all->prm_map->planeY * all->algo_data->camera_x;
-	all->algo_data->mapX = (int)all->prm_map->posX;
-	all->algo_data->mapY = (int)all->prm_map->posY;
-	all->algo_data->deltaDistX = fabs(1 / all->algo_data->rayDirX);
-	all->algo_data->deltaDistY = fabs(1 / all->algo_data->rayDirY);
-	all->algo_data->hit = 0;
+	all->gl->camera_x = 2.0 * x / (double)all->pm->scr_w - 1;
+	all->gl->rayDirX = all->pm->dirX
+		+ all->pm->plX * all->gl->camera_x;
+	all->gl->rayDirY = all->pm->dirY
+		+ all->pm->plY * all->gl->camera_x;
+	all->gl->mapX = (int)all->pm->posX;
+	all->gl->mapY = (int)all->pm->posY;
+	all->gl->deltaDistX = fabs(1 / all->gl->rayDirX);
+	all->gl->deltaDistY = fabs(1 / all->gl->rayDirY);
+	all->gl->hit = 0;
 }
 
 void	cr_part2(t_all *all)
 {
-	if (all->algo_data->rayDirX < 0)
+	if (all->gl->rayDirX < 0)
 	{
-		all->algo_data->stepX = -1;
-		all->algo_data->sideDistX
-			= (all->prm_map->posX - all->algo_data->mapX)
-			* all->algo_data->deltaDistX;
+		all->gl->stepX = -1;
+		all->gl->sideDistX
+			= (all->pm->posX - all->gl->mapX)
+			* all->gl->deltaDistX;
 	}
 	else
 	{
-		all->algo_data->stepX = 1;
-		all->algo_data->sideDistX = (all->algo_data->mapX
-				+ 1.0 - all->prm_map->posX) * all->algo_data->deltaDistX;
+		all->gl->stepX = 1;
+		all->gl->sideDistX = (all->gl->mapX
+				+ 1.0 - all->pm->posX) * all->gl->deltaDistX;
 	}
-	if (all->algo_data->rayDirY < 0)
+	if (all->gl->rayDirY < 0)
 	{
-		all->algo_data->stepY = -1;
-		all->algo_data->sideDistY
-			= (all->prm_map->posY - all->algo_data->mapY)
-			* all->algo_data->deltaDistY;
+		all->gl->stepY = -1;
+		all->gl->sideDistY
+			= (all->pm->posY - all->gl->mapY)
+			* all->gl->deltaDistY;
 	}
 	else
 	{
-		all->algo_data->stepY = 1;
-		all->algo_data->sideDistY = (all->algo_data->mapY
-				+ 1.0 - all->prm_map->posY) * all->algo_data->deltaDistY;
+		all->gl->stepY = 1;
+		all->gl->sideDistY = (all->gl->mapY
+				+ 1.0 - all->pm->posY) * all->gl->deltaDistY;
 	}
-	all->algo_data->hit = 0;
+	all->gl->hit = 0;
 }
 
 void	cr_part3(t_all *all, int x)
 {
-	if (all->algo_data->sideDistX < all->algo_data->sideDistY)
+	if (all->gl->sideDistX < all->gl->sideDistY)
 	{
-		all->algo_data->sideDistX += all->algo_data->deltaDistX;
-		all->algo_data->mapX += all->algo_data->stepX;
-		all->algo_data->side = 0;
+		all->gl->sideDistX += all->gl->deltaDistX;
+		all->gl->mapX += all->gl->stepX;
+		all->gl->side = 0;
 	}
 	else
 	{
-		all->algo_data->sideDistY += all->algo_data->deltaDistY;
-		all->algo_data->mapY += all->algo_data->stepY;
-		all->algo_data->side = 1;
+		all->gl->sideDistY += all->gl->deltaDistY;
+		all->gl->mapY += all->gl->stepY;
+		all->gl->side = 1;
 	}
-	if (all->map[all->algo_data->mapY][all->algo_data->mapX] == '1')
-		all->algo_data->hit = 1;
-	if (all->algo_data->side == 0)
-		all->algo_data->pwd = (all->algo_data->mapX - all->prm_map->posX
-			+ (1 - all->algo_data->stepX) / 2) / all->algo_data->rayDirX;
+	if (all->map[all->gl->mapY][all->gl->mapX] == '1')
+		all->gl->hit = 1;
+	if (all->gl->side == 0)
+		all->gl->pwd = (all->gl->mapX - all->pm->posX
+			+ (1 - all->gl->stepX) / 2) / all->gl->rayDirX;
 	else
-		all->algo_data->pwd = (all->algo_data->mapY - all->prm_map->posY
-			+ (1 - all->algo_data->stepY) / 2) / all->algo_data->rayDirY;
-	all->sprite->z_buf[x] = all->algo_data->pwd;
+		all->gl->pwd = (all->gl->mapY - all->pm->posY
+			+ (1 - all->gl->stepY) / 2) / all->gl->rayDirY;
+	all->sprite->z_buf[x] = all->gl->pwd;
 }
 
 void	cr_part4(t_all *all)
 {
-	all->algo_data->line_h = (int)(all->prm_map->scr_h
-		/ all->algo_data->pwd);
-	all->algo_data->draw_start = -1 * (all->algo_data->line_h)
-		/ 2 + all->prm_map->scr_h / 2;
-	if (all->algo_data->draw_start < 0)
-		all->algo_data->draw_start = 0;
-	all->algo_data->draw_end = all->algo_data->line_h
-		/ 2 + all->prm_map->scr_h / 2;
-	if (all->algo_data->draw_end >= all->prm_map->scr_h)
-		all->algo_data->draw_end = all->prm_map->scr_h - 1;
+	all->gl->line_h = (int)(all->pm->scr_h
+		/ all->gl->pwd);
+	all->gl->draw_start = -1 * (all->gl->line_h)
+		/ 2 + all->pm->scr_h / 2;
+	if (all->gl->draw_start < 0)
+		all->gl->draw_start = 0;
+	all->gl->draw_end = all->gl->line_h
+		/ 2 + all->pm->scr_h / 2;
+	if (all->gl->draw_end >= all->pm->scr_h)
+		all->gl->draw_end = all->pm->scr_h - 1;
 }
 
 void	cr_part5(t_all *all, t_img *tex)
 {
-	if (all->algo_data->side == 0)
-		all->txtr_data->wall_x = all->prm_map->posY
-			+ all->algo_data->pwd * all->algo_data->rayDirY;
+	if (all->gl->side == 0)
+		all->txtr_data->wall_x = all->pm->posY
+			+ all->gl->pwd * all->gl->rayDirY;
 	else
-		all->txtr_data->wall_x = all->prm_map->posX + all->algo_data->pwd
-			* all->algo_data->rayDirX;
+		all->txtr_data->wall_x = all->pm->posX + all->gl->pwd
+			* all->gl->rayDirX;
 	all->txtr_data->wall_x -= floor((all->txtr_data->wall_x));
 	all->txtr_data->tex_x = (int)(all->txtr_data->wall_x
 		* (double)(tex->width));
-	if (all->algo_data->side == 0 && all->algo_data->rayDirX > 0)
+	if (all->gl->side == 0 && all->gl->rayDirX > 0)
 		all->txtr_data->tex_x = tex->width - all->txtr_data->tex_x - 1;
-	if (all->algo_data->side == 1 && all->algo_data->rayDirY < 0)
+	if (all->gl->side == 1 && all->gl->rayDirY < 0)
 		all->txtr_data->tex_x = tex->width - all->txtr_data->tex_x - 1;
-	all->txtr_data->step = 1.0 * tex->height / all->algo_data->line_h;
+	all->txtr_data->step = 1.0 * tex->height / all->gl->line_h;
 	all->txtr_data->text_pos
-		= (all->algo_data->draw_start - all->prm_map->scr_h
-		/ 2 + all->algo_data->line_h / 2)
+		= (all->gl->draw_start - all->pm->scr_h
+		/ 2 + all->gl->line_h / 2)
 		* all->txtr_data->step;
 }
 
@@ -113,11 +113,11 @@ void	cr_part6(t_all *all, int x, t_img *tex)
 	int y;
 
 	y = 0;
-	while (y < all->prm_map->scr_h)
+	while (y < all->pm->scr_h)
 	{
-		if (y < all->algo_data->draw_start)
-			my_mlx_pixel_put(all->win, x, y, all->prm_map->color_ceil);
-		if (y >= all->algo_data->draw_start && y <= all->algo_data->draw_end)
+		if (y < all->gl->draw_start)
+			my_mlx_pixel_put(all->win, x, y, all->pm->color_ceil);
+		if (y >= all->gl->draw_start && y <= all->gl->draw_end)
 		{
 			all->txtr_data->tex_y = (int)all->txtr_data->text_pos
 				& (tex->height - 1);
@@ -130,23 +130,23 @@ void	cr_part6(t_all *all, int x, t_img *tex)
 				* (tex->bpp / 8)));
 			my_mlx_pixel_put(all->win, x, y, all->txtr_data->color);
 		}
-		if ( y > all->algo_data->draw_end)
-			my_mlx_pixel_put(all->win, x, y, all->prm_map->color_floor);
+		if ( y > all->gl->draw_end)
+			my_mlx_pixel_put(all->win, x, y, all->pm->color_floor);
 		y++;
 	}
 }
 
 t_img	*chooseTex(t_all *all)
 {
-	if (all->algo_data->side == 1)
+	if (all->gl->side == 1)
 	{
-		if (all->algo_data->mapY > all->prm_map->posY)
+		if (all->gl->mapY > all->pm->posY)
 			return (all->texSO);
 		else
 			return (all->texNO);
 	}
 	else
-		if (all->algo_data->mapX > all->prm_map->posX)
+		if (all->gl->mapX > all->pm->posX)
 			return (all->texWE);
 		else
 			return (all->texEA);
@@ -157,13 +157,13 @@ int	cast_rays(t_all *all)
 	int		x;
 	t_img	*tmp;
 
-	// all->sprite->z_buf = malloc((sizeof(double)) * all->prm_map->scr_w);
+	// all->sprite->z_buf = malloc((sizeof(double)) * all->pm->scr_w);
 	x = 0;
-	while (x < all->prm_map->scr_w)
+	while (x < all->pm->scr_w)
 	{
 		cr_part1(all, x);
 		cr_part2(all);
-		while (all->algo_data->hit == 0)
+		while (all->gl->hit == 0)
 			cr_part3(all, x);
 		cr_part4(all);
 		tmp = chooseTex(all);

@@ -20,11 +20,11 @@ int	resolution(char *line, t_all *all)
 {
 	char	**resolution;
 
-	if (all->prm_map->scr_h != -1 && all->prm_map->scr_w != -1)
+	if (all->pm->scr_h != -1 && all->pm->scr_w != -1)
 		printf_exit("двойной ввод R");
 	resolution = ft_split(line, ' ');
-	all->prm_map->scr_w = ft_atoi_pars(resolution[1]);
-	all->prm_map->scr_h = ft_atoi_pars(resolution[2]);
+	all->pm->scr_w = ft_atoi_pars(resolution[1]);
+	all->pm->scr_h = ft_atoi_pars(resolution[2]);
 	array_free(resolution);
 	return (1);
 }
@@ -39,6 +39,6 @@ int	check_texture(char *line, char **texture)
 	while (line[i] == ' ')
 		i++;
 	*texture = ft_strdup(&line[i]);
-	// check_texture(all->prm_map->north); //оставить
+	// check_texture(all->pm->north); //оставить
 	return (1);
 }

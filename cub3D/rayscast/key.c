@@ -1,97 +1,94 @@
 #include "../cub.h"
 
-int key_esc(int key, t_all *all)
+int	key_esc(int key, t_all *all)
 {
 	exit(0);
 }
 
-void	key_w_s(t_all *all, double movespeed, int key)
+void	key_w_s(t_all *all, double msd, int key)
 {
 	if (key == KEY_W)
 	{
-		
-		if (all->map[(int)all->prm_map->posY]
-				[(int)(all->prm_map->posX + all->prm_map->dirX * movespeed)] == '0')
-			all->prm_map->posX += all->prm_map->dirX * movespeed;
-		
-		if (all->map[(int)(all->prm_map->posY + all->prm_map->dirY
-					* movespeed)][(int)all->prm_map->posX] == '0')
-			all->prm_map->posY += all->prm_map->dirY * movespeed;
+		if (all->map[(int)all->pm->posY]
+			[(int)(all->pm->posX + all->pm->dirX * msd)] == '0')
+			all->pm->posX += all->pm->dirX * msd;
+		if (all->map[(int)(all->pm->posY + all->pm->dirY
+				* msd)][(int)all->pm->posX] == '0')
+			all->pm->posY += all->pm->dirY * msd;
 	}
 	if (key == KEY_S)
 	{
-		if (all->map[(int)all->prm_map->posY]
-				[(int)(all->prm_map->posX - all->prm_map->dirX * movespeed)] == '0')
-			all->prm_map->posX -= all->prm_map->dirX * movespeed;
-			
-		if (all->map[(int)(all->prm_map->posY - all->prm_map->dirY
-					* movespeed)][(int)all->prm_map->posX] == '0')
-			all->prm_map->posY -= all->prm_map->dirY * movespeed;
+		if (all->map[(int)all->pm->posY]
+			[(int)(all->pm->posX - all->pm->dirX * msd)] == '0')
+			all->pm->posX -= all->pm->dirX * msd;
+		if (all->map[(int)(all->pm->posY - all->pm->dirY
+				* msd)][(int)all->pm->posX] == '0')
+			all->pm->posY -= all->pm->dirY * msd;
 	}
 }
 
-void	key_a_d(t_all *all, double movespeed, int key)
+void	key_a_d(t_all *all, double msd, int key)
 {
 	if (key == KEY_A)
 	{
-		if (all->map[(int)(all->prm_map->posY)]
-				[(int)(all->prm_map->posX
-				 - all->prm_map->planeX * movespeed)] == '0')
-			all->prm_map->posX -= all->prm_map->planeX * movespeed;
-		if (all->map[(int)(all->prm_map->posY 
-				+ all->prm_map->planeY
-				* movespeed)][(int)(all->prm_map->posX)] == '0')
-			all->prm_map->posY -= all->prm_map->planeY * movespeed;
+		if (all->map[(int)(all->pm->posY)]
+				[(int)(all->pm->posX
+				 - all->pm->plX * msd)] == '0')
+			all->pm->posX -= all->pm->plX * msd;
+		if (all->map[(int)(all->pm->posY
+				+ all->pm->plY
+				* msd)][(int)(all->pm->posX)] == '0')
+			all->pm->posY -= all->pm->plY * msd;
 	}
 	if (key == KEY_D)
 	{
-		if (all->map[(int)(all->prm_map->posY)]
-				[(int)(all->prm_map->posX + all->prm_map->planeX * movespeed)] == '0')
-			all->prm_map->posX += all->prm_map->planeX * movespeed;
-		if (all->map[(int)(all->prm_map->posY - all->prm_map->planeY
-					* movespeed)][(int)(all->prm_map->posX)] == '0')
-			all->prm_map->posY += all->prm_map->planeY * movespeed;
+		if (all->map[(int)(all->pm->posY)]
+				[(int)(all->pm->posX + all->pm->plX * msd)] == '0')
+			all->pm->posX += all->pm->plX * msd;
+		if (all->map[(int)(all->pm->posY - all->pm->plY
+				* msd)][(int)(all->pm->posX)] == '0')
+			all->pm->posY += all->pm->plY * msd;
 	}
 }
 
-void	key_left_right(int key, t_all *all, double rotspeed)
+void	key_left_right(int key, t_all *all, double rs)
 {
-	double oldDirX;
+	double	oldDirX;
 
 	if (key == KEY_LEFT)
 	{
-		oldDirX = all->prm_map->dirX;
-		all->prm_map->dirX = all->prm_map->dirX * cos(-rotspeed) - all->prm_map->dirY * sin(-rotspeed);
-		all->prm_map->dirY = oldDirX * sin(-rotspeed) + all->prm_map->dirY * cos(-rotspeed);
-		all->algo_data->old_plane_x = all->prm_map->planeX;
-		all->prm_map->planeX = all->prm_map->planeX * cos(-rotspeed) - all->prm_map->planeY * sin(-rotspeed);
-		all->prm_map->planeY = all->algo_data->old_plane_x * sin(-rotspeed) + all->prm_map->planeY * cos(-rotspeed);
+		oldDirX = all->pm->dirX;
+		all->pm->dirX = all->pm->dirX * cos(-rs) - all->pm->dirY * sin(-rs);
+		all->pm->dirY = oldDirX * sin(-rs) + all->pm->dirY * cos(-rs);
+		all->gl->old_plX = all->pm->plX;
+		all->pm->plX = all->pm->plX * cos(-rs) - all->pm->plY * sin(-rs);
+		all->pm->plY = all->gl->old_plX * sin(-rs) + all->pm->plY * cos(-rs);
 	}
 	if (key == KEY_RIGHT)
 	{
-		oldDirX = all->prm_map->dirX;
-		all->prm_map->dirX = all->prm_map->dirX * cos(rotspeed) - all->prm_map->dirY * sin(rotspeed);
-		all->prm_map->dirY = oldDirX * sin(rotspeed) + all->prm_map->dirY * cos(rotspeed);
-		all->algo_data->old_plane_x = all->prm_map->planeX;
-		all->prm_map->planeX = all->prm_map->planeX * cos(rotspeed) - all->prm_map->planeY * sin(rotspeed);
-		all->prm_map->planeY = all->algo_data->old_plane_x * sin(rotspeed) + all->prm_map->planeY * cos(rotspeed);
+		oldDirX = all->pm->dirX;
+		all->pm->dirX = all->pm->dirX * cos(rs) - all->pm->dirY * sin(rs);
+		all->pm->dirY = oldDirX * sin(rs) + all->pm->dirY * cos(rs);
+		all->gl->old_plX = all->pm->plX;
+		all->pm->plX = all->pm->plX * cos(rs) - all->pm->plY * sin(rs);
+		all->pm->plY = all->gl->old_plX * sin(rs) + all->pm->plY * cos(rs);
 	}
 }
 
-int		move(int key, t_all *all)
+int	move(int key, t_all *all)
 {
-	double	movespeed;
-	double	rotspeed;
+	double	msd;
+	double	rs;
 
-	movespeed = 0.3;
-	rotspeed = 0.1;
-	if(key == KEY_ESC)
+	msd = 0.3;
+	rs = 0.1;
+	if (key == KEY_ESC)
 		key_esc(key, all);
 	if (key == KEY_W || key == KEY_S)
-		key_w_s(all, movespeed, key);
-	if (key == KEY_A|| key == KEY_D)
-		key_a_d(all, movespeed, key);
+		key_w_s(all, msd, key);
+	if (key == KEY_A || key == KEY_D)
+		key_a_d(all, msd, key);
 	if (key == KEY_LEFT || key == KEY_RIGHT)
-		key_left_right(key, all, rotspeed);
+		key_left_right(key, all, rs);
 	return (1);
 }

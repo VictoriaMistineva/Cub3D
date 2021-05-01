@@ -6,7 +6,7 @@
 /*   By: ycordell <ycordell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/01 17:30:19 by ycordell          #+#    #+#             */
-/*   Updated: 2021/05/01 18:32:55 by ycordell         ###   ########.fr       */
+/*   Updated: 2021/05/01 18:39:45 by ycordell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,23 +79,27 @@ void	sp_drawstart(t_all *all, int i)
 
 void	sp_drawend(t_all *all)
 {
-	all->sprite->drawEndY = all->sprite->spriteHeight / 2 + all->param_map->scr_h / 2;
-    if(all->sprite->drawEndY >= all->param_map->scr_h)
-        all->sprite->drawEndY = all->param_map->scr_h - 1;
-    all->sprite->spriteWidth = abs((int)(all->param_map->scr_h / (all->sprite->transformY)));
-    all->sprite->drawStartX = -all->sprite->spriteWidth / 2 + all->sprite->spriteScreenX;
-    if(all->sprite->drawStartX < 0)
-        all->sprite->drawStartX = 0;
-    all->sprite->drawEndX = all->sprite->spriteWidth / 2 + all->sprite->spriteScreenX;
-    if(all->sprite->drawEndX >= all->param_map->scr_w)
-        all->sprite->drawEndX = all->param_map->scr_w - 1;
+	all->sprite->drawEndY = all->sprite->spriteHeight
+		/ 2 + all->param_map->scr_h / 2;
+	if (all->sprite->drawEndY >= all->param_map->scr_h)
+		all->sprite->drawEndY = all->param_map->scr_h - 1;
+	all->sprite->spriteWidth = abs((int)(all->param_map->scr_h
+				/ (all->sprite->transformY)));
+	all->sprite->drawStartX = -all->sprite->spriteWidth
+		/ 2 + all->sprite->spriteScreenX;
+	if (all->sprite->drawStartX < 0)
+		all->sprite->drawStartX = 0;
+	all->sprite->drawEndX = all->sprite->spriteWidth
+		/ 2 + all->sprite->spriteScreenX;
+	if (all->sprite->drawEndX >= all->param_map->scr_w)
+		all->sprite->drawEndX = all->param_map->scr_w - 1;
 }
 
 void	sp_color(t_all *all)
 {
-	t_img *texS;
-	int stripe;
-	int y;
+	t_img	*texS;
+	int		stripe;
+	int		y;
 
 	texS = all->texS;
 	stripe = all->sprite->drawStartX;

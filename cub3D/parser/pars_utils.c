@@ -33,9 +33,9 @@ int	ft_atoi_pars(const char *str)
 }
 int	type_flags_check(t_all *all)
 {
-	if(all->param_map->scr_h != -1 && all->param_map->scr_w != -1)
-		if(all->param_map->floor_r != -1)
-			if(all->param_map->ceil_r != -1)
+	if(all->prm_map->scr_h != -1 && all->prm_map->scr_w != -1)
+		if(all->prm_map->floor_r != -1)
+			if(all->prm_map->ceil_r != -1)
 					return(0);
 	return (1);
 }

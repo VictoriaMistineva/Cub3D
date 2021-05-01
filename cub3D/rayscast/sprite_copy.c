@@ -6,7 +6,7 @@
 /*   By: ycordell <ycordell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/01 17:30:19 by ycordell          #+#    #+#             */
-/*   Updated: 2021/05/01 19:38:45 by ycordell         ###   ########.fr       */
+/*   Updated: 2021/05/01 19:49:54 by ycordell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,19 @@ void	sp_drawend(t_all *all)
 		all->sprite->drawEndX = all->prm_map->scr_w - 1;
 }
 
+void	sp_color_2(t_all *all, int y, int stp)
+{
+	all->sprite->d = (y) * 256 - all->prm_map->scr_h * 128
+		+ all->sprite->sp_H * 128;
+	all->sprite->texY = ((all->sprite->d * all->texS->height)
+			/ all->sprite->sp_H) / 256;
+	all->sprite->color = *(unsigned int *)(all->texS->addr
+			+ all->sprite->texY * all->texS->line_len
+			+ all->sprite->texX * (all->texS->bpp / 8));
+	if ((all->sprite->color & 0x00FFFFFF) != 0)
+		my_mlx_pixel_put(all->win, stp, y, all->sprite->color);
+}
+
 void	sp_color(t_all *all)
 {
 	t_img	*texS;
@@ -113,24 +126,14 @@ void	sp_color(t_all *all)
 		{
 			y = all->sprite->drawStartY;
 			while (++y < all->sprite->drawEndY)
-			{
-				all->sprite->d = (y) * 256 - all->prm_map->scr_h * 128
-					+ all->sprite->sp_H * 128;
-				all->sprite->texY = ((all->sprite->d * all->texS->height)
-						/ all->sprite->sp_H) / 256;
-				all->sprite->color = *(unsigned int *)(all->texS->addr
-						+ all->sprite->texY * all->texS->line_len
-						+ all->sprite->texX * (all->texS->bpp / 8));
-				if ((all->sprite->color & 0x00FFFFFF) != 0)
-					my_mlx_pixel_put(all->win, stp, y, all->sprite->color);
-			}
+				sp_color_2(all, y, stp);
 		}
 	}
 }
 
 void	cast_sprites(t_all *all)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	coord_sprite(all);

@@ -43,7 +43,7 @@ typedef struct	s_point // структура для точки
 	int			y;
 }				 t_point;
 
-typedef struct	s_param_map
+typedef struct	s_prm_map
 {
 	int			scr_h;
 	int			scr_w;
@@ -66,7 +66,7 @@ typedef struct	s_param_map
 	double		dirX;
 	double		planeY;
 	double		planeX;
-}				t_param_map;
+}				t_prm_map;
 
 typedef struct	s_algo_data
 {
@@ -137,17 +137,17 @@ typedef struct s_sprite
 {
 	t_sp_cast 	*sp_cast;
 	t_sp		*sp;
-    double      *z_buffer;
+    double      *z_buf;
     double      spriteX;
     double      spriteY;
     double      invDet;
     double      transformX;
-    double      transformY;
-    int         spriteScreenX;
-    int         spriteHeight;
+    double      trfY;
+    int         sp_ScrX;
+    int         sp_H;
     int         drawStartY;
     int         drawEndY;
-    int         spriteWidth;
+    int         sp_W;
     int         drawStartX;
     int         drawEndX;
     int         texX;
@@ -163,7 +163,7 @@ typedef struct	s_all // структура для всего вместе
 {
 	void		*mlx;
 	t_win		*win;
-	t_param_map *param_map;
+	t_prm_map *prm_map;
 	t_algo_data	*algo_data;
 	t_txtr_data	*txtr_data;
 	t_sprite    *sprite;

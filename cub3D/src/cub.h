@@ -211,13 +211,5 @@ void 	sotirovka_sprite(t_sprite *sprite);
 void    create_screenshot(t_all *all);
 void is_save(char **argv, t_all *all, int argc);
 void set_cub(t_all *all, char **argv, int argc);
-void	check_sp(t_all *all);
-
-//sp
-void	sp_color(t_all *all);
-void	sp_drawend(t_all *all);
-void	sp_drawstart(t_all *all, int i);
-void	sp_1(t_all *all);
-
 
 #endif

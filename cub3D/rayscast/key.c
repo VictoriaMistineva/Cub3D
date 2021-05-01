@@ -10,23 +10,23 @@ void	key_w_s(t_all *all, double movespeed, int key)
 	if (key == KEY_W)
 	{
 		
-		if (all->map[(int)all->param_map->posY]
-				[(int)(all->param_map->posX + all->param_map->dirX * movespeed)] == '0')
-			all->param_map->posX += all->param_map->dirX * movespeed;
+		if (all->map[(int)all->prm_map->posY]
+				[(int)(all->prm_map->posX + all->prm_map->dirX * movespeed)] == '0')
+			all->prm_map->posX += all->prm_map->dirX * movespeed;
 		
-		if (all->map[(int)(all->param_map->posY + all->param_map->dirY
-					* movespeed)][(int)all->param_map->posX] == '0')
-			all->param_map->posY += all->param_map->dirY * movespeed;
+		if (all->map[(int)(all->prm_map->posY + all->prm_map->dirY
+					* movespeed)][(int)all->prm_map->posX] == '0')
+			all->prm_map->posY += all->prm_map->dirY * movespeed;
 	}
 	if (key == KEY_S)
 	{
-		if (all->map[(int)all->param_map->posY]
-				[(int)(all->param_map->posX - all->param_map->dirX * movespeed)] == '0')
-			all->param_map->posX -= all->param_map->dirX * movespeed;
+		if (all->map[(int)all->prm_map->posY]
+				[(int)(all->prm_map->posX - all->prm_map->dirX * movespeed)] == '0')
+			all->prm_map->posX -= all->prm_map->dirX * movespeed;
 			
-		if (all->map[(int)(all->param_map->posY - all->param_map->dirY
-					* movespeed)][(int)all->param_map->posX] == '0')
-			all->param_map->posY -= all->param_map->dirY * movespeed;
+		if (all->map[(int)(all->prm_map->posY - all->prm_map->dirY
+					* movespeed)][(int)all->prm_map->posX] == '0')
+			all->prm_map->posY -= all->prm_map->dirY * movespeed;
 	}
 }
 
@@ -34,23 +34,23 @@ void	key_a_d(t_all *all, double movespeed, int key)
 {
 	if (key == KEY_A)
 	{
-		if (all->map[(int)(all->param_map->posY)]
-				[(int)(all->param_map->posX
-				 - all->param_map->planeX * movespeed)] == '0')
-			all->param_map->posX -= all->param_map->planeX * movespeed;
-		if (all->map[(int)(all->param_map->posY 
-				+ all->param_map->planeY
-				* movespeed)][(int)(all->param_map->posX)] == '0')
-			all->param_map->posY -= all->param_map->planeY * movespeed;
+		if (all->map[(int)(all->prm_map->posY)]
+				[(int)(all->prm_map->posX
+				 - all->prm_map->planeX * movespeed)] == '0')
+			all->prm_map->posX -= all->prm_map->planeX * movespeed;
+		if (all->map[(int)(all->prm_map->posY 
+				+ all->prm_map->planeY
+				* movespeed)][(int)(all->prm_map->posX)] == '0')
+			all->prm_map->posY -= all->prm_map->planeY * movespeed;
 	}
 	if (key == KEY_D)
 	{
-		if (all->map[(int)(all->param_map->posY)]
-				[(int)(all->param_map->posX + all->param_map->planeX * movespeed)] == '0')
-			all->param_map->posX += all->param_map->planeX * movespeed;
-		if (all->map[(int)(all->param_map->posY - all->param_map->planeY
-					* movespeed)][(int)(all->param_map->posX)] == '0')
-			all->param_map->posY += all->param_map->planeY * movespeed;
+		if (all->map[(int)(all->prm_map->posY)]
+				[(int)(all->prm_map->posX + all->prm_map->planeX * movespeed)] == '0')
+			all->prm_map->posX += all->prm_map->planeX * movespeed;
+		if (all->map[(int)(all->prm_map->posY - all->prm_map->planeY
+					* movespeed)][(int)(all->prm_map->posX)] == '0')
+			all->prm_map->posY += all->prm_map->planeY * movespeed;
 	}
 }
 
@@ -60,21 +60,21 @@ void	key_left_right(int key, t_all *all, double rotspeed)
 
 	if (key == KEY_LEFT)
 	{
-		oldDirX = all->param_map->dirX;
-		all->param_map->dirX = all->param_map->dirX * cos(-rotspeed) - all->param_map->dirY * sin(-rotspeed);
-		all->param_map->dirY = oldDirX * sin(-rotspeed) + all->param_map->dirY * cos(-rotspeed);
-		all->algo_data->old_plane_x = all->param_map->planeX;
-		all->param_map->planeX = all->param_map->planeX * cos(-rotspeed) - all->param_map->planeY * sin(-rotspeed);
-		all->param_map->planeY = all->algo_data->old_plane_x * sin(-rotspeed) + all->param_map->planeY * cos(-rotspeed);
+		oldDirX = all->prm_map->dirX;
+		all->prm_map->dirX = all->prm_map->dirX * cos(-rotspeed) - all->prm_map->dirY * sin(-rotspeed);
+		all->prm_map->dirY = oldDirX * sin(-rotspeed) + all->prm_map->dirY * cos(-rotspeed);
+		all->algo_data->old_plane_x = all->prm_map->planeX;
+		all->prm_map->planeX = all->prm_map->planeX * cos(-rotspeed) - all->prm_map->planeY * sin(-rotspeed);
+		all->prm_map->planeY = all->algo_data->old_plane_x * sin(-rotspeed) + all->prm_map->planeY * cos(-rotspeed);
 	}
 	if (key == KEY_RIGHT)
 	{
-		oldDirX = all->param_map->dirX;
-		all->param_map->dirX = all->param_map->dirX * cos(rotspeed) - all->param_map->dirY * sin(rotspeed);
-		all->param_map->dirY = oldDirX * sin(rotspeed) + all->param_map->dirY * cos(rotspeed);
-		all->algo_data->old_plane_x = all->param_map->planeX;
-		all->param_map->planeX = all->param_map->planeX * cos(rotspeed) - all->param_map->planeY * sin(rotspeed);
-		all->param_map->planeY = all->algo_data->old_plane_x * sin(rotspeed) + all->param_map->planeY * cos(rotspeed);
+		oldDirX = all->prm_map->dirX;
+		all->prm_map->dirX = all->prm_map->dirX * cos(rotspeed) - all->prm_map->dirY * sin(rotspeed);
+		all->prm_map->dirY = oldDirX * sin(rotspeed) + all->prm_map->dirY * cos(rotspeed);
+		all->algo_data->old_plane_x = all->prm_map->planeX;
+		all->prm_map->planeX = all->prm_map->planeX * cos(rotspeed) - all->prm_map->planeY * sin(rotspeed);
+		all->prm_map->planeY = all->algo_data->old_plane_x * sin(rotspeed) + all->prm_map->planeY * cos(rotspeed);
 	}
 }
 

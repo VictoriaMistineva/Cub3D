@@ -6,7 +6,7 @@
 /*   By: ycordell <ycordell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/01 17:30:19 by ycordell          #+#    #+#             */
-/*   Updated: 2021/05/01 18:39:45 by ycordell         ###   ########.fr       */
+/*   Updated: 2021/05/01 18:48:00 by ycordell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,20 +103,30 @@ void	sp_color(t_all *all)
 
 	texS = all->texS;
 	stripe = all->sprite->drawStartX;
-	while(stripe < all->sprite->drawEndX)
+	while (stripe < all->sprite->drawEndX)
 	{
-		all->sprite->texX = (int)(256 * (stripe - (-all->sprite->spriteWidth/ 2 + all->sprite->spriteScreenX)) * texS->width/ all->sprite->spriteWidth) / 256;
-		if (all->sprite->transformY > 0 && stripe > 0 && stripe < all->param_map->scr_w && all->sprite->transformY < all->sprite->z_buffer[stripe])
+		all->sprite->texX = (int)(256 * (stripe - (-all->sprite->spriteWidth
+						/ 2 + all->sprite->spriteScreenX)) * texS->width
+				/ all->sprite->spriteWidth) / 256;
+		if (all->sprite->transformY > 0 && stripe > 0 && stripe
+			< all->param_map->scr_w && all->sprite->transformY
+			< all->sprite->z_buffer[stripe])
+		{
 			y = all->sprite->drawStartY;
 			while (y < all->sprite->drawEndY)
 			{
-				all->sprite->d = (y) * 256 - all->param_map->scr_h * 128 + all->sprite->spriteHeight * 128;
-                all->sprite->texY = ((all->sprite->d * all->texS->height) / all->sprite->spriteHeight) / 256;
-                    all->sprite->color = *(unsigned int *)(all->texS->addr + all->sprite->texY * all->texS->line_len + all->sprite->texX * (all->texS->bpp / 8));
+				all->sprite->d = (y) * 256 - all->param_map->scr_h * 128
+					+ all->sprite->spriteHeight * 128;
+				all->sprite->texY = ((all->sprite->d * all->texS->height)
+						/ all->sprite->spriteHeight) / 256;
+				all->sprite->color = *(unsigned int *)(all->texS->addr
+						+ all->sprite->texY * all->texS->line_len
+						+ all->sprite->texX * (all->texS->bpp / 8));
 				if ((all->sprite->color & 0x00FFFFFF) != 0)
 					my_mlx_pixel_put(all->win, stripe, y, all->sprite->color);
 				y++;
 			}
+		}
 		stripe++;
 	}
 }

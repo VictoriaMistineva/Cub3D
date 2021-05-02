@@ -4,7 +4,7 @@ int	type_identifier(char *line, t_all *all)
 {
 	int	i;
 
-	i = -1; 
+	i= -1; 
 	while (line[++i])
 	{
 		if (line[i] == 'R' && line[i + 1] == ' ')

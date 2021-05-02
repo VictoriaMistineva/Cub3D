@@ -1,27 +1,26 @@
 #include "../cub.h"
 
-void check_player_map(t_all *all)
+void	check_player_map(t_all *all)
 {
-	if(all->pm->posX != 0)	
+	if (all->pm->posX != 0)
 		printf_exit("Два игрока на карте");
 }			
 
-
 void	check_cell(t_all *all, int j, int k)
 {
-    if(all->map[k][j] == ' ' || all->map[k][j] == '1')
-        return ;
-    if (j == 0 || k == 0 || j == (all->pm->scr_w - 1)
-        || k == (all->pm->scr_h - 1))
-			printf_exit ("невалидная карта");
-    if (all->map[k + 0][j + 1] == ' '
-        || all->map[k + 0][j - 1] == ' '
-        || all->map[k + 1][j + 0] == ' '
-        || all->map[k - 1][j + 0] == ' '
-        || all->map[k - 1][j + 1] == ' '
-        || all->map[k - 1][j - 1] == ' '
-        || all->map[k + 1][j - 1] == ' '
-        || all->map[k + 1][j + 1] == ' ')
+	if (all->map[k][j] == ' ' || all->map[k][j] == '1')
+		return ;
+	if (j == 0 || k == 0 || j == (all->pm->scr_w - 1)
+		|| k == (all->pm->scr_h - 1))
+		printf_exit ("невалидная карта");
+	if (all->map[k + 0][j + 1] == ' '
+		|| all->map[k + 0][j - 1] == ' '
+		|| all->map[k + 1][j + 0] == ' '
+		|| all->map[k - 1][j + 0] == ' '
+		|| all->map[k - 1][j + 1] == ' '
+		|| all->map[k - 1][j - 1] == ' '
+		|| all->map[k + 1][j - 1] == ' '
+		|| all->map[k + 1][j + 1] == ' ')
 		printf_exit("невалидная карта");
 }
 

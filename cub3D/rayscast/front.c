@@ -16,9 +16,9 @@ void	cr_part1(t_all *all, int x)
 	all->gl->hit = 0;
 }
 
-void	cr_part2(t_all *all)
+void	cr_X(t_all *all)
 {
-	if (all->gl->rayDirX < 0)
+	if	(all->gl->rayDirX < 0)
 	{
 		all->gl->stepX = -1;
 		all->gl->sideDistX
@@ -31,6 +31,11 @@ void	cr_part2(t_all *all)
 		all->gl->sideDistX = (all->gl->mapX
 				+ 1.0 - all->pm->posX) * all->gl->deltaDistX;
 	}
+}
+
+void	cr_Y(t_all *all)
+{
+
 	if (all->gl->rayDirY < 0)
 	{
 		all->gl->stepY = -1;
@@ -65,17 +70,17 @@ void	cr_part3(t_all *all, int x)
 		all->gl->hit = 1;
 	if (all->gl->side == 0)
 		all->gl->pwd = (all->gl->mapX - all->pm->posX
-			+ (1 - all->gl->stepX) / 2) / all->gl->rayDirX;
+				+ (1 - all->gl->stepX) / 2) / all->gl->rayDirX;
 	else
 		all->gl->pwd = (all->gl->mapY - all->pm->posY
-			+ (1 - all->gl->stepY) / 2) / all->gl->rayDirY;
+				+ (1 - all->gl->stepY) / 2) / all->gl->rayDirY;
 	all->sprite->z_buf[x] = all->gl->pwd;
 }
 
-void	cr_part4(t_all *all)
+void	cr_draw(t_all *all)
 {
 	all->gl->line_h = (int)(all->pm->scr_h
-		/ all->gl->pwd);
+			/ all->gl->pwd);
 	all->gl->draw_start = -1 * (all->gl->line_h)
 		/ 2 + all->pm->scr_h / 2;
 	if (all->gl->draw_start < 0)
@@ -104,7 +109,7 @@ void	cr_part5(t_all *all, t_img *tex)
 	all->txtr_data->step = 1.0 * tex->height / all->gl->line_h;
 	all->txtr_data->text_pos
 		= (all->gl->draw_start - all->pm->scr_h
-		/ 2 + all->gl->line_h / 2)
+			/ 2 + all->gl->line_h / 2)
 		* all->txtr_data->step;
 }
 

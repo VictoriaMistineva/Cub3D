@@ -155,6 +155,13 @@ void set_cub_struct(t_all *all, int argc, char **argv)
 	set_cub(all, argv , argc);
 	is_save(argv, all, argc);
 }
+void	map_init(t_all *all, char *line)
+{
+	char	*bigLine;
+
+	bigLine = NULL;
+	init_map(all, line, bigLine);
+}
 
 int	main(int argc, char **argv)
 {
@@ -164,14 +171,13 @@ int	main(int argc, char **argv)
 	void		*mlx;
     void		*mlx_win;
 	char		*line;
-	char		*bigLine;
 
-	bigLine = NULL;
 	line = NULL;
 	set_cub_struct(&all, argc, argv);
 	pm = all.pm;
 	init_struct(&all);
-	init_map(&all, line, bigLine);
+	map_init(&all, line);
+	// init_map(&all, line, bigLine);
 	check_player(&all);
 	check_map(&all);
 	free(line);

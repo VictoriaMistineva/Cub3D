@@ -12,92 +12,114 @@
 
 #include "../cub.h"
 
-static char	*ft_strcpy(char *dst, char *src)
+static char	*get_line(char *reste)
 {
-	int				i;
+	int		i;
+	char	*line;
 
 	i = 0;
-	while (src[i] != '\0')
+	while (reste && reste[i] && reste[i] != '\n')
+		i++;
+	line = (char *)malloc((i + 1) * sizeof(char));
+	if (!line)
+		return (NULL);
+	i = 0;
+	while (reste && reste[i] && reste[i] != '\n')
 	{
-		dst[i] = src[i];
+		line[i] = reste[i];
 		i++;
 	}
-	dst[i] = '\0';
-	return (dst);
+	line[i] = '\0';
+	return (line);
 }
 
-static char	*char_free(char **str)
+static char	*ft_strjoinplus(char *reste, char *buff, int ret)
 {
-	free(*str);
-	*str = NULL;
-	return (NULL);
-}
+	char	*new;
+	int		i;
+	int		j;
 
-static char	*check_newline(char **line, char **remainder)
-{
-	char			*ptr_n;
-
-	ptr_n = NULL;
-	if (*remainder && **remainder)
+	new = (char *)malloc((ft_strlen2(reste) + ret + 1) * sizeof(char));
+	if (!new)
+		return (0);
+	i = 0;
+	while (reste && reste[i])
 	{
-		if ((ptr_n = ft_strchr(*remainder, '\n')))
-		{
-			*ptr_n++ = '\0';
-			*line = ft_substr(*remainder, 0, ft_strlen(*remainder));
-			*remainder = ft_strcpy(*remainder, ptr_n);
-		}
-		else
-		{
-			*line = ft_substr(*remainder, 0, ft_strlen(*remainder));
-			return (char_free(remainder));
-		}
+		new[i] = reste[i];
+		i++;
 	}
-	else
-		*line = ft_calloc(1, sizeof(char));
-	return (ptr_n);
+	j = 0;
+	while (j < ret)
+	{
+		new[i + j] = buff[j];
+		j++;
+	}
+	new[i + j] = '\0';
+	if (reste)
+		free(reste);
+	return (new);
 }
 
-static	int read_lines(t_gnl *gnl, char **remainder, int fd, char **line)
+static char	*free_reste(char *reste, int *ret, int j)
 {
-	int				count;
+	char	*new;
+	int		i;
 
-	count = 1;
-	while ((!gnl->ptr_n && ((count = read(fd, gnl->buf, BUFFER_SIZE)) > 0)))
+	*ret = 0;
+	i = is_line(reste);
+	if (i < 0)
 	{
-		gnl->buf[count] = '\0';
-		if ((gnl->ptr_n = ft_strchr(gnl->buf, '\n')))
-		{
-			*gnl->ptr_n++ = '\0';
-			*remainder = ft_substr(gnl->ptr_n, 0, ft_strlen(gnl->ptr_n));
-		}
-		if (!(gnl->tmp = ft_strjoin(*line, gnl->buf)))
-			return (-1);
-		free(*line);
-		*line = gnl->tmp;
+		if (i == -1)
+			free (reste);
+		return (0);
 	}
-	if (count == -1)
+	new = (char *)malloc((ft_strlen2(reste) - i + 1) * sizeof(char));
+	if (!new)
+	{
+		*ret = -1;
+		free(reste);
+		return (0);
+	}
+	i++;
+	norme_gnl(reste, i, &j, new);
+	new[j] = '\0';
+	free(reste);
+	return (new);
+}
+
+static int	get_next_l(int fd, char **line, unsigned int size)
+{
+	char		buff[BUFFER_SIZE + 1];
+	static char	*reste[FOPEN_MAX];
+	int			ret;
+
+	if (read(fd, buff, 0) < 0)
 		return (-1);
-	gnl->count = count;
-	return (0);
+	*line = NULL;
+	ret = 1;
+	while (is_line(reste[fd]) < 0 && ret)
+	{
+		ret = read(fd, buff, size);
+		reste[fd] = ft_strjoinplus(reste[fd], buff, ret);
+		if (!reste[fd])
+			return (-1);
+	}
+	*line = get_line(reste[fd]);
+	if (!*line)
+		return (-1);
+	reste[fd] = free_reste(reste[fd], &ret, 0);
+	if (!reste[fd])
+		return (-1);
+	return (1);
 }
 
 int	get_next_line(int fd, char **line)
 {
-	static char		*remainder;
-	t_gnl			gnl;
-	register int	i;
+	unsigned int	size;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || !line)
+	if (BUFFER_SIZE <= 0 || !line || fd > FOPEN_MAX)
 		return (-1);
-	i = 0;
-	while (i < BUFFER_SIZE + 1)
-		gnl.buf[i++] = '\0';
-	gnl.ptr_n = check_newline(line, &remainder);
-	if (read_lines(&gnl, &remainder, fd, line) == -1)
-		return (-1);
-	if (remainder && !*remainder)
-		char_free(&remainder);
-	if (!remainder && !gnl.count)
-		return (0);
-	return (1);
+	size = BUFFER_SIZE;
+	size += 1;
+	return (get_next_l(fd, line, size));
 }

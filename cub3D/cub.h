@@ -211,5 +211,12 @@ void 	sotirovka_sprite(t_sprite *sprite);
 void    create_screenshot(t_all *all);
 void is_save(char **argv, t_all *all, int argc);
 void set_cub(t_all *all, char **argv, int argc);
-
+int	is_line(char *save);
+void	norme_gnl(char *reste, int i, int *j, char *new);
+int	ft_strlen2(char *str);
+void	sp_1(t_all *all);
+void	sp_drawstart(t_all *all, int i);
+void	sp_drawend(t_all *all);
+void	sp_color_2(t_all *all, int y, int stp);
+void	sp_color(t_all *all);
 #endif

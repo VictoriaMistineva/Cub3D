@@ -60,8 +60,6 @@ void	check_player(t_all *all)
 					all->map[k][j] = '0';
 				}
 			}
-			else if (all->map[k][j] == '2')
-				all->sprite->sp_num++;
 			j++;
 		}
 		k++;

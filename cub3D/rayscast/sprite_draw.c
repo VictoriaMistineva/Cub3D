@@ -1,41 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   sprite_copy.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ycordell <ycordell@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/01 17:30:19 by ycordell          #+#    #+#             */
-/*   Updated: 2021/05/02 01:48:41 by ycordell         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../cub.h"
-
-void	coord_sprite(t_all *all)
-{
-	int	i;
-	int	k;
-	int	j;
-
-	i = 0;
-	k = 0;
-	while (all->map[k])
-	{
-		j = 0;
-		while (all->map[k][j])
-		{
-			if (all->map[k][j] == '2')
-			{
-				all->sprite->sp[i].x = j + 0.5;
-				all->sprite->sp[i].y = k + 0.5;
-				i++;
-			}
-			j++;
-		}
-		k++;
-	}
-}
 
 void	sp_1(t_all *all)
 {
@@ -128,23 +91,5 @@ void	sp_color(t_all *all)
 			while (++y < all->sprite->drawEndY)
 				sp_color_2(all, y, stp);
 		}
-	}
-}
-
-void	cast_sprites(t_all *all)
-{
-	int	i;
-
-	i = 0;
-	coord_sprite(all);
-	sp_1(all);
-	i = 0;
-	sotirovka_sprite(all->sprite);
-	while (i < all->sprite->sp_num)
-	{
-		sp_drawstart(all, i);
-		sp_drawend(all);
-		sp_color(all);
-		i++;
 	}
 }

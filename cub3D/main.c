@@ -11,7 +11,7 @@ void	my_mlx_pixel_put(t_win *data, int x, int y, int color)
     *(unsigned int*)dst = color;
 }
 
-void	init_stuct(t_all *all)
+void	init_struct(t_all *all)
 {
 	all->pm->scr_h = -1;
 	all->pm->scr_w = -1;
@@ -130,64 +130,56 @@ void	init_map(t_all *all, char *line, char *bigLine)
 	all->map = ft_split(bigLine, '\n');
 	free(bigLine);
 }
+void mall_struct(t_all *all)
+{	
+	all->win = malloc(sizeof(t_win));
+	all->pm = malloc(sizeof(t_pm));
+	all->gl = malloc(sizeof(t_gl));
+	all->txtr_data = malloc(sizeof(t_txtr_data));
+	all->sprite = malloc(sizeof(t_sprite));
+}
+
+void mlx_render(t_all *all, void *mlx)
+{
+	init_tex(all);
+	init_tex_2(all);
+	mlx_hook(all->win->mlx, 2, 1L<<0, move, all);
+    mlx_put_image_to_window(mlx, all->win->mlx, all->win->img, 0, 0);
+	mlx_loop_hook(all->mlx, render_next_frame, all);
+    mlx_loop(all->mlx);
+}
+
+void set_cub_struct(t_all *all, int argc, char **argv)
+{
+	mall_struct(all);
+	set_cub(all, argv , argc);
+	is_save(argv, all, argc);
+}
 
 int	main(int argc, char **argv)
 {
 	t_all		all;
+	t_point		point;
+	t_pm		*pm;
 	void		*mlx;
     void		*mlx_win;
-	t_point		point;
-	t_pm *pm;
+	char		*line;
+	char		*bigLine;
 
-	all.win = malloc(sizeof(t_win));
-	all.pm = malloc(sizeof(t_pm));
-	all.gl = malloc(sizeof(t_gl));
-	all.txtr_data = malloc(sizeof(t_txtr_data));
-	all.sprite = malloc(sizeof(t_sprite));
-
-	set_cub(&all, argv , argc);
-	is_save(argv, &all, argc);
+	bigLine = NULL;
+	line = NULL;
+	set_cub_struct(&all, argc, argv);
 	pm = all.pm;
-	init_stuct(&all);
-	
-	char	  	*line = NULL;
-	char 		*bigLine = NULL;
-
-
-	// while (get_next_line(fd, &line) > 0) 
-	// {
-	// 	if (type_flags_check(&all) > 0)
-	// 		type_identifier(line, &all);
-	// 	else
-	// 	{
-	// 		tmp = bigLine;
-	// 		bigLine = ft_strjoin(bigLine, line);
-	// 		free(tmp);
-	// 		tmp = bigLine;
-	// 		bigLine = ft_strjoin(bigLine, "\n");
-	// 		free(tmp);
-	// 	}
-	// 	free(line);
-	// }
-	// tmp = bigLine;
-	// bigLine = ft_strjoin(bigLine, line);
-	// free(tmp);
-	// all.map = ft_split(bigLine, '\n');//проверка валидности карты
-	// free(bigLine);
+	init_struct(&all);
 	init_map(&all, line, bigLine);
 	check_player(&all);
 	check_map(&all);
 	free(line);
-	malloc_sp(&all);//
-    all.mlx = mlx_init(); //защитить маллоки
+	malloc_sp(&all);
+    all.mlx = mlx_init();
     all.win->mlx = mlx_new_window(all.mlx, pm->scr_w, pm->scr_h, "CUB_3D");
     all.win->img = mlx_new_image(all.mlx, pm->scr_w, pm->scr_h);
-    all.win->addr = mlx_get_data_addr(all.win->img, &all.win->bits_per_pixel, &all.win->line_length,
-                                 &all.win->endian);
-	init_tex(&all);
-	init_tex_2(&all);
-	mlx_hook(all.win->mlx, 2, 1L<<0, move, &all);
-    mlx_put_image_to_window(mlx, all.win->mlx, all.win->img, 0, 0);
-	mlx_loop_hook(all.mlx, render_next_frame, &all);
-    mlx_loop(all.mlx);
+    all.win->addr = mlx_get_data_addr(all.win->img, &all.win->bits_per_pixel, 
+					&all.win->line_length, &all.win->endian);
+	mlx_render(&all, mlx);
 }

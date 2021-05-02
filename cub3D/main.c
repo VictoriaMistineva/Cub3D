@@ -1,5 +1,4 @@
 #include "cub.h"
-#include "Libft/includes/libft.h" 
 #include <fcntl.h>
 #include <stdio.h>
 

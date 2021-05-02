@@ -10,7 +10,7 @@ void	set_cub(t_all *all, char **argv, int argc)
 		printf_exit("WRONG_MAP");
 }
 
-char	**array_free(char **array)
+char	**array_f(char **array)
 {
 	size_t	i;
 

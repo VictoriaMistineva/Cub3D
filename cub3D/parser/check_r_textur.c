@@ -9,7 +9,7 @@ int	resolution(char *line, t_all *all)
 	resolution = ft_split(line, ' ');
 	all->pm->scr_w = ft_atoi_pars(resolution[1]);
 	all->pm->scr_h = ft_atoi_pars(resolution[2]);
-	array_free(resolution);
+	array_f(resolution);
 	return (1);
 }
 

@@ -1,51 +1,39 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ycordell <ycordell@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/23 17:11:27 by ycordell          #+#    #+#             */
-/*   Updated: 2021/05/02 02:13:54 by ycordell         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../cub.h"
 
-static char	*get_line(char *reste)
+static char	*get_line(char *remd)
 {
 	int		i;
 	char	*line;
 
 	i = 0;
-	while (reste && reste[i] && reste[i] != '\n')
+	while (remd && remd[i] && remd[i] != '\n')
 		i++;
 	line = (char *)malloc((i + 1) * sizeof(char));
 	if (!line)
 		return (NULL);
 	i = 0;
-	while (reste && reste[i] && reste[i] != '\n')
+	while (remd && remd[i] && remd[i] != '\n')
 	{
-		line[i] = reste[i];
+		line[i] = remd[i];
 		i++;
 	}
 	line[i] = '\0';
 	return (line);
 }
 
-static char	*ft_strjoinplus(char *reste, char *buff, int ret)
+static char	*ft_strjoinplus(char *remd, char *buff, int ret)
 {
 	char	*new;
 	int		i;
 	int		j;
 
-	new = (char *)malloc((ft_strlen2(reste) + ret + 1) * sizeof(char));
+	new = (char *)malloc((ft_strlen2(remd) + ret + 1) * sizeof(char));
 	if (!new)
 		return (0);
 	i = 0;
-	while (reste && reste[i])
+	while (remd && remd[i])
 	{
-		new[i] = reste[i];
+		new[i] = remd[i];
 		i++;
 	}
 	j = 0;
@@ -55,60 +43,60 @@ static char	*ft_strjoinplus(char *reste, char *buff, int ret)
 		j++;
 	}
 	new[i + j] = '\0';
-	if (reste)
-		free(reste);
+	if (remd)
+		free(remd);
 	return (new);
 }
 
-static char	*free_reste(char *reste, int *ret, int j)
+static char	*free_remd(char *remd, int *ret, int j)
 {
 	char	*new;
 	int		i;
 
 	*ret = 0;
-	i = is_line(reste);
+	i = is_line(remd);
 	if (i < 0)
 	{
 		if (i == -1)
-			free (reste);
+			free (remd);
 		return (0);
 	}
-	new = (char *)malloc((ft_strlen2(reste) - i + 1) * sizeof(char));
+	new = (char *)malloc((ft_strlen2(remd) - i + 1) * sizeof(char));
 	if (!new)
 	{
 		*ret = -1;
-		free(reste);
+		free(remd);
 		return (0);
 	}
 	i++;
-	norme_gnl(reste, i, &j, new);
+	norme_gnl(remd, i, &j, new);
 	new[j] = '\0';
-	free(reste);
+	free(remd);
 	return (new);
 }
 
 static int	get_next_l(int fd, char **line, unsigned int size)
 {
 	char		buff[BUFFER_SIZE + 1];
-	static char	*reste[FOPEN_MAX];
+	static char	*remd[FOPEN_MAX];
 	int			ret;
 
 	if (read(fd, buff, 0) < 0)
 		return (-1);
 	*line = NULL;
 	ret = 1;
-	while (is_line(reste[fd]) < 0 && ret)
+	while (is_line(remd[fd]) < 0 && ret)
 	{
 		ret = read(fd, buff, size);
-		reste[fd] = ft_strjoinplus(reste[fd], buff, ret);
-		if (!reste[fd])
+		remd[fd] = ft_strjoinplus(remd[fd], buff, ret);
+		if (!remd[fd])
 			return (-1);
 	}
-	*line = get_line(reste[fd]);
+	*line = get_line(remd[fd]);
 	if (!*line)
 		return (-1);
-	reste[fd] = free_reste(reste[fd], &ret, 0);
-	if (!reste[fd])
+	remd[fd] = free_remd(remd[fd], &ret, 0);
+	if (!remd[fd])
 		return (-1);
 	return (1);
 }

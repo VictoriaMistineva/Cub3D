@@ -28,11 +28,11 @@ int	is_line(char *save)
 	return (-1);
 }
 
-void	norme_gnl(char *reste, int i, int *j, char *new)
+void	norme_gnl(char *remd, int i, int *j, char *new)
 {
-	while (reste[i + *j])
+	while (remd[i + *j])
 	{
-		new[*j] = reste[i + *j];
+		new[*j] = remd[i + *j];
 		(*j)++;
 	}
 }

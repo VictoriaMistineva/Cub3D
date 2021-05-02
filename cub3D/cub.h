@@ -2,8 +2,7 @@
 # define CUB_H
 
 
-# include "minilibx_mms/mlx.h"
-# include "Libft/includes/libft.h" 
+# include "minilibx_mms/mlx.h" 
 # include <mlx.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -185,7 +184,7 @@ void	validate_color(int color);
 int		create_rgb(int r, int g, int b);
 int		type_flags_check(t_all *all);
 int		check_num(const char *str, int num);
-char			**array_free(char **array);
+static char	**array_free(char **array);
 
 int	get_next_line(int fd, char **line);
 int	type_identifier(char *line, t_all *all);
@@ -193,7 +192,6 @@ int	resolution(char *line, t_all *all);
 int	check_argument_textur(char *line, t_all *all);
 int check_texture(char *line, char **texture);
 void	color_floor_cell(t_all *all);
-
 int		floor_color(char *line, t_all *all);
 int		celling_color(char *line, t_all *all);
 void	check_map(t_all *all);
@@ -202,21 +200,33 @@ int	cast_rays(t_all *all);
 void	my_mlx_pixel_put(t_win *data, int x, int y, int color);
 int		move(int key, t_all *all);
 void draw(t_all *all);
-
 void	cast_sprites(t_all *all);
 int		render_next_frame(t_all *all);
 void	check_player_map(t_all *all);
-
 void 	sotirovka_sprite(t_sprite *sprite);
 void    create_screenshot(t_all *all);
 void is_save(char **argv, t_all *all, int argc);
 void set_cub(t_all *all, char **argv, int argc);
 int	is_line(char *save);
-void	norme_gnl(char *reste, int i, int *j, char *new);
+void	norme_gnl(char *remd, int i, int *j, char *new);
 int	ft_strlen2(char *str);
 void	sp_1(t_all *all);
 void	sp_drawstart(t_all *all, int i);
 void	sp_drawend(t_all *all);
 void	sp_color_2(t_all *all, int y, int stp);
 void	sp_color(t_all *all);
+void	cr_part4(t_all *all);
+void	cr_part3(t_all *all, int x);
+void	cr_Y(t_all *all);
+void	cr_X(t_all *all);
+void	cr_part1(t_all *all, int x);
+void	ft_bzero(void *s, size_t n);
+char	**ft_split(char const *s, char c);
+char	*ft_strndup(const char *s, size_t n);
+char	*ft_strdup(const char *s1);
+char	*ft_strjoin(char const *s1, char const *s2);
+size_t	ft_strlen(const char *s);
+char	*ft_strchr(const char *s, int c);
+char	**array_f(char **array);
+
 #endif

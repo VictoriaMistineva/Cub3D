@@ -5,10 +5,10 @@
 
 void	my_mlx_pixel_put(t_win *data, int x, int y, int color)
 {
-    char    *dst;
+	char	*dst;
 
-    dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-    *(unsigned int*)dst = color;
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	*(unsigned int *) dst = color;
 }
 
 void	init_struct(t_all *all)
@@ -21,20 +21,19 @@ void	init_struct(t_all *all)
 	all->pm->ceil_r = -1;
 	all->pm->ceil_g = -1;
 	all->pm->ceil_b = -1;
-	all->pm->color_ceil= 0;
-	all->pm->color_floor= 0;
-	all->pm->north= NULL;
-	all->pm->south= NULL;
-	all->pm->east= NULL;
-	all->pm->west= NULL;
-	all->pm->sprite= NULL;
+	all->pm->color_ceil = 0;
+	all->pm->color_floor = 0;
+	all->pm->north = NULL;
+	all->pm->south = NULL;
+	all->pm->east = NULL;
+	all->pm->west = NULL;
+	all->pm->sprite = NULL;
 	all->pm->posX = 0;
 	all->pm->posY = 0;
 	all->pm->dirY = 0;
 	all->pm->dirX = 0;
 	all->pm->plY = 0;
 	all->pm->plX = 0;
-
 }
 
 int	render_next_frame(t_all *all)
@@ -49,10 +48,9 @@ int	render_next_frame(t_all *all)
 	return (0);
 }
 
-
 void	malloc_sp(t_all *all)
 {
-	all->sprite->sp_dist = malloc(sizeof(double)* all->sprite->sp_num);
+	all->sprite->sp_dist = malloc(sizeof(double) * all->sprite->sp_num);
 	all->sprite->sp_order = malloc((sizeof(int)) * all->sprite->sp_num);
 	all->sprite->sp_cast = malloc(sizeof(t_sprite) * all->sprite->sp_num);
 	all->sprite->sp = malloc(sizeof(t_sprite));
@@ -103,6 +101,7 @@ void	init_tex_2(t_all *all)
 			&texS->line_len, &texS->endian);
 	all->texS = texS;
 }
+
 void	init_map(t_all *all, char *line, char *bigLine)
 {	
 	int		fd;
@@ -130,7 +129,8 @@ void	init_map(t_all *all, char *line, char *bigLine)
 	all->map = ft_split(bigLine, '\n');
 	free(bigLine);
 }
-void mall_struct(t_all *all)
+
+void	mall_struct(t_all *all)
 {	
 	all->win = malloc(sizeof(t_win));
 	all->pm = malloc(sizeof(t_pm));
@@ -139,22 +139,23 @@ void mall_struct(t_all *all)
 	all->sprite = malloc(sizeof(t_sprite));
 }
 
-void mlx_render(t_all *all, void *mlx)
+void	mlx_render(t_all *all, void *mlx)
 {
 	init_tex(all);
 	init_tex_2(all);
-	mlx_hook(all->win->mlx, 2, 1L<<0, move, all);
-    mlx_put_image_to_window(mlx, all->win->mlx, all->win->img, 0, 0);
+	mlx_hook(all->win->mlx, 2, 1L << 0, move, all);
+	mlx_put_image_to_window(mlx, all->win->mlx, all->win->img, 0, 0);
 	mlx_loop_hook(all->mlx, render_next_frame, all);
-    mlx_loop(all->mlx);
+	mlx_loop(all->mlx);
 }
 
-void set_cub_struct(t_all *all, int argc, char **argv)
+void	set_cub_struct(t_all *all, int argc, char **argv)
 {
 	mall_struct(all);
-	set_cub(all, argv , argc);
+	set_cub(all, argv, argc);
 	is_save(argv, all, argc);
 }
+
 void	map_init(t_all *all, char *line)
 {
 	char	*bigLine;
@@ -169,7 +170,6 @@ int	main(int argc, char **argv)
 	t_point		point;
 	t_pm		*pm;
 	void		*mlx;
-    void		*mlx_win;
 	char		*line;
 
 	line = NULL;
@@ -177,15 +177,14 @@ int	main(int argc, char **argv)
 	pm = all.pm;
 	init_struct(&all);
 	map_init(&all, line);
-	// init_map(&all, line, bigLine);
 	check_player(&all);
 	check_map(&all);
 	free(line);
 	malloc_sp(&all);
-    all.mlx = mlx_init();
-    all.win->mlx = mlx_new_window(all.mlx, pm->scr_w, pm->scr_h, "CUB_3D");
-    all.win->img = mlx_new_image(all.mlx, pm->scr_w, pm->scr_h);
-    all.win->addr = mlx_get_data_addr(all.win->img, &all.win->bits_per_pixel, 
-					&all.win->line_length, &all.win->endian);
+	all.mlx = mlx_init();
+	all.win->mlx = mlx_new_window(all.mlx, pm->scr_w, pm->scr_h, "CUB_3D");
+	all.win->img = mlx_new_image(all.mlx, pm->scr_w, pm->scr_h);
+	all.win->addr = mlx_get_data_addr(all.win->img, &all.win->bits_per_pixel,
+			&all.win->line_length, &all.win->endian);
 	mlx_render(&all, mlx);
 }

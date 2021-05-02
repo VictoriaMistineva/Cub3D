@@ -18,7 +18,7 @@ void	cr_part1(t_all *all, int x)
 
 void	cr_X(t_all *all)
 {
-	if	(all->gl->rayDirX < 0)
+	if (all->gl->rayDirX < 0)
 	{
 		all->gl->stepX = -1;
 		all->gl->sideDistX
@@ -35,7 +35,6 @@ void	cr_X(t_all *all)
 
 void	cr_Y(t_all *all)
 {
-
 	if (all->gl->rayDirY < 0)
 	{
 		all->gl->stepY = -1;
@@ -77,7 +76,7 @@ void	cr_part3(t_all *all, int x)
 	all->sprite->z_buf[x] = all->gl->pwd;
 }
 
-void	cr_draw(t_all *all)
+void	cr_part4(t_all *all)
 {
 	all->gl->line_h = (int)(all->pm->scr_h
 			/ all->gl->pwd);
@@ -101,7 +100,7 @@ void	cr_part5(t_all *all, t_img *tex)
 			* all->gl->rayDirX;
 	all->txtr_data->wall_x -= floor((all->txtr_data->wall_x));
 	all->txtr_data->tex_x = (int)(all->txtr_data->wall_x
-		* (double)(tex->width));
+			* (double)(tex->width));
 	if (all->gl->side == 0 && all->gl->rayDirX > 0)
 		all->txtr_data->tex_x = tex->width - all->txtr_data->tex_x - 1;
 	if (all->gl->side == 1 && all->gl->rayDirY < 0)
@@ -115,7 +114,7 @@ void	cr_part5(t_all *all, t_img *tex)
 
 void	cr_part6(t_all *all, int x, t_img *tex)
 {
-	int y;
+	int	y;
 
 	y = 0;
 	while (y < all->pm->scr_h)
@@ -128,14 +127,12 @@ void	cr_part6(t_all *all, int x, t_img *tex)
 				& (tex->height - 1);
 			all->txtr_data->text_pos += all->txtr_data->step;
 			all->txtr_data->color = *(unsigned int *)
-				(tex->addr
-				+ (all->txtr_data->tex_y
-				* tex->line_len
-				+ all->txtr_data->tex_x
-				* (tex->bpp / 8)));
+				(tex->addr + (all->txtr_data->tex_y
+						* tex->line_len + all->txtr_data->tex_x
+						* (tex->bpp / 8)));
 			my_mlx_pixel_put(all->win, x, y, all->txtr_data->color);
 		}
-		if ( y > all->gl->draw_end)
+		if (y > all->gl->draw_end)
 			my_mlx_pixel_put(all->win, x, y, all->pm->color_floor);
 		y++;
 	}
@@ -151,10 +148,12 @@ t_img	*chooseTex(t_all *all)
 			return (all->texNO);
 	}
 	else
+	{
 		if (all->gl->mapX > all->pm->posX)
 			return (all->texWE);
 		else
 			return (all->texEA);
+	}
 }
 
 int	cast_rays(t_all *all)
@@ -162,12 +161,12 @@ int	cast_rays(t_all *all)
 	int		x;
 	t_img	*tmp;
 
-	// all->sprite->z_buf = malloc((sizeof(double)) * all->pm->scr_w);
 	x = 0;
 	while (x < all->pm->scr_w)
 	{
 		cr_part1(all, x);
-		cr_part2(all);
+		cr_X(all);
+		cr_Y(all);
 		while (all->gl->hit == 0)
 			cr_part3(all, x);
 		cr_part4(all);

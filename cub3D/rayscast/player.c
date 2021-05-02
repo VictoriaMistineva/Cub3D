@@ -48,8 +48,7 @@ void	check_player(t_all *all)
 		j = 0;
 		while (all->map[k][j])
 		{
-			if (all->map[k][j] == 'N' || all->map[k][j] == 'S'
-				|| all->map[k][j] == 'W' || all->map[k][j] == 'E')
+			if (ft_strchr("NSWE", all->map[k][j]))
 			{
 				check_player_map(all);
 				if (all->pm->posX == 0)

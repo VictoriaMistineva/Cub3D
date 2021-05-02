@@ -11,31 +11,6 @@ void	my_mlx_pixel_put(t_win *data, int x, int y, int color)
     *(unsigned int*)dst = color;
 }
 
-void	draw_scale(t_all *all, t_point point)
-{
-	int i;
-	int j;
-	int start_x;
-	int start_y;
-
-	start_x = point.x * SCALE;
-	start_y = point.y * SCALE;
-
-	i = 1;
-	point.y = start_y;
-	while (i++ <= SCALE)
-	{
-		j = 1;
-		point.x = start_x;
-		while(j++ <= SCALE)
-		{
-			my_mlx_pixel_put(all->win, point.x, point.y, 0x00FFFF1);
-			point.x++;
-		}
-		point.y++;
-	}
-}
-
 void	init_stuct(t_all *all)
 {
 	all->pm->scr_h = -1;
@@ -67,51 +42,95 @@ int	render_next_frame(t_all *all)
 	mlx_clear_window(all->mlx, all->win->mlx);
 	cast_rays(all);
 	cast_sprites(all);
-	if(all->flag_save == 1)
+	if (all->flag_save == 1)
 		create_screenshot(all);
 	mlx_put_image_to_window(all->mlx, all->win->mlx, all->win->img, 0, 0);
 	mlx_do_sync(all->mlx);
 	return (0);
 }
 
-void malloc_sp(t_all *all)
+
+void	malloc_sp(t_all *all)
 {
 	all->sprite->sp_dist = malloc(sizeof(double)* all->sprite->sp_num);
 	all->sprite->sp_order = malloc((sizeof(int)) * all->sprite->sp_num);
 	all->sprite->sp_cast = malloc(sizeof(t_sprite) * all->sprite->sp_num);
 	all->sprite->sp = malloc(sizeof(t_sprite));
-
+	all->sprite->z_buf = malloc((sizeof(double)) * all->pm->scr_w);
 }
 
-void init_tex(t_all *all)
+void	init_tex(t_all *all)
 {
 	t_img		*texNO;
 	t_img		*texSO;
+
+	texNO = (t_img *)malloc(sizeof(t_img));
+	texNO->img = mlx_png_file_to_image(all->mlx, all->pm->north,
+			&texNO->width, &texNO->height);
+	texNO->addr = mlx_get_data_addr(texNO->img, &texNO->bpp,
+			&texNO->line_len, &texNO->endian);
+	all->texNO = texNO;
+	texSO = (t_img *)malloc(sizeof(t_img));
+	texSO->img = mlx_png_file_to_image(all->mlx, all->pm->south,
+			&texSO->width, &texSO->height);
+	texSO->addr = mlx_get_data_addr(texSO->img, &texSO->bpp,
+			&texSO->line_len, &texSO->endian);
+	all->texSO = texSO;
+}
+
+void	init_tex_2(t_all *all)
+{		
 	t_img		*texWE;
 	t_img		*texEA;
 	t_img		*texS;
 
-	texNO = (t_img *)malloc(sizeof(t_img));
-	texNO->img = mlx_png_file_to_image(all->mlx, all->pm->north, &texNO->width, &texNO->height);
-	texNO->addr = mlx_get_data_addr(texNO->img, &texNO->bpp, &texNO->line_len, &texNO->endian);
-	all->texNO = texNO;
-	texSO = (t_img *)malloc(sizeof(t_img));
-	texSO->img = mlx_png_file_to_image(all->mlx, all->pm->south, &texSO->width, &texSO->height);
-	texSO->addr = mlx_get_data_addr(texSO->img, &texSO->bpp, &texSO->line_len, &texSO->endian);
-	all->texSO = texSO;
 	texWE = (t_img *)malloc(sizeof(t_img));
-	texWE->img = mlx_png_file_to_image(all->mlx, all->pm->west, &texWE->width, &texWE->height);
-	texWE->addr = mlx_get_data_addr(texWE->img, &texWE->bpp, &texWE->line_len, &texWE->endian);
+	texWE->img = mlx_png_file_to_image(all->mlx, all->pm->west,
+			&texWE->width, &texWE->height);
+	texWE->addr = mlx_get_data_addr(texWE->img, &texWE->bpp,
+			&texWE->line_len, &texWE->endian);
 	all->texWE = texWE;
 	texEA = (t_img *)malloc(sizeof(t_img));
-	texEA->img = mlx_png_file_to_image(all->mlx, all->pm->east, &texEA->width, &texEA->height);
-	texEA->addr = mlx_get_data_addr(texEA->img, &texEA->bpp, &texEA->line_len, &texEA->endian);
+	texEA->img = mlx_png_file_to_image(all->mlx, all->pm->east,
+			&texEA->width, &texEA->height);
+	texEA->addr = mlx_get_data_addr(texEA->img, &texEA->bpp,
+			&texEA->line_len, &texEA->endian);
 	all->texEA = texEA;
 	texS = (t_img *)malloc(sizeof(t_img));
-	texS->img = mlx_png_file_to_image(all->mlx, all->pm->sprite, &texS->width, &texS->height);
-	texS->addr = mlx_get_data_addr(texS->img, &texS->bpp, &texS->line_len, &texS->endian);
+	texS->img = mlx_png_file_to_image(all->mlx, all->pm->sprite,
+			&texS->width, &texS->height);
+	texS->addr = mlx_get_data_addr(texS->img, &texS->bpp,
+			&texS->line_len, &texS->endian);
 	all->texS = texS;
 }
+void	init_map(t_all *all, char *line, char *bigLine)
+{	
+	int		fd;
+	char	*tmp;
+
+	fd = open("map.cub", O_RDONLY);
+	while (get_next_line(fd, &line) > 0)
+	{
+		if (type_flags_check(all) > 0)
+			type_identifier(line, all);
+		else
+		{
+			tmp = bigLine;
+			bigLine = ft_strjoin(bigLine, line);
+			free(tmp);
+			tmp = bigLine;
+			bigLine = ft_strjoin(bigLine, "\n");
+			free(tmp);
+		}
+		free(line);
+	}
+	tmp = bigLine;
+	bigLine = ft_strjoin(bigLine, line);
+	free(tmp);
+	all->map = ft_split(bigLine, '\n');
+	free(bigLine);
+}
+
 int	main(int argc, char **argv)
 {
 	t_all		all;
@@ -130,42 +149,43 @@ int	main(int argc, char **argv)
 	is_save(argv, &all, argc);
 	pm = all.pm;
 	init_stuct(&all);
-	int      	fd = open("map.cub", O_RDONLY);
+	
 	char	  	*line = NULL;
 	char 		*bigLine = NULL;
-	char		*tmp;
 
-	while (get_next_line(fd, &line) > 0) 
-	{
-		if (type_flags_check(&all) > 0)
-			type_identifier(line, &all);
-		else
-		{
-			tmp = bigLine;
-			bigLine = ft_strjoin(bigLine, line);
-			free(tmp);
-			tmp = bigLine;
-			bigLine = ft_strjoin(bigLine, "\n");
-			free(tmp);
-		}
-		free(line);
-	}
-	tmp = bigLine;
-	bigLine = ft_strjoin(bigLine, line);
-	free(tmp);
-	all.map = ft_split(bigLine, '\n');//проверка валидности карты
-	free(bigLine);
+
+	// while (get_next_line(fd, &line) > 0) 
+	// {
+	// 	if (type_flags_check(&all) > 0)
+	// 		type_identifier(line, &all);
+	// 	else
+	// 	{
+	// 		tmp = bigLine;
+	// 		bigLine = ft_strjoin(bigLine, line);
+	// 		free(tmp);
+	// 		tmp = bigLine;
+	// 		bigLine = ft_strjoin(bigLine, "\n");
+	// 		free(tmp);
+	// 	}
+	// 	free(line);
+	// }
+	// tmp = bigLine;
+	// bigLine = ft_strjoin(bigLine, line);
+	// free(tmp);
+	// all.map = ft_split(bigLine, '\n');//проверка валидности карты
+	// free(bigLine);
+	init_map(&all, line, bigLine);
 	check_player(&all);
 	check_map(&all);
 	free(line);
-	malloc_sp(&all);
-	all.sprite->z_buf = malloc((sizeof(double)) * all.pm->scr_w); //
+	malloc_sp(&all);//
     all.mlx = mlx_init(); //защитить маллоки
     all.win->mlx = mlx_new_window(all.mlx, pm->scr_w, pm->scr_h, "CUB_3D");
     all.win->img = mlx_new_image(all.mlx, pm->scr_w, pm->scr_h);
     all.win->addr = mlx_get_data_addr(all.win->img, &all.win->bits_per_pixel, &all.win->line_length,
                                  &all.win->endian);
 	init_tex(&all);
+	init_tex_2(&all);
 	mlx_hook(all.win->mlx, 2, 1L<<0, move, &all);
     mlx_put_image_to_window(mlx, all.win->mlx, all.win->img, 0, 0);
 	mlx_loop_hook(all.mlx, render_next_frame, &all);

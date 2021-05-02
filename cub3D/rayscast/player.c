@@ -41,7 +41,6 @@ void	check_player(t_all *all)
 	int	k;
 	int	j;
 
-	all->sprite->sp_num = 0;
 	k = 0;
 	while (all->map[k])
 	{

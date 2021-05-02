@@ -1,7 +1,6 @@
 #ifndef CUB_H
 # define CUB_H
 
-
 # include "minilibx_mms/mlx.h" 
 # include <mlx.h>
 # include <unistd.h>
@@ -25,7 +24,7 @@
 
 # define KEY_ESC				53 
 
-typedef struct	s_win //структура для окна
+typedef struct s_win
 {
 	void		*mlx;
 	void		*win;
@@ -34,15 +33,15 @@ typedef struct	s_win //структура для окна
 	int			line_length;
 	int			bits_per_pixel;
 	int			endian;
-}				  t_win;
+}				t_win;
 
-typedef struct	s_point // структура для точки
+typedef struct s_point
 {
 	int			x;
 	int			y;
-}				 t_point;
+}				t_point;
 
-typedef struct	s_pm
+typedef struct s_pm
 {
 	int			scr_h;
 	int			scr_w;
@@ -67,7 +66,7 @@ typedef struct	s_pm
 	double		plX;
 }				t_pm;
 
-typedef struct	s_gl
+typedef struct s_gl
 {
 	double		pwd;
 	double		camera_x;
@@ -80,17 +79,16 @@ typedef struct	s_gl
 	double		rayDirX;
 	double		deltaDistX;
 	double		deltaDistY;
-	int 		stepX;
-    int 		stepY;
-	double 		sideDistX;
-    double 		sideDistY;
-	int 		mapX;
-    int 		mapY;
+	int			stepX;
+	int			stepY;
+	double		sideDistX;
+	double		sideDistY;
+	int			mapX;
+	int			mapY;
 	double		old_plX;
-
 }				t_gl;
 
-typedef struct	s_img 
+typedef struct s_img
 {
 	void		*img;
 	char		*addr;
@@ -101,7 +99,7 @@ typedef struct	s_img
 	int			width;
 }				t_img;
 
-typedef struct	s_txtr_data 
+typedef struct s_txtr_data
 {
 	int			text_num;
 	double		wall_x;
@@ -112,60 +110,60 @@ typedef struct	s_txtr_data
 	int			color;
 }				t_txtr_data;
 
-typedef struct	s_gnl
+typedef struct s_gnl
 {
-	char	buf[BUFFER_SIZE + 1];
-	int		count;
-	char	*ptr_n;
-	char	*tmp;
+	char		buf[BUFFER_SIZE + 1];
+	int			count;
+	char		*ptr_n;
+	char		*tmp;
 }				t_gnl;
 
-typedef struct s_sp_cast  //amount
+typedef struct s_sp_cast
 {
-	int order;
-	double dist;
-}			t_sp_cast;
+	int			order;
+	double		dist;
+}				t_sp_cast;
 
-typedef struct s_sp  //amount
+typedef struct s_sp
 {
 	double		x;
 	double		y;
-}			t_sp;
+}				t_sp;
 
 typedef struct s_sprite
 {
-	t_sp_cast 	*sp_cast;
+	t_sp_cast	*sp_cast;
 	t_sp		*sp;
-    double      *z_buf;
-    double      spriteX;
-    double      spriteY;
-    double      invDet;
-    double      transformX;
-    double      trfY;
-    int         sp_ScrX;
-    int         sp_H;
-    int         drawStartY;
-    int         drawEndY;
-    int         sp_W;
-    int         drawStartX;
-    int         drawEndX;
-    int         texX;
-    int         d;
-    int         texY;
-    int         sp_num;
-    int         color;
+	double		*z_buf;
+	double		spriteX;
+	double		spriteY;
+	double		invDet;
+	double		transformX;
+	double		trfY;
+	int			sp_ScrX;
+	int			sp_H;
+	int			drawStartY;
+	int			drawEndY;
+	int			sp_W;
+	int			drawStartX;
+	int			drawEndX;
+	int			texX;
+	int			d;
+	int			texY;
+	int			sp_num;
+	int			color;
 	int			*sp_order;
 	double		*sp_dist;
-}       		t_sprite;
+}				t_sprite;
 
-typedef struct	s_all // структура для всего вместе
+typedef struct s_all // структура для всего вместе
 {
 	void		*mlx;
 	t_win		*win;
-	t_pm *pm;
-	t_gl	*gl;
+	t_pm		*pm;
+	t_gl		*gl;
 	t_txtr_data	*txtr_data;
-	t_sprite    *sprite;
+	t_sprite	*sprite;
 	t_img		*texNO;
 	t_img		*texSO;
 	t_img		*texWE;
@@ -176,57 +174,60 @@ typedef struct	s_all // структура для всего вместе
 	int			file;
 }				t_all;
 
-//utils
-int		charlen(char **str);
-char	*printf_exit(char *str);
-int		ft_atoi_pars(const char *str);
-void	validate_color(int color);
-int		create_rgb(int r, int g, int b);
-int		type_flags_check(t_all *all);
-int		check_num(const char *str, int num);
-static char	**array_free(char **array);
-
-int	get_next_line(int fd, char **line);
-int	type_identifier(char *line, t_all *all);
-int	resolution(char *line, t_all *all);
-int	check_argument_textur(char *line, t_all *all);
-int check_texture(char *line, char **texture);
-void	color_floor_cell(t_all *all);
-int		floor_color(char *line, t_all *all);
-int		celling_color(char *line, t_all *all);
-void	check_map(t_all *all);
-void	check_player(t_all *all);
-int	cast_rays(t_all *all);
-void	my_mlx_pixel_put(t_win *data, int x, int y, int color);
-int		move(int key, t_all *all);
-void draw(t_all *all);
-void	cast_sprites(t_all *all);
+void	init_map(t_all *all, char *line, char *bigLine);
+void	init_tex_2(t_all *all);
+void	init_tex(t_all *all);
+void	malloc_sp(t_all *all);
 int		render_next_frame(t_all *all);
-void	check_player_map(t_all *all);
-void 	sotirovka_sprite(t_sprite *sprite);
-void    create_screenshot(t_all *all);
-void is_save(char **argv, t_all *all, int argc);
-void set_cub(t_all *all, char **argv, int argc);
-int	is_line(char *save);
-void	norme_gnl(char *remd, int i, int *j, char *new);
-int	ft_strlen2(char *str);
-void	sp_1(t_all *all);
-void	sp_drawstart(t_all *all, int i);
-void	sp_drawend(t_all *all);
-void	sp_color_2(t_all *all, int y, int stp);
+void	init_struct(t_all *all);
+void	my_mlx_pixel_put(t_win *data, int x, int y, int color);
+void	create_screenshot(t_all *all);
+void	create_screenshot2(int fd, t_all *all);
+void	is_save(char **argv, t_all *all, int argc);
+char	*ft_strchr(const char *s, int c);
+size_t	ft_strlen(const char *s);
+char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strdup(const char *s1);
+char	*ft_strndup(const char *s, size_t n);
+char	**ft_split(char const *s, char c);
+void	ft_bzero(void *s, size_t n);
+void	cast_sprites(t_all *all);
 void	sp_color(t_all *all);
+void	sp_color_2(t_all *all, int y, int stp);
+void	sp_drawend(t_all *all);
+void	sp_drawstart(t_all *all, int i);
+void	sp_1(t_all *all);
+void	check_player(t_all *all);
+int		move(int key, t_all *all);
+int		cast_rays(t_all *all);
 void	cr_part4(t_all *all);
 void	cr_part3(t_all *all, int x);
 void	cr_Y(t_all *all);
 void	cr_X(t_all *all);
 void	cr_part1(t_all *all, int x);
-void	ft_bzero(void *s, size_t n);
-char	**ft_split(char const *s, char c);
-char	*ft_strndup(const char *s, size_t n);
-char	*ft_strdup(const char *s1);
-char	*ft_strjoin(char const *s1, char const *s2);
-size_t	ft_strlen(const char *s);
-char	*ft_strchr(const char *s, int c);
+int		type_identifier(char *line, t_all *all);
+int		check_num(const char *str, int num);
+int		type_flags_check(t_all *all);
+int		ft_atoi_pars(const char *str);
+char	*printf_exit(char *str);
+int		charlen(char **str);
 char	**array_f(char **array);
+void	set_cub(t_all *all, char **argv, int argc);
+void	check_map(t_all *all);
+void	check_invalid(t_all *all, int k, int j);
+void	check_cell(t_all *all, int j, int k);
+void	check_player_map(t_all *all);
+int		get_next_line(int fd, char **line);
+void	norme_gnl(char *remd, int i, int *j, char *new);
+int		is_line(char *save);
+int		ft_strlen2(char *str);
+void	validate_color(int color);
+int		create_rgb(int r, int g, int b);
+int		check_texture(char *line, char **texture);
+int		resolution(char *line, t_all *all);
+int		celling_color(char *line, t_all *all);
+int		floor_color(char *line, t_all *all);
+void	free_res(char **color);
+char	*return_space(char *line);
 
 #endif

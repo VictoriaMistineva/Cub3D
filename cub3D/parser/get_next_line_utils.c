@@ -27,6 +27,7 @@ int	is_line(char *save)
 	}
 	return (-1);
 }
+
 void	norme_gnl(char *reste, int i, int *j, char *new)
 {
 	while (reste[i + *j])

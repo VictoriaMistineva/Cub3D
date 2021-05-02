@@ -229,5 +229,6 @@ int		celling_color(char *line, t_all *all);
 int		floor_color(char *line, t_all *all);
 void	free_res(char **color);
 char	*return_space(char *line);
+int		exiit(int key, t_all *all);
 
 #endif

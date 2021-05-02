@@ -16,6 +16,7 @@ void	mlx_render(t_all *all, void *mlx)
 	init_tex(all);
 	init_tex_2(all);
 	mlx_hook(all->win->mlx, 2, 1L << 0, move, all);
+	mlx_hook(all->win->mlx, 17, 0, exiit, all);
 	mlx_put_image_to_window(mlx, all->win->mlx, all->win->img, 0, 0);
 	mlx_loop_hook(all->mlx, render_next_frame, all);
 	mlx_loop(all->mlx);

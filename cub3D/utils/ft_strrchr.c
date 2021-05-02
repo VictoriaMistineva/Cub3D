@@ -12,3 +12,9 @@ char	*ft_strchr(const char *s, int c)
 	}
 	return (NULL);
 }
+
+int	exiit(int key, t_all *all)
+{
+	exit(0);
+	return (1);
+}

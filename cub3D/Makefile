@@ -1,67 +1,55 @@
-NAME =	cub3D
+SRCS =	main_utils.c \
+		main.c \
+		main_utils_2.c \
+		screen.c \
+		parser/check_f_c.c \
+		parser/check_r_textur.c \
+		parser/color.c \
+		parser/get_next_line.c \
+		parser/get_next_line_utils.c \
+		parser/pars_map.c \
+		parser/pars_ut.c \
+		parser/pars_utils.c \
+		parser/parser_type.c \
+		rayscast/front.c \
+		rayscast/front_utils.c \
+		rayscast/key.c \
+		rayscast/player.c \
+		rayscast/sprite_draw.c \
+		rayscast/sprite.c \
+		utils/ft_bzero.c \
+		utils/ft_split.c \
+		utils/ft_strdup_copy.c \
+		utils/ft_strdup.c \
+		utils/ft_strjoin.c \
+		utils/ft_strlen.c \
+		utils/ft_strrchr.c
 
-# CFLAG =	-Wall -Werror -Wextra
-LXFLAG =  -g -lm -lmlx -framework OpenGL -framework AppKit 
+OBJS			= $(SRCS:.c=.o)
 
-MLXLIB =  libmlx.dylib
+CC				= gcc
+RM				= rm -f
+CFLAGS			= -O3 -I.
+LIBS			= -framework OpenGL -framework AppKit libmlx.dylib
+MLX				= libmlx.dylib
 
-INCD =	 -I includes/ -I Libft/includes
-# INCD =	-I . -I Libft/includes
+NAME			= cub3D
 
-HEAD =	cub.h
+all:			$(NAME)
 
-# SRCD =	src/
-# SRCD =	.
+$(NAME):		$(MLX) $(OBJS)
+				gcc -g libmlx.dylib ${CFLAGS} -o ${NAME} ${OBJS} ${LIBS}
 
-OBJD = 	obj/
-
-LIBFT =	Libft/libft.a
-
-SRC = parser.c \
-		get_next_line.c \
-
-
-
-
-
-OBJ =	$(addprefix $(OBJD), $(patsubst %.c, %.o, $(SRC)))
-
-all: $(NAME)
-
-$(NAME): $(LIBFT) $(OBJD) $(OBJ)
-	@cp $(LIBFT) .
-	@ar -rc $(notdir $(LIBFT)) $(OBJ)
-	@mv $(notdir $(LIBFT)) $(NAME)
-	@ranlib $(NAME)
-	@printf "🐓\x1b[32mCreate: "
-	@printf $@
-	@printf "\x1b[0m\n"
-
-#gcc -g  -lm -lmlx -framework OpenGL -framework AppKit  Libft/libft.a get_next_line.c parser.c | ./a.out map.cub
-
-$(OBJD)%.o: $(SRC)%.c $(HEAD)
-#	@gcc $(CFLAG) $(LXFLAG)  -o $@ -c $< $(INCD)
-	@gcc $(CFLAG) $(LXFLAG) $(LIBFT) $(SRCS)
-	@printf "💜\x1b[35mCompile: "
-	@printf $(notdir $@)
-	@printf "\x1b[0m\n"
-
-$(OBJD):
-	@mkdir -p $@
-
-$(LIBFT):
-	@make -C $(dir $(LIBFT))
-
-run:
-	gcc -g libmlx.dylib -framework OpenGL -framework AppKit utils/*.c parser/*.c rayscast/*.c ./*.c libmlx.dylib
-	./a.out map.cub
+$(MLX):
+				@$(MAKE) -C minilibx_mms
+				@mv minilibx_mms/$(MLX) .
 
 clean:
-	@make -C $(dir $(LIBFT)) clean
-	@rm -rf $(OBJD)
+				$(RM) $(OBJS)
 
-fclean: clean
-	@make -C $(dir $(LIBFT)) fclean
-	@rm -f $(NAME)
+fclean:			clean
+				$(RM) $(NAME) $(MLX)
 
-re: fclean allw
+re:				fclean $(NAME)
+
+.PHONY:			all clean fclean re
